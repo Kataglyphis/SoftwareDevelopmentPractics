@@ -1,0 +1,8 @@
+Material MyMaterial : edu.kit.valaris/materials/PBRLighting.j3md {
+    MaterialParameters {
+            Metallic : 0.0
+            Roughness : 0.4
+            Specular : 0.5
+            BaseColor : 0.1 0.1 0.1 1.0
+        }
+}

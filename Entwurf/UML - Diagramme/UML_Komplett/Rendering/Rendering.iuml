@@ -1,0 +1,108 @@
+@startuml rendering
+!include styles.puml
+
+package rendering #FFCCBC {
+    !include particle-effect.iuml
+    !include postprocessing.iuml
+    !include Animation.iuml
+}
+
+package com.jme3.post {
+    
+    class FilterPostProcessor {
+        +initialize(rm: RenderManager, vp: ViewPort): void
+        +postFrame(out: FrameBuffer)
+        +postQueue(rq: RenderQueue):void
+        +preFrame(tpf: float):void
+        +addFilter(filter: Filter)
+        +removeFilter(filter:Filter):void
+        +setAssetManager(assetManager: AssetManager):void
+    }
+    class FXAAFilter {
+        
+    }    
+    abstract class Filter {
+        #enabled: boolean
+        #material: Material
+        #postRenderPasses: List<Filter.Pass>
+        #processor: FilterPostProcessor
+        #getPostRenderPasses():List<Filter.Pass>
+        #init(manager: AssetManager,renderManager: RenderManager,vp: ViewPort,w:int,h:int):void
+        #initFilter(manager: AssetManager,renderManager: RenderManager,vp: ViewPort,w:int,h:int):void
+        +isEnabled():boolean
+        #postFilter(r:Renderer, buffer: FrameBuffer):void
+        #postFrame(renderManager: RenderManager, viewPort: ViewPort, prevFilterBuffer: FrameBuffer, sceneBuffer: FrameBuffer):void
+        #postQueue(queue:RenderQueue):void
+        #preFrame(tpf:float):void
+        #setProcessor(proc:FilterPostProcessor):void
+    }
+    interface SceneProcessor {
+        +cleanup():void
+        +initialize(rm: RenderManager, vp: ViewPort): void
+        +isInitialized():boolean
+        +postFrame(out: FrameBuffer):void
+        +postQueue(rq: RenderQueue):void
+        +preFrame(tpf: float):void
+        +reshape(vp: ViewPort, w: int, h: int):void
+    }
+    class HDRRenderer {
+
+    }
+}
+package com.jme3.scene {
+    class Geometry {
+
+    }
+    class Mesh {
+
+    }
+}
+package com.jme3.animation {
+    class AnimControl {
+        +AnimControl(skeleton:Skeleton)
+        +addAnim(anim:Animation):void
+        +addListener(listener:AnimEventListener):void
+        +createChannel():AnimChannel
+        +getAnim(name:String):Animation
+        +removeAnim(anim:Animation):void
+        +setAnimations(HashMap<String,Animation>,animations):void
+    }
+
+    class Animation {
+        +Animation(name:String, length:float)
+        +addTrack(track:Track):void
+        +getLength():float
+        +getName():String
+        +getTracks():Track[]
+    }
+    class AnimChannel {
+        +getControl():AnimControl
+        +getLoopMode():LoopMode
+        +getSpeed():float
+        +getTime():float
+        +reset(rewind:boolean):void
+        +setAnim(name:String):void
+        +setTime(time:float):void
+    }
+}
+''''''''''FilterDependencies'''''''''''''''''
+FilterPostProcessor ..|> SceneProcessor
+Filter --"processor" FilterPostProcessor
+HDRRenderer ..|> SceneProcessor
+FXAAFilter --^ Filter
+FilterPostProcessor "1" *--> "*" MotionBlurFilter
+Filter ^-- MotionBlurFilter
+
+'''''''''''EffectsDependecies'''''''''''''''''
+ParticleEffect --|> com.jme3.scene.control.AbstractControl
+Mesh <|-- EffectMesh
+'''''''''''AnimationDependencies''''''''''''''
+Animator "*" o-- "1" AnimControl
+Animator "*" o-- "*" Animation
+Animator "*" o-- "*" AnimChannel
+'AnimatorPropertyProcessor "*" o-- "1" Animator
+''''''''''''format'''''''''''''
+'effects -[hidden]up- com.jme3.animation
+
+
+@enduml

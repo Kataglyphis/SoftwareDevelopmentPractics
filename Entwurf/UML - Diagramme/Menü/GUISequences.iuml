@@ -1,0 +1,182 @@
+@startuml AllScreens
+' ########################################################################
+' ########################### Start a Game ###############################
+' ########################################################################
+participant "__:MainmenuScreen__"
+participant "__:SinglePlayerModeScreen__"
+participant "__:LoadingScreen__"
+participant "__:HUD__"
+participant "__:Pausemenu__"
+participant "__:EndmenuScreen__"
+
+-> "__:MainmenuScreen__" : AppStateManager.attach(MainmenuScreen)
+activate "__:MainmenuScreen__"
+
+"__:MainmenuScreen__" -> "__:SinglePlayerModeScreen__" : openSinglePlayerMode()
+activate "__:SinglePlayerModeScreen__"
+deactivate "__:MainmenuScreen__"
+
+"__:SinglePlayerModeScreen__" -> "__:LoadingScreen__" : openLoadingScreen()
+activate "__:LoadingScreen__"
+deactivate "__:SinglePlayerModeScreen__"
+
+"__:LoadingScreen__" -> "__:LoadingScreen__" : startGame()
+"__:LoadingScreen__" -> "__:LoadingScreen__" : IMapBody = generateMap()
+"__:LoadingScreen__" -> "__:HUD__" : openHUD()
+activate "__:HUD__" 
+deactivate "__:LoadingScreen__"
+
+"__:HUD__"  -> "__:HUD__"  : createMiniMap()
+loop
+    "__:HUD__"  -> "__:HUD__"  : playerPositions = updatePlayerPositions(player: String, x: int, y: int)
+    "__:HUD__"  -> "__:HUD__"  : playerTimes = updatePlayerTime(player: String, time: int)
+    "__:HUD__"  -> "__:HUD__"  : playerRankings = updatePlayerRankings(player: String, rank: int)
+end
+"__:HUD__" -> "__:Pausemenu__" : openPausemenu()
+activate "__:Pausemenu__"
+"__:Pausemenu__" -> "__:HUD__" : backtoGame()
+deactivate "__:Pausemenu__"
+
+
+"__:HUD__" -> "__:EndmenuScreen__" : openEndScreen()
+activate "__:EndmenuScreen__"
+deactivate "__:HUD__"
+
+loop for each player
+    "__:EndmenuScreen__"  -> "__:EndmenuScreen__"  : playerEndTimes = updatePlayerEndTime(player: String, time: int)
+    
+end
+@enduml
+
+' ########################################################################
+' ########################### Edit Settings ###############################
+' ########################################################################
+
+@startuml EditSettings
+
+participant "__:MainmenuScreen__"
+participant "__:SettingsmenuScreen__"
+participant "__:GraphicsConfig__"
+participant "__:InternalGameConfig__"
+
+
+-> "__:MainmenuScreen__" : AppStateManager.attach(MainmenuScreen)
+activate "__:MainmenuScreen__"
+
+alt Über das Haupt- oder Pausemenü
+    "__:MainmenuScreen__" -> "__:SettingsmenuScreen__" : openSettingsmenu()
+    activate "__:SettingsmenuScreen__"
+    deactivate "__:MainmenuScreen__"
+
+    "__:SettingsmenuScreen__" -> "__:GraphicsConfig__" : saveSettings()
+    activate "__:GraphicsConfig__"
+    "__:GraphicsConfig__" -> "__:GraphicsConfig__" : saveConfig()
+    "__:GraphicsConfig__" --> "__:SettingsmenuScreen__"  
+    deactivate "__:GraphicsConfig__"
+
+    "__:SettingsmenuScreen__" -> "__:InternalGameConfig__" : saveSettings()
+    activate "__:InternalGameConfig__"
+    "__:InternalGameConfig__" -> "__:InternalGameConfig__" : saveConfig()
+    "__:InternalGameConfig__" --> "__:SettingsmenuScreen__"  
+    deactivate "__:InternalGameConfig__"
+
+    "__:SettingsmenuScreen__" -> "__:MainmenuScreen__" : backToMainmenu()
+    deactivate "__:SettingsmenuScreen__"
+    activate "__:MainmenuScreen__"
+
+else 
+    "__:MainmenuScreen__" -> "__:SinglePlayerModeScreen__" : openSinglePlayerMode()
+    activate "__:SinglePlayerModeScreen__"
+    deactivate "__:MainmenuScreen__"
+
+    "__:SinglePlayerModeScreen__" -> "__:LoadingScreen__" : openLoadingScreen()
+    activate "__:LoadingScreen__"
+    deactivate "__:SinglePlayerModeScreen__"
+
+    "__:LoadingScreen__" -> "__:LoadingScreen__" : startGame()
+    "__:LoadingScreen__" -> "__:LoadingScreen__" : IMapBody = generateMap()
+    "__:LoadingScreen__" -> "__:HUD__" : openHUD()
+    activate "__:HUD__" 
+    deactivate "__:LoadingScreen__"
+
+    "__:HUD__"  -> "__:HUD__"  : createMiniMap()
+    loop
+        "__:HUD__"  -> "__:HUD__"  : playerPositions = updatePlayerPositions(player: String, x: int, y: int)
+        "__:HUD__"  -> "__:HUD__"  : playerTimes = updatePlayerTime(player: String, time: int)
+        "__:HUD__"  -> "__:HUD__"  : playerRankings = updatePlayerRankings(player: String, rank: int)
+    end
+    "__:HUD__" -> "__:Pausemenu__" : openPausemenu()
+    activate "__:Pausemenu__"
+    "__:Pausemenu__" -> "__:SettingsmenuScreen__" : openSettingsmenu()
+    activate "__:SettingsmenuScreen__"
+    deactivate "__:MainmenuScreen__"
+
+    "__:SettingsmenuScreen__" -> "__:GraphicsConfig__" : saveSettings()
+    activate "__:GraphicsConfig__"
+    "__:GraphicsConfig__" -> "__:GraphicsConfig__" : saveConfig()
+    "__:GraphicsConfig__" --> "__:SettingsmenuScreen__"  
+    deactivate "__:GraphicsConfig__"
+
+    "__:SettingsmenuScreen__" -> "__:InternalGameConfig__" : saveSettings()
+    activate "__:InternalGameConfig__"
+    "__:InternalGameConfig__" -> "__:InternalGameConfig__" : saveConfig()
+    "__:InternalGameConfig__" --> "__:SettingsmenuScreen__"  
+    deactivate "__:InternalGameConfig__"
+
+    "__:SettingsmenuScreen__" -> "__:Pausemenu__" : backToPausemenu()
+    deactivate "__:SettingsmenuScreen__"
+    activate "__:MainmenuScreen__"
+    deactivate "__:Pausemenu__"
+end
+@enduml
+
+' ########################################################################
+' ########################### Save a Seed ###############################
+' ########################################################################
+
+@startuml SaveSeed
+' ########################################################################
+' ########################### Start a Game ###############################
+' ########################################################################
+
+participant "__:HUD__"
+participant "__:Pausemenu__"
+participant "__:SeedConfig__"
+participant "__:EndmenuScreen__"
+
+activate "__:HUD__" 
+
+"__:HUD__"  -> "__:HUD__"  : createMiniMap()
+loop
+    "__:HUD__"  -> "__:HUD__"  : playerPositions = updatePlayerPositions(player: String, x: int, y: int)
+    "__:HUD__"  -> "__:HUD__"  : playerTimes = updatePlayerTime(player: String, time: int)
+    "__:HUD__"  -> "__:HUD__"  : playerRankings = updatePlayerRankings(player: String, rank: int)
+end
+alt Über das Pausemenü oder den Endbildschirm
+    "__:HUD__" -> "__:Pausemenu__" : openPausemenu()
+    activate "__:Pausemenu__"
+    "__:Pausemenu__" -> "__:SeedConfig__" : saveSeed()
+    activate "__:SeedConfig__"
+    "__:SeedConfig__" -> "__:SeedConfig__" :addSeed(currentSeed)
+    "__:SeedConfig__" --> "__:Pausemenu__"
+    deactivate "__:SeedConfig__"
+    "__:Pausemenu__" -> "__:HUD__" : backtoGame()
+    deactivate "__:Pausemenu__"
+else 
+
+    "__:HUD__" -> "__:EndmenuScreen" : openEndScreen()
+    activate "__:EndmenuScreen"
+    deactivate "__:HUD__"
+
+    loop for each player
+        "__:EndmenuScreen"  -> "__:EndmenuScreen"  : playerEndTimes = updatePlayerEndTime(player: String, time: int)
+        
+    end
+    "__:EndmenuScreen" -> "__:SeedConfig__" : saveSeed()
+    activate "__:SeedConfig__"
+    "__:SeedConfig__" -> "__:SeedConfig__" :addSeed(currentSeed)
+    "__:SeedConfig__" --> "__:EndmenuScreen"
+    deactivate "__:SeedConfig__"
+
+end
+@enduml

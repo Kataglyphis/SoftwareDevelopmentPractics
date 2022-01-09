@@ -1,0 +1,14 @@
+{
+  "key" : "Trap",
+  "path" : "/edu.kit.valaris/assets/gravitytrap/GravityTrap.j3o",
+  "nodes" : [],
+  "controls" : [
+    {"key" : "Particles", "path" : "GravityTrap/GravityTrap", "isPreload" : false, "type" : "edu.kit.valaris.rendering.particleEffect.ParticleEffect", "params" : "GravityTrap"}
+  ],
+  "meshes" : [
+    {"path" : "GravityTrap/GravityTrap", "material" : "/edu.kit.valaris/assets/gravitytrap/GravityTrap.j3m"}
+  ],
+  "animations" : [
+    {"key" : "dummyanim", "name" : "dummyanim", "path" : "dummypath"}
+  ]
+}

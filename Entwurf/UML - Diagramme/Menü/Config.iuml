@@ -1,0 +1,34 @@
+@startuml Config
+
+!include styles.puml
+
+package menuconfig #D1C4E9 {
+    hide empty members
+    interface IConfig{
+        {static} + getConfig(): Properties
+        {static} + saveConfig(properties: Properties): void
+    }
+    class SeedConfig{
+        {static} - properties: Properties
+        {static} - currentSeed: SeedEntry
+        {static} + getCurrentSeed(): SeedEntry
+        {static} + setCurrentSeed(seed: SeedEntry): void
+        {static} + addSeed(seed: SeedEntry): void
+    }
+
+    class GraphicsConfig{
+        {static} - properties: Properties
+    }
+
+    class InternalGameConfig{
+        {static} - properties: Properties
+    }
+
+
+    IConfig <|.. SeedConfig
+    IConfig <|.. GraphicsConfig
+    IConfig <|.. InternalGameConfig
+  
+}
+
+@enduml

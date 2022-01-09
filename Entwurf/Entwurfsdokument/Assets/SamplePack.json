@@ -1,0 +1,18 @@
+{
+    "groups":[
+        {
+            "key"    : "group0",
+            "members": [
+                "asset0.json",
+                "asset1.json"
+            ]
+        },
+        {
+            "key"    : "group1",
+            "members": [
+                "asset0.json",
+                "asset2.json"
+            ]
+        }
+    ]
+}

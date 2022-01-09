@@ -1,0 +1,16 @@
+@startuml
+!include styles.iuml
+
+    skinparam roundcorner 20
+    skinparam maxmessagesize 60
+    skinparam sequenceParticipant underline
+
+    actor user
+
+    user -> FilterPostProcessor : addProcessor()
+    activate FilterPostProcessor
+    FilterPostProcessor -> MotionBlurFilter : addFilter()
+    activate MotionBlurFilter
+    MotionBlurFilter -> MotionBlurFilter :initFilter()
+    activate MotionBlurFilter #DarkSalmon
+@enduml

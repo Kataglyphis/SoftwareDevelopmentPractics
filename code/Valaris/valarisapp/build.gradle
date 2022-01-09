@@ -1,0 +1,100 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'application'
+    id 'edu.sc.seis.launch4j' version '2.4.4'
+}
+
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.10
+
+//launch4j
+launch4j {
+    mainClassName = 'edu.kit.valaris.ValarisMain'
+    jreMinVersion = sourceCompatibility
+    icon = "${projectDir}/launch4j/valaris128.ico"
+    bundledJrePath = "jre"
+    bundledJre64Bit = true
+}
+
+mainClassName = 'edu.kit.valaris.ValarisMain'
+
+sourceSets.main {
+    java.srcDirs = ["src/main/java"]
+    resources.srcDirs = ["src/main/resources"]
+}
+
+sourceSets.test {
+    java.srcDirs = ["src/test/java"]
+    resources.srcDirs = ["src/test/resources"]
+}
+
+ext {
+    jmonkeyengine_version = '[3.1,)'
+    jackson_version = '[2.9.4,)'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+
+    flatDir {
+        dirs 'lib'
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+dependencies {
+    //project dependencies
+    compile project(':dummysim')
+    compile project(':apputil')
+
+    //other team
+    compile name: 'simulationlib-1.0'
+
+    //basic dependencies
+    compile "org.jmonkeyengine:jme3-core:$jmonkeyengine_version"
+    compile "org.jmonkeyengine:jme3-lwjgl:$jmonkeyengine_version"
+    compile "org.jmonkeyengine:jme3-plugins:$jmonkeyengine_version"
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+    //compile 'org.json:json:20171018'
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+
+    // Nifty
+    compile "org.jmonkeyengine:jme3-niftygui:$jmonkeyengine_version"
+
+
+    //blender model support
+    compile "org.jmonkeyengine:jme3-blender:$jmonkeyengine_version"
+
+    //networking
+    compile "org.jmonkeyengine:jme3-networking:$jmonkeyengine_version"
+
+    //json object mapper
+    compile "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
+
+    //HammersleySet https://github.com/umontreal-simul/ssj
+    compile "ca.umontreal.iro.simul:ssj:+"
+
+    //svg/eps/pdf export library: https://github.com/eseifert/vectorgraphics2d
+    compile "de.erichseifert.vectorgraphics2d:VectorGraphics2D:0.13"
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}

@@ -1,0 +1,12 @@
+{
+  "key" : "SimpleStreet",
+  "path" : "/edu.kit.valaris/assets/road/basicStreet/SimpleStreetA2.j3o",
+
+  "nodes" : [],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "Borders/Cube.0011", "material" : "/edu.kit.valaris/assets/road/basicStreet/asphaltWhite.j3m"},
+    {"path" : "Underground/Cube.0021", "material" : "/edu.kit.valaris/assets/road/basicStreet/asphaltGrey.j3m"}
+  ],
+  "animations" : []
+}

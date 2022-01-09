@@ -1,0 +1,209 @@
+\subsection{Generierung}
+
+\subsubsection{Automatische Tests}
+\paragraph{BiomMeadowColoringTest}
+\begin{itemize}
+    \item \textit{makeColorRoad}
+        \begin{leftbar}[0.9\linewidth]
+			Testet die Färbung zweier Dreiecke, bei denen ein Fahrbahnuntergrund zu sehen sein soll.
+			Jeder Farbkanal enthält den gleichen Farbwert: 0.1f.
+		\end{leftbar}
+		
+	\item \textit{makeColorRock}
+        \begin{leftbar}[0.9\linewidth]
+			Testet die Färbung zweier Dreiecke, bei denen ein Stein zu sehen sein soll.
+			Jeder Farbkanal enthält den gleichen Wert: 0f.
+		\end{leftbar}
+		
+	\item \textit{makeColorSnow}
+        \begin{leftbar}[0.9\linewidth]
+            Testet die Färbung zweier Dreiecke, bei denen Schnee zu sehen sein soll.
+			Jeder Farbkanal enthält den gleichen Wert: 1f.
+		\end{leftbar}
+		
+	\item \textit{makeColorMeadow}
+		\begin{leftbar}[0.9\linewidth]
+			Testet die Färbung zweier Dreiecke, bei denen Wiese zu sehen sein soll.
+			Jeder Farbkanal enthält unterschiedliche Werte zwischen 0f und 1f.
+		\end{leftbar}
+
+	\item \textit{makeColorSnowOverMeadow}
+        \begin{leftbar}[0.9\linewidth]
+			Testet die Färbung zweier Dreiecke, bei denen nicht alle Eckpunkte die gleichen Eigenschaftenm aufweisen,
+			einige Eckpunkte 'bestehen aus' Wiese andere aus Schnee.
+			Die Farbkanäle enthalten die oben genannten Werte, je für Schnee bzw. Wiese.
+		\end{leftbar}
+		
+	\item \textit{makeColorMeadowOverRock}
+        \begin{leftbar}[0.9\linewidth]
+			Testet die Färbung zweier Dreiecke, bei denen nicht alle Eckpunkte die gleichen Eigenschaftenm aufweisen,
+			einige Eckpunkte 'bestehen aus' Wiese andere aus Stein.
+			Die Farbkanäle enthalten die oben genannten Werte, je für Stein bzw. Wiese.
+        \end{leftbar}
+\end{itemize}
+
+\paragraph{MapBodyTest}
+\begin{itemize}
+    \item \textit{test0Calc3DTransform}
+        \begin{leftbar}[0.9\linewidth]
+			Testet die Transformat von Positionen aus dem RoadModel
+			in Weltkoordinaten.
+		\end{leftbar}
+	\item \textit{test1Calc3DTransform}
+        \begin{leftbar}[0.9\linewidth]
+            Testet die Transformat von Positionen aus dem RoadModel
+			in Weltkoordinaten.
+		\end{leftbar}
+	\item \textit{test2Calc3DTransform}
+        \begin{leftbar}[0.9\linewidth]
+            Testet die Transformat von Positionen aus dem RoadModel
+			in Weltkoordinaten.
+		\end{leftbar}
+\end{itemize}
+
+\paragraph{RoadGeneratorTest}
+\begin{itemize}
+	\item \textit{generateSphereRoad}
+        \begin{leftbar}[0.9\linewidth]
+			Testet ob die Generierung einer Strecke für eine Kuppel erfolgreich war.
+			Testet die Koorektheit der Rotation der RoadCursor Instanzen.
+			Testet ob die Minimaldistanz zwischen den RoadCursor Instanzen eingehalten.
+		\end{leftbar}
+	\item \textit{generateConnectingRoad}
+        \begin{leftbar}[0.9\linewidth]
+            Testet ob die Generierung einer Strecke für einen Tunnel erfolgreich war.
+			Testet die Koorektheit der Rotation der RoadCursor Instanzen.
+			Testet ob die Minimaldistanz zwischen den RoadCursor Instanzen eingehalten.
+		\end{leftbar}
+	\item \textit{generateCuboidRoad}
+        \begin{leftbar}[0.9\linewidth]
+            Testet ob die Generierung einer Strecke für einen Raum erfolgreich war.
+			Testet die Koorektheit der Rotation der RoadCursor Instanzen.
+			Testet ob die Minimaldistanz zwischen den RoadCursor Instanzen eingehalten.
+		\end{leftbar}
+\end{itemize}
+
+\paragraph{DynamicRoomGeneratorTest}
+\begin{itemize}
+	\item \textit{test0GenerateRoom}
+        \begin{leftbar}[0.9\linewidth]
+            Testet ob die Raumgenerierung unter bestimmten Parametern erfolgreich ist.
+		\end{leftbar}
+	\item \textit{test1GenerateRoom}
+        \begin{leftbar}[0.9\linewidth]
+            Testet ob die Raumgenerierung unter bestimmten Parametern erfolgreich ist.
+		\end{leftbar}
+	\item \textit{test2GenerateRoom}
+        \begin{leftbar}[0.9\linewidth]
+            Testet ob die Raumgenerierung unter bestimmten Parametern erfolgreich ist.
+		\end{leftbar}
+	\item \textit{testGenerateStartRoom}
+        \begin{leftbar}[0.9\linewidth]
+			Testet ob die Raumgenerierung unter bestimmten Parametern erfolgreich ist.
+			Testet ob die Richtige Anzahl an Startpositionen Platziert wurde.
+		\end{leftbar}
+	\item \textit{testGenerateEndRoom}
+        \begin{leftbar}[0.9\linewidth]
+			Testet ob die Raumgenerierung unter bestimmten Parametern erfolgreich ist.
+			Testet ob die Ziellinie korrekt platziert wurde.
+		\end{leftbar}
+\end{itemize}
+
+
+\paragraph{TunnelGeneratorTest}
+\begin{itemize}
+	\item \textit{testGenerate}
+        \begin{leftbar}[0.9\linewidth]
+			Testet ob die TunnelGenerierung mit unterschiedlichen Parametern erfolgreich ist.
+			Testet ob der letzte RoadCursor in Position und Rotation nur minimal vom "Ziel"-RoadCursor abweicht.
+		\end{leftbar}
+\end{itemize}
+
+
+\paragraph{RoadTest}
+\begin{itemize}
+	\item \textit{testUpdateDirections}
+        \begin{leftbar}[0.9\linewidth]
+			Testet ob die Methode testUpdateDirections(...) die Rotation der RoadCursor korrekt korrigiert.
+		\end{leftbar}
+	\item \textit{attach}
+        \begin{leftbar}[0.9\linewidth]
+			Testet ob die Methode attach(...) die Positionen der RoadCursor Instanzen der
+			angehängten Road korrekt transformiert.
+		\end{leftbar}
+\end{itemize}
+
+\paragraph{RoadCursorTest}
+\begin{itemize}
+	\item \textit{testPosition}
+        \begin{leftbar}[0.9\linewidth]
+			Testet die Position der RoadCursor:
+			Nach dem Erstellen durch unterschiedliche Konstruktoren,
+			Nach Anwendung von Rotation durch die Methode applyRotation(...),
+			Nach Anwendung von Transformation durch die Methode applyTransformation(...);
+		\end{leftbar}
+	\item \textit{testDirection}
+        \begin{leftbar}[0.9\linewidth]
+			Testet den Richtungsvektor der RoadCursor:
+			Nach dem Erstellen durch unterschiedliche Konstruktoren,
+			Nach Anwendung von Rotation durch die Methode applyRotation(...),
+			Nach Anwendung von Transformation durch die Methode applyTransformation(...);
+		\end{leftbar}
+	\item \textit{testRight}
+        \begin{leftbar}[0.9\linewidth]
+			Testet den Rechtsvektor der RoadCursor:
+			Nach dem Erstellen durch unterschiedliche Konstruktoren,
+			Nach Anwendung von Rotation durch die Methode applyRotation(...),
+			Nach Anwendung von Transformation durch die Methode applyTransformation(...);
+		\end{leftbar}
+	\item \textit{testNormal}
+        \begin{leftbar}[0.9\linewidth]
+			Testet den Normalenvektor der RoadCursor:
+			Nach dem Erstellen durch unterschiedliche Konstruktoren,
+			Nach Anwendung von Rotation durch die Methode applyRotation(...),
+			Nach Anwendung von Transformation durch die Methode applyTransformation(...);
+		\end{leftbar}
+	\item \textit{testXZAngle}
+        \begin{leftbar}[0.9\linewidth]
+			Testet die Berechnung des Winkels in der Ebene der RoadCursor.
+		\end{leftbar}
+	\item \textit{testYAngle}
+        \begin{leftbar}[0.9\linewidth]
+			Testet die Berechnung des Steigungs Winkels der RoadCursor.
+		\end{leftbar}
+	\item \textit{testTiltAngle}
+        \begin{leftbar}[0.9\linewidth]
+			Testet ob der Kippwinkel des RoadCursors 0 ist.
+		\end{leftbar}
+	\item \textit{testRoadCursorProperty}
+        \begin{leftbar}[0.9\linewidth]
+			Testet ob der RoadCursor die ihm zugewiesene RoadCursorProperty hat.
+		\end{leftbar}
+	\item \textit{testRoadFrame}
+        \begin{leftbar}[0.9\linewidth]
+			Testet ob die Methode testRoadFrame(...) korrekt funktioniert.
+		\end{leftbar}
+\end{itemize}
+
+\subsubsection{Manuelle Tests}
+
+	Zusätzlich zu den oben genannten JUnit-Tests wurde zum größten Teil manuell getestet, da optische Eindrücke 
+	nicht automatisiert getestet werden können. Hierzu wurde für jeden betrachteten Teil ggf. die 
+	\textit{GenerationConfig} kurzzeitig angepasst und dann das Spiel mit der DummySimulation ausgeführt, um so das
+	entsprechende Element auf Sicht zu prüfen. Hierzu wurden die betrachteten Teile vorallem möglichst klein gehalten
+	und manchmal auch beispielsweise Screenshots als Hilfestellung verwendet. Unten aufgelistet sind beispielhafte 
+	Testabläufe, welche noch nicht im Pflichtenheft definiert wurden.
+
+	\begin{itemize} [label={}]
+		\item \textbf{ET120}\par %Bitte im Pflichtenheft nachschauen nach der nächsten Nummer
+			\textbf{STAND} Benutzer im Hauptmenü.\\
+			\textbf{AKTION} Generierung mit beleuchteten Räumen.\\
+            \textbf{RESULTAT} Beleuchtung wirkt natürlich.\\\par
+            
+        \item \textbf{ET130}\par %Bitte im Pflichtenheft nachschauen nach der nächsten Nummer
+			\textbf{STAND} Generierung, mit Kuppel und darin leigender Straße, abgeschlossen.\\
+			\textbf{AKTION} Betrachtung der auf die Straße angepassten Landschaft.\\
+			\textbf{RESULTAT} Landschaft unterhalb der Straße wird, in allen Punkten, 
+			genau unter die Straße gesetz.\\\par
+
+	\end{itemize}

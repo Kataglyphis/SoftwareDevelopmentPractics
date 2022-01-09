@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<nifty>
+    <resourceBundle id="menudialog" filename="MenuLocal/menudialog"/>
+    <useControls filename="nifty-default-controls.xml"/>
+
+    <screen id="errorscreen" controller="edu.kit.valaris.menu.gui.ErrorScreen"
+            inputMapping="edu.kit.valaris.menu.gui.MenuInputMapping">
+        <layer id="layer_hintergrund" childLayout="center" width="100%" height="100%">
+        </layer>
+    </screen>
+    <!-- Popup for changing the language -->
+    <popup id="messagePopup" childLayout="center" backgroundColor="#000c">
+        <effect>
+            <onStartScreen name="fade" startColor="#0000" endColor="#000a" length="200" />
+            <onEndScreen name="fade" startColor="#000a" endColor="#0000" length="250" startDelay="200" />
+        </effect>
+        <panel id="messagePopupMainPanel" style="glass-panel" padding="28px,18px,28px,18px" width="50%" height="40%" align="center" valign="center" childLayout="vertical">
+            <panel id="messagePopupTextPanel" height="30%" width="100%" childLayout="center">
+                <control name="label" style="Franklin24" id="messagePopupTitel"
+                         text="" color="#FFFFFF"
+                         height="20%" width="100%" align="right" valign="center" childLayout="vertical"/>
+            </panel>
+            <panel height="40%"/>
+            <panel id="messagePopupButtonsPanel" height="30%" width="50%" childLayout="center" align="center"
+                   valign="center">
+                <control name="button" label="OK" id="messagePopupButton" align="center"
+                         valign="center" style="PopupButton" height="100%" width="80%" >
+                    <interact onClick="quitPopup()" />
+                </control>
+            </panel>
+        </panel>
+    </popup>
+</nifty>

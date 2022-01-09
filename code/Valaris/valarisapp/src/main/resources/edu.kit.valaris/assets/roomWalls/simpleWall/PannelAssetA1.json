@@ -1,0 +1,12 @@
+{
+  "key" : "SimplePanel",
+  "path" : "/edu.kit.valaris/assets/roomWalls/simpleWall/PannelA1.j3o",
+
+  "nodes" : [],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "InnerPlane/Plane.0011", "material" : "/edu.kit.valaris/assets/roomWalls/simpleWall/metallicDarkGrey.j3m"},
+    {"path" : "OutherPlane/Plane.0021", "material" : "/edu.kit.valaris/assets/roomWalls/simpleWall/metallicLightGrey.j3m"}
+  ],
+  "animations" : []
+}

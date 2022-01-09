@@ -1,0 +1,74 @@
+//author: Frederik Lingg
+
+#ifndef PI
+#define PI 3.1415926535
+#endif
+
+//use hammersley set to get accurate set of points
+vec2 hammersley(in int s, in int numSamples);
+
+//use ggx distribution to calculate halfvectors
+vec3 sampleGGX(in float roughness, in vec2 xi, in vec3 normal);
+vec3 sampleLambert(in vec2 xi, in vec3 normal);
+
+//calculate the light direction for a view direction and a given halfvector
+vec3 calcLight(in vec3 h, in vec3 v);
+
+//calculate hammersley set
+vec2 hammersley(in int s, in int numSamples) {
+    //use radical inverse
+    uint bits = uint(s);
+    bits = (bits << 16u) | (bits >> 16u);
+    bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);
+    bits = ((bits & 0x33333333u) << 2u) | ((bits & 0xCCCCCCCCu) >> 2u);
+    bits = ((bits & 0x0F0F0F0Fu) << 4u) | ((bits & 0xF0F0F0F0u) >> 4u);
+    bits = ((bits & 0x00FF00FFu) << 8u) | ((bits & 0xFF00FF00u) >> 8u);
+    float ri = float(bits) * 2.3283064365386963e-10; // / 0x100000000
+
+    return vec2(float(s) / float(numSamples), ri);
+}
+
+//sampling method for ggx specular
+vec3 sampleGGX(in float roughness, in vec2 xi, in vec3 normal) {
+    float alpha = roughness * roughness;
+
+    //calculate angles for dist using roughness
+    float phi = 2.0 * PI * xi.x;
+    float cosThetaSqrd = (1 - xi.y) / (1 + (alpha * alpha - 1) * xi.y);
+    float cosTheta = sqrt(cosThetaSqrd);
+    float sinTheta = sqrt(1 - cosThetaSqrd);
+
+    //use y as up axis
+    vec3 h = vec3(sinTheta * cos(phi), cosTheta, -sinTheta * sin(phi));
+
+    //transform from tangent space
+    vec3 up = abs(normal.y) < 0.999 ? vec3(0.0, 1.0, 0.0) : vec3(1.0, 0.0, 0.0);
+    vec3 tangentX = normalize(cross(up, normal));
+    vec3 tangentZ = normalize(cross(normal, tangentX));
+
+    return (tangentX * h.x + normal * h.y + tangentZ * h.z);
+}
+
+//sampling for lambert diffuse
+vec3 sampleLambert(in vec2 xi, in vec3 normal) {
+    //calculate angles for dist using roughness
+    float phi = 2.0 * PI * xi.x;
+    float cosThetaSqrd = (1 - xi.y);
+    float cosTheta = sqrt(cosThetaSqrd);
+    float sinTheta = sqrt(1 - cosThetaSqrd);
+
+    //use y as up axis
+    vec3 h = vec3(sinTheta * cos(phi), cosTheta, -sinTheta * sin(phi));
+
+    //transform from tangent space
+    vec3 up = abs(normal.y) < 0.999 ? vec3(0.0, 1.0, 0.0) : vec3(1.0, 0.0, 0.0);
+    vec3 tangentX = normalize(cross(up, normal));
+    vec3 tangentZ = normalize(cross(normal, tangentX));
+
+    return (tangentX * h.x + normal * h.y + tangentZ * h.z);
+}
+
+//calc light vector for given halfvector
+vec3 calcLight(in vec3 h, in vec3 v) {
+    return 2.0 * dot(v, h) * h - v;
+}

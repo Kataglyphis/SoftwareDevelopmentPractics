@@ -1,0 +1,9 @@
+Material TwistedPipeRing : edu.kit.valaris/materials/PBRLighting.j3md {
+    MaterialParameters {
+            Metallic : 0.0
+            Roughness : 0.5
+            Specular : 0.6
+            BaseColor : 0.8 0.8 0.8 1.0
+        }
+}
+

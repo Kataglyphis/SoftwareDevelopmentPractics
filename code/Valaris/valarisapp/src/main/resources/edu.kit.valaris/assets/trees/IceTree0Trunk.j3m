@@ -1,0 +1,11 @@
+Material IceTree0Trunk : edu.kit.valaris/materials/PBRLighting.j3md {
+    MaterialParameters {
+        Metallic : 0.0
+        Roughness : 0.908
+        Specular : 0.5
+        BaseColor : 0.065 0.022 0.018 1.0
+    }
+
+    AdditionalRenderState {
+    }
+}

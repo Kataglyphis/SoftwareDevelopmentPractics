@@ -1,0 +1,137 @@
+@startuml MapGenerator
+scale 2
+
+!include styles.puml
+
+''''''''''''''''''''''Begin Document''''''''''''''''''''''''
+	
+
+package "generation" #F1F8E9 {
+    
+	interface ISceneItem {
+		generateSceneGraph(): Node
+	}
+
+
+	Enum GeneratorSettings {
+
+	}
+
+	Enum GridVertexProperty {
+
+
+	}
+
+	class GenerationConfig {
+		
+	}
+
+
+	class RandomNumberGenerator {
+		+RandomNumberGenerator(seed: int)
+		+getNewSeed(): int
+		+random(): float
+	}
+
+
+	class CullingManager {
+		+CullingManager(rootNode: Node)
+		+ setDoorStatus(index: int, isOpen: boolean)
+		# addNode(index: int, node: Node)
+	}
+
+
+
+	class GridVertex{
+        -position: Vector3f
+        -color: float[]
+        -index: final int[]
+        ''''''''''''''''''''''''''''''''''''''''''#
+        ~GridVertex(position: Vector3f, indexX: int, indexY: int, indexZ: int)
+
+		+ hashCode(): int
+		+ equals(): boolean
+
+        ~getIndex(): int[]
+        ~setPosition(position: Vector3f)
+        ~getPosition(): Vector3f
+        ~setColor(float[])
+        ~getColor(): float[]
+		~setMaterial(material: Material)
+		~getMaterial(): Material
+
+        ~hasProperty(property: GridVertexProperty): boolean
+		~setProperty(property: GridVertexProperty)
+
+    }
+
+	GridVertex --"*" GridVertexProperty
+
+'''''''''''''''''''''MapGeneration'''''''''''''''''''''''''
+	!include mapgeneration.iuml
+	Map -down-"*" ISceneItem
+
+'''''''''''''''''''''RoomGeneration'''''''''''''''''''''''''
+
+	!include roomgeneration.iuml
+	ISceneItem <|-down- IRoom
+	MapGenerator -down-"1" IRoomGenerator
+	GridVertex  "*"-left- DynamicRoom
+
+''''''''''''''''''TunnelGeneration'''''''''''''''''''''''''''
+	!include tunnelgeneration.iuml
+	ISceneItem <|-down- ITunnel
+	MapGenerator -down-"1" ITunnelGenerator
+	GridVertex "*"-up-- Tunnel
+
+'''''''''''''''DomeGeneration''''''''''''''''''''''''''''''''
+	!include domegeneration.iuml
+	ISceneItem <|-down- IDome
+	MapGenerator -down-"1" IDomeGenerator
+	GridVertex "*"-right- Dome
+
+'''''''''''''RoadGeneration''''''''''''''''''''''''
+	!include roadgeneration.iuml
+
+
+	Dome -down-"1" Road
+	Tunnel -down-"1" Road
+	StaticRoom -down-"1" Road
+	DynamicRoom -down-"1" Road
+
+	DomeGenerator -up-"1" IRoadGenerator
+	TunnelGenerator -up-"1" IRoadGenerator
+	DynamicRoomGenerator -down-"1" IRoadGenerator
+	StaticRoomGenerator -[hidden]down-"1" IRoadGenerator
+
+	MapGenerator .right.> CullingManager: <<creates>>
+
+
+	''''''''''''format'''''''''''''''''
+
+
+	mapgeneration -[hidden]down---- domegeneration
+	mapgeneration -[hidden]down-- tunnelgeneration
+	mapgeneration -[hidden]down---- roomgeneration
+
+	domegeneration -[hidden]left- tunnelgeneration
+	tunnelgeneration -[hidden]left- roomgeneration
+
+	domegeneration -[hidden]down------ roadgeneration
+	tunnelgeneration -[hidden]down------ roadgeneration
+	roomgeneration -[hidden]down------ roadgeneration
+
+
+	tunnelgeneration -[hidden]down-- GridVertex
+
+
+
+
+
+	Map -[hidden]- ISceneItem
+	IRoadGenerator -[hidden]down- RoadGenerator
+	'AbstractRoomGenerator -[hidden]up- RoomSelector
+
+}
+
+@enduml

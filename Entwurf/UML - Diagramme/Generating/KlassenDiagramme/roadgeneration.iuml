@@ -1,0 +1,107 @@
+@startuml roadgeneration
+
+scale 2
+!include styles.puml
+hide empty members
+
+package "roadgeneration" #DCEDC8 {
+
+    class Road{
+        -roadCursors: ArrayList<RoadCursor>
+        -roadObjects: Collection<RoadObject>
+        +attach(road: Road): Road 
+        +getRoadCursors(): ArrayList<RoadCursor>
+        +getRoadIterator(): Iterator<RoadCursor>
+        +addRoadCursor(roadCursor: RoadCursor)
+        +addRoadObject(roadObject: RoadObject) 
+        +getFirstCursor(): RoadCursor
+        +getLastCursor(): RoadCursor
+        +getRoadObjects(): Collection<RoadObjects>
+    }
+
+    class RoadObject {
+        -roadObjectProperties: Set<RoadObjectProperty>
+        +RoadObject(position: Vector3f)
+        +setPosition(position: Vector3f)
+        +getPosition(): Vector3f
+        +addProperty(property: RoadObjectProperty)
+        +hasProperty(property: RoadObjectProperty): Boolean
+    }
+
+    Enum RoadObjectProperty {
+
+    }
+    
+
+
+    class RoadCursor{
+        -position: Vector3f
+        -normal: Vector3f
+        -direction: Vector3f
+        -right: Vector3f
+        -width: Vector2f
+        -roadCursorProperties: Set<RoadCursorProperty>
+        ''''''''''''''''''''''''''''''''''
+        +RoadCursor(xTozAngle: float, xzToyAngle: float, tiltAngle: float, pos: Vector3f, width: Vector2f)
+        +RoadCursor(roadCursor: RoadCursor)
+
+        +setAngles(xTozAngle: float, xzToyAngle: float, tiltAngle: float)
+        +getAngles(): Vector3f
+        +applyRotation(q: Quaternion)
+        +getRotation(): Quaternion
+        +applyTransformation(c: RoadCursor)
+
+        + addProperty(roadCursorProperty: RoadCursorProperty)
+        + hasProperty(roadCursorProperty: RoadCursorProperty): boolean
+
+        +getPosition(): Vector3f
+        +setPosition(position: Vector3f)
+        +getDirection(): Vector3f
+        +getNormal(): Vector3f
+        +getRight(): Vector3f
+        +getWidthAndHight(): Vector2f
+        +setWidthAndHight(width: Vector2f)
+
+    }
+
+    interface IRoadGenerator{
+        +generateSphereRoad(seed: int, radius: float, biom: String,
+        entryWidth: Vector2f, exitAngle: float, flags: Set<GeneratorSettings>): Road
+        +generateConnectingRoad(seed: int, target: RoadCursor,
+        entryWidth: Vector2f, flags: Set<GeneratorSettings>): Road
+        +generateCuboidRoad(seed: int, cuboidDimensions: Vector3f,
+        entryWidth: Vector2f, exitAngle: float, flags: Set<GeneratorSettings>): Road   
+    }
+ 
+    class RoadGenerator{
+        -generationConfig: GenerationConfig
+        +RoadGenerator(generationConfig: GenerationConfig)
+
+    }
+    
+    Enum RoadCursorProperty {
+
+    }
+
+    RoadCursor --"*" RoadCursorProperty
+
+    IRoadGenerator <|-- RoadGenerator
+
+
+    Road --"*" RoadCursor
+
+    Road <.right. RoadGenerator
+
+    RoadObject --"*" RoadObjectProperty
+
+    Road --"*" RoadObject
+
+
+
+    '''''''''''format''''''''''''''''''
+    'RoadGenerator -[hidden]left- Road
+}
+
+
+
+@enduml

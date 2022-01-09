@@ -1,0 +1,11 @@
+Material BasicTree0Leaves : edu.kit.valaris/materials/PBRLighting.j3md {
+    MaterialParameters {
+        Metallic : 0.0
+        Roughness : 0.8
+        Specular : 0.5
+        BaseColor : 0.093 0.232 0.056 1.0
+    }
+
+    AdditionalRenderState {
+    }
+}

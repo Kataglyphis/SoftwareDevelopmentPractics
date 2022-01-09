@@ -1,0 +1,114 @@
+\subsection{InGame - Grafik}
+
+\subsubsection{Partikel}
+\begin{itemize}
+    \item \textit{Darstellung eines Partikels}
+        \begin{leftbar}[0.9\linewidth]
+            Partikel hat nun einen Transform, der Rotation, Translation, Größe
+            des Partikels bündelt.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{Shader und MaterialDef}
+\begin{itemize}
+    \item \textit{Wechsel der BRDF}
+        \begin{leftbar}[0.9\linewidth]
+            Disney's principled BRDF hat an Kanten kleine weiße Pixel produziert.
+            Wechsel zum Ansatz, der die Unreal Engine macht, um Problem zu umgehen.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{PartikelEffekt}
+\begin{itemize}
+    \item \textit{Farbe als Vertexattribut}
+        \begin{leftbar}[0.9\linewidth]
+        Farbe nicht mehr als Vertexattribut sondern mit übergebenen Ramp Factor berechnet im Shader
+        \end{leftbar}
+    \item \textit{Partikel töten}
+        \begin{leftbar}[0.9\linewidth]
+        Ist jetzt Sache der Strategie.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{ParticleStrategy}
+\begin{itemize}
+    \item \textit{emitParticle(Particle particle, float tpf)}
+    \begin{leftbar}[0.9\linewidth]]
+        Emitierung von einem Partikel
+        Methode behandelt einen einzelnen Partikel.
+        Rückgabetyp ist nun void da er nicht weiter benötigt wird.
+        Allerdings übergeben wir nun ein Particle und für entsprechende
+        Geschwindigkeitsberechnungen tpf(=times per frame)
+    \end{leftbar}
+
+    \item \textit{getMaterial()}
+    \begin{leftbar}[0.9\linewidth]
+        wurde hinzugefügt, da es der particle effect zur Einrichtung benötigt.
+    \end{leftbar}
+
+    \item \textit{setNumParticles(int numberOfParticles)}
+    \begin{leftbar}[0.9\linewidth]
+        wurde hinzugefügt, da es der particle effect zur Einrichtung benötigt.
+    \end{leftbar}
+
+    \item \textit{setLifeTime(float lifeTime)}
+    \begin{leftbar}[0.9\linewidth]
+        wurde hinzugefügt, da der Partikel PartikelEffekt
+    \end{leftbar}
+
+    \item \textit{ void initializeParticleData(Particle[] particles)}
+    \begin{leftbar}[0.9\linewidth]
+        wurde hinzugefügt, da Strategie partikel initialisieren muss
+    \end{leftbar}
+\end{itemize}
+
+\subsubsection{ViewPortManager}
+\begin{itemize}
+    \item \textit{Klasse hinzugefügt}
+    \begin{leftbar}[0.9\linewidth]
+        ViewPortManager bietet ein einfaches Interface zum erstellen von ViewPorts für
+        verschiedene Verwendungszwecke. Eingeführt, um die Applikationsarchitektur mehr
+        auf AppStates basieren zu lassen.
+    \end{leftbar}
+\end{itemize}
+
+\subsubsection{SceneManager}
+\begin{itemize}
+    \item \textit{Klasse hinzugefügt}
+    \begin{leftbar}[0.9\linewidth]
+        SceneManager ist der Haupt-Appstate welcher während dem Rennen aktiv ist.
+        Er ist dafür verantwortlich alle ViewPorts (für SplitScreen) zu initialisieren
+        und später auch wieder zu zerstören, die CullingManager zu erstellen und die gesammte
+        Szene zusammen zu führen.
+    \end{leftbar}
+\end{itemize}
+
+\subsubsection{CullingManager}
+\begin{itemize}
+    \item \textit{Klasse hinzugefügt}
+    \begin{leftbar}[0.9\linewidth]
+        CullingManager ist ein SceneProcessor, welcher dafür sorgt,
+        dass in einem ViewPort nicht mehr Geometrie gerendert wird als notwendig.
+        Wurde hinzugefügt um Performance zu verbessern.
+    \end{leftbar}
+\end{itemize}
+
+\subsubsection{CullingControl}
+\begin{itemize}
+    \item \textit{Klasse hinzugefügt}
+    \begin{leftbar}[0.9\linewidth]
+        CullingControl ist an jedem Spatial angehängt, was vom CullingManager kontrolliert werden kann.
+        Wurde hinzugefügt um das verstecken von Spatials im Scenegraph zu vereinfachen und um dem
+        CullingManager einfachen Zugriff auf nötige Informationen zu geben.
+    \end{leftbar}
+\end{itemize}
+
+\subsubsection{CullableRegister}
+\begin{itemize}
+    \item \textit{Klasse hinzugefügt}
+    \begin{leftbar}[0.9\linewidth]
+        CullableRegister enthält alle Spatials, welche ein CullingControl beinhalten.
+        Wurde hinzugefügt um Zugriff auf die statische Szene zu zentralisieren, da es mehrere
+        CullingManager geben kann (sofern SplitScreen aktiv ist).
+    \end{leftbar}
+\end{itemize}

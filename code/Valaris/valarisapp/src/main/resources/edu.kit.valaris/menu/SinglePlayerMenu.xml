@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<nifty>
+    <resourceBundle id="menudialog" filename="MenuLocal/menudialog"/>
+    <useControls filename="nifty-default-controls.xml"/>
+
+    <screen id="singleplayerscreen" controller="edu.kit.valaris.menu.gui.SinglePlayerModeScreen"
+            inputMapping="edu.kit.valaris.menu.gui.MenuInputMapping">
+        <layer id="background" childLayout="center" >
+            <image id="SingleHintergrund" height="100%" width="100%"
+                   filename="edu/kit/valaris/menuSkin/Bilder/Hintergrund.png"/>
+        </layer>
+        <layer id="foreground" childLayout="vertical">
+            <panel height="2%"/>
+            <panel id="SingleTitel" height="6%" width="99%"
+                   style="whitepanelwithoutborder" align="center"
+                   childLayout="absolute">
+                <control x="-5px" y="0px" height="100%" width="6%" name="button" id="backButton" align="right" valign="bottom"
+                         style="BackButton">
+                    <interact onClick="backtoMainmenu()" />
+                </control>
+                <text x="65px" y="11px" style="DefaultText" color="#000000" text="${menudialog.back}"
+                      align="right" valign="center">
+                    <interact onClick="backtoMainmenu()" />
+                </text>
+                <text x="500px" y="0px" style="TitelText" color="#000000" text="${menudialog.singleScreenTitel}"/>
+            </panel>
+            <panel height="5%"/>
+            <panel align="center" valign="center" height="7%" width="50%" childLayout="center">
+                <text style="Franklin36"  text="${menudialog.currentlyselected}" align="left" valign="center"/>
+            </panel>
+            <panel height="2%"/>
+            <panel align="center" valign="center" height="23px" width="440px" childLayout="horizontal" >
+                <panel  childLayout="absolute-inside" width="410px" >
+                    <control id="seedDropDown" name="dropDown"  style="nifty-drop-down" width="400px" align="left" valign="center">
+                    </control>
+                    <control name="textfield" id="editSeedNameField" width="90%" visible="false"
+                    style="nifty-textfield"/>
+                </panel>
+                <panel childLayout="absolute-inside" height="25px" width="25px">
+                    <control name="button" id="editSeedNameButton" align="center" valign="center"
+                             style="EditSeedNameButton" >
+                        <interact onClick="editSeednameTextfieldVisibility()" />
+                        <effect>
+                            <onHover name="hint" hintText="${menudialog.currentlyselectedHint}"/>
+                        </effect>
+                    </control>
+                    <control name="button" id="saveSeedNameButton" align="center" valign="center"
+                             style="SaveSeedNameButton" visible="false">
+                        <interact onClick="saveSeedName()" />
+                        <effect>
+                            <onHover name="hint" hintText="${menudialog.savecurrentlyselectedHint}"/>
+                        </effect>
+                    </control>
+                </panel>
+            </panel>
+            <panel height="5%"/>
+            <panel height="3px" width="60%" backgroundColor="#FFFFFF" align="center"/>
+            <panel height="3%"/>
+            <panel height="1%"/>
+            <panel align="center" valign="center" height="7%" width="50%" childLayout="horizontal">
+                <text style="Franklin36" color="#FFFFFF" text="${menudialog.seed}" align="left" valign="center"/>
+                <panel width="33px"/>
+                <panel childLayout="vertical">
+                    <panel height="1%"/>
+                    <panel childLayout="horizontal" height="70%" width="85%">
+                        <control name="textfield" id="editSeedNumber" valign="center"  width="87%"
+                                 height="100%" visible="true" style="white-textfield" focusable="true">
+                            <effect>
+                                <onHover name="hint" hintText="${menudialog.alternativeSeedHint}"/>
+                                <onFocus name="border" color="#FFFFFF"/>
+                            </effect>
+                        </control>
+                        <panel width="2%"/>
+                        <control name="button" id="saveSeedNumberButton" align="center" valign="center"
+                                 style="SaveSeedNameButton" visible="false">
+                            <interact onClick="saveSeedNumber()" />
+                            <effect>
+                                <onHover name="hint" hintText="${menudialog.savecurrentNumberHint}"/>
+                            </effect>
+                        </control>
+                    </panel>
+                    <panel height="1%"/>
+                    <text style="DefaultText" color="#FFFFFF" text="${menudialog.alternativeSeed}" align="left" valign="center"/>
+                </panel>
+            </panel>
+            <panel height="2%"/>
+            <panel align="center" valign="center" height="7%" width="50%" childLayout="horizontal">
+                <text style="Franklin32" color="#FFFFFF" text="${menudialog.roadType}" align="left"
+                      valign="center" textHAlign="left" width="20%"/>
+                <panel width="7%"/>
+                <control id="roadTypeDropDown" name="dropDown"  style="nifty-drop-down" width="51%" align="center" valign="center">
+                </control>
+                <panel width="9%"/>
+            </panel>
+            <panel height="3%"/>
+            <panel height="3px" width="60%" backgroundColor="#FFFFFF" align="center"/>
+            <panel height="3%"/>
+            <panel align="center" valign="center" height="7%" width="50%" childLayout="horizontal">
+                <text style="Franklin36" color="#FFFFFF" text="${menudialog.playercount}" align="left" valign="center"
+                      width="20%" textHAlign="left"/>
+                <panel width="10%"/>
+                <control name="textfield" id="editPlayerCount" valign="center" maxLength="1" width="20%"
+                         height="70%" visible="true" style="white-textfield-middle" focusable="true">
+                    <effect>
+                        <onHover name="hint" hintText="1-4"/>
+                        <onFocus name="border" color="#FFFFFF"/>
+                    </effect>
+                </control>
+            </panel>
+            <panel align="center" valign="center" height="7%" width="50%" childLayout="horizontal">
+                <text style="Franklin36" color="#FFFFFF" text="${menudialog.kicount}" align="left" valign="center"
+                      width="20%" textHAlign="left"/>
+                <panel width="10%"/>
+                <control name="textfield" id="editKICount" valign="center" maxLength="1" width="20%"
+                         height="70%" visible="true" style="white-textfield-middle" focusable="true">
+                    <effect>
+                        <onHover name="hint" hintText="0-9"/>
+                        <onFocus name="border" color="#FFFFFF"/>
+                    </effect>
+                </control>
+            </panel>
+            <panel height="6%"/>
+            <control name="button" label="${menudialog.startgame}" id="StartButton" align="center" valign="center"
+                     style="RoundStartButton" childLayout="center">
+                <interact onClick="openLoadingScreen()" />
+                <effect>
+                    <onEndScreen name="move" mode="out" direction="bottom" length="300" startDelay="0" inherit="true"/>
+                </effect>
+            </control>
+        </layer>
+    </screen>
+
+    <!-- Popup for changing the language -->
+    <popup id="messagePopup" childLayout="center" backgroundColor="#000c">
+        <effect>
+            <onStartScreen name="fade" startColor="#0000" endColor="#000a" length="200" />
+            <onEndScreen name="fade" startColor="#000a" endColor="#0000" length="250" startDelay="200" />
+        </effect>
+        <panel id="messagePopupMainPanel" style="glass-panel" padding="28px,18px,28px,18px" width="30%" height="20%" align="center" valign="center" childLayout="vertical">
+            <panel id="messagePopupTextPanel" height="30%" width="100%" childLayout="center">
+                <control name="label" style="Franklin24" id="messagePopupTitel"
+                         text="" color="#FFFFFF"
+                         height="20%" width="100%" align="right" valign="center" childLayout="vertical"/>
+            </panel>
+            <panel height="40%"/>
+            <panel id="messagePopupButtonsPanel" height="30%" width="50%" childLayout="center" align="center"
+                   valign="center">
+                <control name="button" label="OK" id="messagePopupButton" align="center"
+                         valign="center" style="PopupButton" height="100%" width="80%" >
+                    <interact onClick="quitPopup()" />
+                </control>
+            </panel>
+        </panel>
+    </popup>
+</nifty>

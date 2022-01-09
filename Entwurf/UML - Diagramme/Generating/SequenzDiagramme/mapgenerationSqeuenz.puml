@@ -1,0 +1,107 @@
+@startuml mapgenerationSequenz
+!include styles.puml
+
+
+
+
+participant "__:MapGenerator__"
+activate "__:MapGenerator__"
+
+
+"__:MapGenerator__" --> "__:MapGenerator__": generationConfig = <<create>>GenerationConfig()
+
+create "__domeGen:IDomeGenerator__"
+"__:MapGenerator__" --> "__domeGen:IDomeGenerator__": <<create>> DomeGenerator(generationConfig, assetManager) 
+
+create "__tunnelGen:ITunnelGenerator__"
+"__:MapGenerator__" --> "__tunnelGen:ITunnelGenerator__": <<create>> TunnelGenerator(generationConfig, assetManager)
+
+create "__roomGen:IRoomGenerator__"
+"__:MapGenerator__" --> "__roomGen:IRoomGenerator__": <<create>> RoomSelctor(generationConfig, assetManager)
+
+create "__:Map__"
+"__:MapGenerator__" --> "__:Map__": <<create>> Map(appStateManager)
+
+
+create "__road:Road__"
+activate "__:Map__"
+"__:Map__" --> "__road:Road__": <<create>> Road()
+deactivate "__:Map__"
+
+
+
+
+
+loop Generiere Sgemente bis Ziel erreicht
+    note right of "__:MapGenerator__": Algorithmus bestimmt, welches Segment als nächstes Generiert werden muss
+
+
+    alt Generierung einer Kuppel
+
+        ref over "__domeGen:IDomeGenerator__": siehe Sequenzdiagramm domegeneration
+        "__:MapGenerator__" -> "__domeGen:IDomeGenerator__": aktSegment = generateDome(seed, sphereRadius, entryWidth, exitAngle, flags)
+        activate "__domeGen:IDomeGenerator__"
+        "__domeGen:IDomeGenerator__" --> "__:MapGenerator__": dome
+        deactivate "__domeGen:IDomeGenerator__"
+
+
+    else Generierung eines Tunnels
+
+        ref over "__tunnelGen:ITunnelGenerator__": siehe Sequenzdiagramm tunnelgeneration
+        "__:MapGenerator__" -> "__tunnelGen:ITunnelGenerator__": aktSegment = generateTunnel(seed, RoadCursor, entryWidth, flags)
+        activate "__tunnelGen:ITunnelGenerator__"
+        "__tunnelGen:ITunnelGenerator__" --> "__:MapGenerator__": tunnel
+        deactivate "__tunnelGen:ITunnelGenerator__"
+
+    else Generierung eines Raums
+
+        ref over "__roomGen:IRoomGenerator__": siehe Sequenzdiagramm roomgeneration
+        "__:MapGenerator__" -> "__roomGen:IRoomGenerator__": aktSegment = generateRoom(seed, boundingSphereRadius, entryWidth, exitAngle, flags)
+        activate "__roomGen:IRoomGenerator__"
+        "__roomGen:IRoomGenerator__" --> "__:MapGenerator__": room
+        deactivate "__roomGen:IRoomGenerator__"
+    end
+
+
+
+    "__:MapGenerator__" -> "__:Map__": addaktSegment(aktSegment, cullingIndex)
+    activate "__:Map__"
+    "__:Map__" --> "__:MapGenerator__"
+    deactivate "__:Map__"
+
+    "__:MapGenerator__" -> "__:Map__": getRoad()
+    activate "__:Map__"
+    "__:Map__" --> "__:MapGenerator__": road
+    deactivate "__:Map__" 
+
+    "__:MapGenerator__" -> "__:MapGenerator__": aktSegmentRoad = aktSegment.getRoad()
+        note right
+            ruft getRoad() auf dem aktuell 
+            erstelltem 'aktSegment' auf
+        end note
+
+    "__:MapGenerator__" -> "__road:Road__": attach(aktSegmentRoad)
+    activate "__road:Road__"
+    "__road:Road__" --> "__:MapGenerator__"
+    deactivate "__road:Road__"
+end
+
+
+"__:MapGenerator__" -> "__:Map__": createMapBody()
+activate "__:Map__"
+"__:Map__" --> "__:Map__": mapBody = <<create>> MapBody(physicsRoad, physicItems, road)
+"__:Map__" --> "__:MapGenerator__": mapBody
+deactivate "__:Map__"
+
+"__:MapGenerator__" -> "__:Map__": generateSceneGraph()
+    note right 
+        ruft 'generateSceneGraph' 
+        für alle 'aktSegmentes' die 
+        ertsellt wurden auf
+    end note 
+activate "__:Map__"
+"__:Map__" --> "__:MapGenerator__": Node
+deactivate "__:Map__"
+
+
+@enduml

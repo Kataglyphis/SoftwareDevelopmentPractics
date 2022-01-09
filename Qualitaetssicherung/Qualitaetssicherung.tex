@@ -1,0 +1,380 @@
+\documentclass[parskip=full]{scrartcl}
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2cm, top=3cm, bottom=3cm}
+\usepackage[utf8]{inputenc} % use utf8 file encoding for TeX sources
+\usepackage[T1]{fontenc}    % avoid garbled Unicode text in pdf
+\usepackage[german]{babel}  % german hyphenation, quotes, etc
+\usepackage{hyperref}       % detailed hyperlink/pdf configuration
+\hypersetup{                % ‘texdoc hyperref‘ for options
+pdftitle={Echtzeit-Computergrafik in der Spieleentwicklung},%
+bookmarks=true,%
+}
+
+\usepackage{rotating}
+\usepackage{newclude}
+\usepackage{typearea}
+\newcommand\invisiblesection[1]{%
+  \refstepcounter{section}%
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+  \sectionmark{#1}}
+  
+
+\usepackage{listings}
+
+\usepackage{xcolor}
+\usepackage{graphicx}       % provides commands for including figures
+\usepackage{csquotes}       % provides \enquote{} macro for "quotes"
+\usepackage[nonumberlist]{glossaries}     % provides glossary commands
+\usepackage{enumitem}
+\usepackage{epsf,epsfig,eepic}
+\usepackage[headsepline, footsepline]{scrpage2}
+\usepackage{tabularx}
+
+
+%Design für Methoden-/Attributbeschreibungen  
+\usepackage{framed}
+\usepackage{color}
+\definecolor{gray}{RGB}{200,200,200}
+\renewenvironment{leftbar}[1][\hsize]
+{%
+\def\FrameCommand
+{%
+{\color{gray}\vrule width 1pt}%     
+}%
+\MakeFramed{\hsize#1\advance\hsize-\width\FrameRestore}%
+}
+{\endMakeFramed}
+
+\definecolor{eclipseStrings}{HTML}{B71C1C}
+\definecolor{eclipseKeywords}{HTML}{0D47A1}
+\definecolor{background}{HTML}{ECEFF1}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    commentstyle=\color{eclipseStrings}, % style of comment
+    stringstyle=\color{eclipseKeywords}, % style of strings
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background}, %only if you like
+    string=[s]{"}{"},
+    comment=[l]{:\ "},
+    morecomment=[l]{:"},
+    literate=
+        *{0}{{{\color{numb}0}}}{1}
+         {1}{{{\color{numb}1}}}{1}
+         {2}{{{\color{numb}2}}}{1}
+         {3}{{{\color{numb}3}}}{1}
+         {4}{{{\color{numb}4}}}{1}
+         {5}{{{\color{numb}5}}}{1}
+         {6}{{{\color{numb}6}}}{1}
+         {7}{{{\color{numb}7}}}{1}
+         {8}{{{\color{numb}8}}}{1}
+         {9}{{{\color{numb}9}}}{1}
+}
+
+%kopf und fusszeilen
+\pagestyle{scrheadings}
+\clearscrheadfoot
+
+%kopfzeile
+\ihead{\codename}
+\ohead{\headmark}
+\automark{section}
+
+%fusszeile
+\ofoot{\pagemark}
+\ifoot{\codename}
+
+\makenoidxglossaries
+%
+% % Glossareinträge
+%
+
+%Kommandos
+\newcommand{\codename}{Valaris}
+
+
+\title{Dokument zur Qualitätssicherung}
+\author{Sidney Hansen, Jonas Heinle, Frederik Lingg, Lukas Schölch, Artur Wesner}
+
+\begin{document}
+ 
+	\begin{titlepage}
+		\centering
+		{\scshape\LARGE Dokument zur Qualitätssicherung\par}
+		\vspace{1cm}
+		{\scshape\Large Echtzeit Computergrafik in der Spieleentwicklung \par}
+		\vspace{1cm}
+		{\huge\bfseries \codename \par}
+		\vspace{1cm}
+		\includegraphics[width=.5\linewidth]{./Bilder/valaris_t_4096.png}
+		\par
+		{\vspace{1cm}}
+		{\Large\itshape Autoren \\}
+		{\Large\itshape Sidney Hansen, Jonas Heinle,\\}
+		{\Large\itshape Frederik Lingg, Lukas Schölch, Artur Wesner\par}
+		
+		\vfill
+		Projektbetreuer\par
+		Alisa Jung \& Tobias Rapp
+		
+		\vfill
+		
+		% Bottom of the page
+		{\large \today\par}
+	\end{titlepage}
+
+	\tableofcontents 
+	\pagebreak
+	
+	
+	\pagebreak
+	
+	\section{Einleitung} 
+
+	Die Aufteilung der Module in InGame-Grafik, InGame-Interface, Assets Generierung und GUI wurde auch in der Qualitätssicherung weiterhin berücksichtigt.
+	
+	Neben dem Finden und Beheben von Fehlern in der Software war aber auch das Zusammenführen unseres Projekts mit dem Projekt des anderen Teams ein Fokus.
+	Dies erwies sich aufgrund von einigen Missverständnissen zum Teil als Herausforderung, welche aber letztendlich bewältigt wurde.
+
+	\section{Qualität}
+	\subsection{Definition}
+	Qualität ist ein weitreichender Begriff und kann nicht immer gleich verwendet werden.
+	Beispielsweise spricht man bei realen Gegenständen wie Textilien von Qualität, wenn man
+	die Verarbeitung und Merkmale wie Farbe betrachtet. Bei Lebensmitteln spricht man 
+	auch widerrum von einer anderen Qualität. Dementsprechend muss zunächst einmal der 
+	Qualitätsbegriff definiert werden, mit dem dieses Software-Projekt bewertet wird. 
+	\begin{itemize}
+		\item \textbf{Korrektheit}
+		\begin{leftbar}[0.9\linewidth]
+			Korrektheit ist in Valaris ein ziemlich grober Begriff. Insgesamt müssen 
+			alle Aspekte der Streckengenerierung, In-Game Grafik und des Menüs so 
+			funktionieren, wie sie in der Entwurfsphase geplant worden sind.
+			Folglich müssen alle Tests bezüglich dieser Projektteile möglichst 
+			funktionieren, damit hier Qualität gesichert ist. 
+		\end{leftbar}
+		\item \textbf{Robustheit}
+		\begin{leftbar}[0.9\linewidth]
+			Unter Robustheit ist zu verstehen, dass Valaris unter verschieden 
+			hohen Einstellungen standhaft bleibt. Darunter zählt, dass das Spiel 
+			auch unter maximalen Einstellungen angenehm spielbar ist und so dem 
+			Benutzer einen hohen Spielspaß liefert. 
+		\end{leftbar}
+		\item \textbf{Ausfallsicherheit}
+		\begin{leftbar}[0.9\linewidth]
+			Das Menü sollte auch unter Stressbedingungen, also viele Mouseclicks
+			oder Tastatureingaben entsprechend solide reagieren und nicht abstürzen.
+			Selbige gilt für die Spielsimulation und deren Grafik. Sollten dennoch 
+			Fehler auftreten, so erhält der Benutzer eine entsprechende Meldung.
+		\end{leftbar}
+		\item \textbf{Benutzerfreundlichkeit}
+		\begin{leftbar}[0.9\linewidth]
+			Das Spiel sollte intuitiv benutzbar sein. Die Menüführung darf nicht zu 
+			kompliziert sein und sollte auch bedienbar sein, wenn das Spiel 
+			zum ersten Mal benutzt wird. Falls Fragen bezüglich der Steuerung 
+			innerhalb des Spiels auftreten, kann der Benutzer sich über diese informieren,
+			wenn er den entsprechenden Punkt im Menü findet.
+		\end{leftbar}
+		\item \textbf{Effizienz}
+		\begin{leftbar}[0.9\linewidth]
+			Die Effizienz von Valaris muss daran gemessen werden, wie viel 
+			Ressourcen verbraucht werden und wie effizient die Software arbeitet.
+			Zu messende Ressourcen sind hier Auslastung des Prozessors, 
+			Auslastung der Grafikkarte und der Speicherverbrauch.
+		\end{leftbar}
+		\item \textbf{Portabilität}
+		\begin{leftbar}[0.9\linewidth]
+			Hier kommt es auf die Portabilität des Spiels auf andere Systeme an, also
+			wie gut die Software sich anpasst auf nutzerspezifische 
+			Systemeigenschaften.
+		\end{leftbar}
+		\item \textbf{Validierbarkeit}
+		\begin{leftbar}[0.9\linewidth]
+			Validierbarkeit misst die Effektivität der Entwicklung, also wie gut 
+			die entstanende Software am Ende zu der anfangs gestellten Aufgabe 
+			passt und ob die Umsetzhung zufriedenstellend ist.
+		\end{leftbar}
+		\item \textbf{Flexibilität}
+		\begin{leftbar}[0.9\linewidth]
+			Unter Flixibilität ist im Zusammenhang mit Valaris zu verstehen, dass 
+			dass der implementierungscode flexibel austauschbar ist. Beispielweise 
+			sollen keine \glqq Magic Numbers \grqq{} existieren, was bedeutet, dass 
+			Werte in variablen gespeichert werden sollen und die Implementation dann 
+			mit diesen arbeitet. 
+			Auch soll die Implementierung leicht erweiterbar sein, sobald man 
+			weitere Funktionen zum Spiel hinzufügen möchte.
+		\end{leftbar}
+		\item \textbf{Verständlichkeit}
+		\begin{leftbar}[0.9\linewidth]
+			Verständlichkeit bezieht sich auf Spielinhalte sowie Code. 
+			Bezüglich Spielinhalte kann auf die vorherige Sektion 
+			\glqq Benutzerfreundlichkeit \grqq{} verwiesen werden.
+			Ein gut verständlicher Code hat JavaDocs zu jeder Funktion und Variable,
+			sowie Kommentare innerhalb der Implementation, falls das jeweilige 
+			Codestück schwer zu verstehen sein sollte.
+		\end{leftbar}
+	\end{itemize}
+	\subsection{Qualitätsziele}
+	Die Qualitätsziele von Valaris liegen in allen Bereichen. 
+	Am wenigsten beachtet wurde die Portabilität für andere Systeme, da schon 
+	von vornerein festgelegt wurde, dass nicht versucht wird diese zu unterstützen.
+	Gemeint ist hier, dass der Fokus eher auf Windows und teilweise auch Linux lag.
+	Um die restlichen Ziele zu erreichen, wurden das Werkzeug JUnit benutzt, welches
+	automatisierte Tests des Codes mit sich bringt. Außerdem werden so Coverage-
+	Tests ebenfalls durchgeführt.
+	Um die Effizienz messen zu können, wurde ein eigener Profiler erstellt, welcher
+	sich durch die Console anschalten lässt.
+	Außerdem wurden bereits in der Pflichtenheftphase manull durchzuführende 
+	Testfälle angegeben, um die Qualität und Funktionalität des Spiels zu sichern.
+	Diese Testfälle wurden nun durchgegangen und protokolliert.
+	Gegen Ende der Qualitätssicherungsphase wurde das Spiel Personen
+	vorgestellt, die das Spiel vorher noch nicht gesehen hatten. Diese Testspieler
+	spielten ohne Hilfe unserseits, wodurch wichtige Feedbacks gesammelt werden 
+	konnten, die diese personen anschließend uns mitgeteilt haben.
+	Ein großeß Ziel des Projekt Valaris war unter anderem der Spielspaß. Valaris
+	soll dem Spieler am Ende Spaß gemacht haben und um dies zu gewährleisten wurde 
+	das Spiel intern viele Male getestet, um so Parameter wie Geschwindigkeit und
+	Schwierigkeit zu optimieren.
+
+	\pagebreak
+
+	\section{Änderungen}
+	\input{Grafik/Grafik_Modifications}
+	\pagebreak
+	\input{Interface/Interface_Modifications}
+	\input{Assets/Assets_Modifications}
+	\input{Generierung/Generierung_Modifications}
+	\input{GUI/GUI_Modifications}
+
+	\pagebreak
+	\section{Fehlerbehebungen}
+	\input{Grafik/Grafik_BugReport}
+	\input{Interface/Interface_BugReport}
+	\input{Assets/Assets_BugReport}
+	\pagebreak
+	\input{Generierung/Generierung_BugReport}
+	\pagebreak
+	\input{GUI/GUI_BugReport}
+	\pagebreak
+
+	
+
+	\section{Neu hinzugekommene Tests}
+
+	\input{Grafik/Grafik_NewTests}
+	\input{Interface/Interface_NewTests}
+	\input{Assets/Assets_NewTests}
+	\input{Generierung/Generierung_NewTests}
+	\pagebreak
+	\input{GUI/GUI_NewTests}
+	\pagebreak
+
+	\section{Testergebnisse}
+	\input{Grafik/Grafik_Testergebnisse}
+	\input{Interface/Interface_Testergebnisse}
+	\input{Assets/Assets_Testergebnisse}
+	\input{Generierung/Generierung_Testergebnisse}
+	\input{GUI/GUI_Testergebnisse}
+	\pagebreak
+
+	\subsection{UserTests}
+	Im Zuge der Qualitätsverbesserung wurde eine spielbare Version an Personen 
+	außerhalb des Projektes versendet. Ziel war, dadurch Erfahrungen und 
+	Feedback zu sammeln aus der Sicht einer Person, die nicht an der 
+	Implementierung beteiligt war.
+	Diesen Personen wurde als einzige Aufgabe gestellt, das Spiel zu spielen.
+	Sollten Fehler auftreten oder sonstige Schwierigkeiten, wo wurde 
+	um eine Mitteilung gebeten. Sobald die personen dann fertig waren, wurde 
+	um ein abschließendes Feedback gebeten, welche Punkte positiv und negativ 
+	waren.
+	Viele der Testpersonen hatten angemerkt, dass die Strecke etwas dunkel sei, 
+	vorallem in den Tunneln und am Anfang der Strecke. Dies wurde von uns dann 
+	verbessert im Nachhinein.
+	Außerdem haben viele Lag-Spikes gemeldet, die unterschiedlich stark 
+	ausgefallen sind je nach Streckentyp.
+	Nach langer Untersuchung konnte die fps-zahl deutlich verbessert werden, 
+	jedoch konnte sie nicht maximiert werden. Dies liegt sehr wahrscheinlich 
+	an der Zusammenführung der beiden Team-Teile und nach energischer 
+	Recherchierung konnten wieder kleiner Verbesserungen stattfinden, jedoch 
+	konnte der große Abfall an fps, sobald die race Simulation startet, nicht 
+	vollständig behoben werden. Dennoch ist man an einen zufriedenstellenden 
+	Punkt gelangt. 
+	Weiterhin wurde angemerkt, dass die Energieklau- und Schildfunktion 
+	schlecht bis garnicht zu sehen waren. Beide Funktionen wurden 
+	besser visualisiert, wobei das Energie-Klauen eine Animation des Fahrers 
+	erfordert hätte, welches jedoch aus dem implementierungsplan gestrichen
+	werden musste.
+	Zusammenfassend fanden alle Propanden das Spiel sehr schön, ereignisreich 
+	und erfreulich. Vorallem wurde die Grafik sowie die Steuerung gelobt.
+	Weiterhin wurde gesagt, dass man es gut fand, dass Geschwindigkeiten 
+	gedrosselt werden konnten durch das Energie klauen und so Chancen Gleichheit
+	besteht.
+	Es wurde zugesichert, Spaß gehabt zu haben.
+	\pagebreak
+	\section{Statistiken}
+
+		\subsection{Code-Statistiken}
+
+			\begin{itemize}
+				\item Klassen: 134
+				\begin{itemize}
+					\item Controls: 2
+					\item Assets: 16
+					\item Console: 1
+					\item Profiling: 5
+					\item Threading: 2
+					\item DummySimulation: 2
+					\item Datastructure: 2
+					\item Generation: 38
+					\item Menu: 24
+					\item Rendering: 39
+				\end{itemize}
+				\item SourceCode: 24.392
+				\item SourceCode(von uns erstellt): 23.118
+				\item JavaCode: 13.726
+				\item JavaCode(von uns erstellt): 13.200
+				
+			\end{itemize}
+
+
+
+		\subsection{Code-Coverage}
+
+		\begin{figure}[htbp]
+			\centering
+			\includegraphics[width=\linewidth]{./Bilder/coveradeValaris.png}
+			\caption{Valaris Code-Coverage}
+		\end{figure}
+
+
+	\pagebreak
+
+	\section{Fazit}
+
+	Abschließend lässt sich sagen, dass das Spiel als ganzes läuft, und beinahe alle Pflichtkriterien erreicht wurden.
+	Außerdem lässt sich die Szene durch ein FlyCam betrachten, wobei eine hohe framerate erreicht wird.
+
+	Da uns am Ende die Zeit knapp wurde, konnten wir manche Features nicht implemetieren.
+	Zum Beispiel könnte man weitere Assets hinzugefügt werden, um
+	den Generierungsalgorithmen noch mehr Raum für Varianz zu geben.
+	Sound sowie Splittscrenn fällt auch in diese Kategorie.
+	Jedoch haben wir das Meiste erreicht was uns wichtig erschien.
+
+	Im Laufe der Testphase stellte die Intergration uns vor eine große Herausforderung.
+	Hier ergaben sich eine Vielzahl an Bugs, manche mehr, manche weniger schlimm.
+	Die Integration mit dem anderen Team stellte sich schwieriger heraus als anfangs gedacht.
+	Besonders die unterschiedlichen Streckenmodelle und die Umrechnung von einem in das andere führte zu vielen Fehlern und
+	war aufwändig zu Debuggen.
+
+	Besonders in den letzten Tagen kamen wir dann aber zu großen Fortschritten
+	und konnten die meisten großen Bugs beheben.
+	Hinzu konnten wir uns um Feintuning von Parametern
+	und das Erstellen und Anpassen von Assets kümmern,
+	was dem Spiel Grafisch noch etwas feinschlif gab.
+\end{document}

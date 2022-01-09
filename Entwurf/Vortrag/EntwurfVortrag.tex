@@ -1,0 +1,413 @@
+\documentclass[10pt]{beamer}
+
+\usetheme[numbering=none]{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{verbatim}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\usepackage{xcolor}
+
+\usepackage{listings}
+
+\usepackage{pbox}
+
+\usepackage[absolute,overlay]{textpos}
+
+
+
+\title{Valaris}
+\subtitle{Echtzeit Computergrafik in der Spieleentwicklung}
+\date{26. Juni 2018}
+\author{Sidney Hansen}
+\titlegraphic{\hfill\includegraphics[height=2.5cm]{./Bilder/ValarisLogo.png}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}[fragile]{Module}
+
+    \begin{itemize}
+        \item \textcolor{violet}{menu}
+        \item \textcolor{green}{generation}
+        \item Rendering
+        \begin{itemize}
+            \item \textcolor{orange}{tick}
+            \item \textcolor{orange}{rendering.tick}
+            \item \textcolor{red}{rendering.effects}
+            \item \textcolor{red}{rendering.animation}
+            \item \textcolor{red}{rendering.postprocessing}
+        \end{itemize}
+        \item \textcolor{blue}{assets}
+    \end{itemize}
+
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}[fragile]{Menu}
+ \setlength{\TPHorizModule}{\textwidth}
+ \setlength{\TPVertModule}{\textwidth}
+ \setbeamercolor{block title}{use=structure,fg=black,bg=white!75!gray}
+ \setbeamercolor{block body}{use=structure,fg=black,bg=white!90!gray}
+
+        \begin{textblock}{0.5}(0.35,0.1)
+                \begin{block}{Steuerung}
+                    \textit{menu.gui}
+                    \begin{itemize}
+                        \item KeyInputHandler
+                        \item ScreenController
+                        \item NiftyAppState
+                    \end{itemize}
+                \end{block}
+        \end{textblock}
+\end{frame}
+
+\begin{frame}[fragile]{Menu}
+    \setlength{\TPHorizModule}{\textwidth}
+    \setlength{\TPVertModule}{\textwidth}
+    \setbeamercolor{block title}{use=structure,fg=black,bg=white!75!gray}
+    \setbeamercolor{block body}{use=structure,fg=black,bg=white!90!gray}
+   
+    \begin{textblock}{0.5}(0.35,0.1)
+            \begin{block}{Steuerung}
+                \textit{menu.gui}
+                \begin{itemize}
+                    \item KeyInputHandler
+                    \item ScreenController
+                    \item NiftyAppState
+                \end{itemize}
+            \end{block}
+    \end{textblock}
+
+    \begin{textblock}{0.5}(0.05,0.5)
+        \begin{block}{Anzeige}
+            \textit{de.lessvoid.nifty}
+            \begin{itemize}
+                \item Layout XML
+            \end{itemize}
+        \end{block}
+    \end{textblock}
+
+\end{frame}
+
+\begin{frame}[fragile]{Menu}
+    \setlength{\TPHorizModule}{\textwidth}
+    \setlength{\TPVertModule}{\textwidth}
+    \setbeamercolor{block title}{use=structure,fg=black,bg=white!75!gray}
+    \setbeamercolor{block body}{use=structure,fg=black,bg=white!90!gray}
+   
+    \begin{textblock}{0.5}(0.35,0.1)
+            \begin{block}{Steuerung}
+                \textit{menu.gui}
+                \begin{itemize}
+                    \item KeyInputHandler
+                    \item ScreenController
+                    \item NiftyAppState
+                \end{itemize}
+            \end{block}
+    \end{textblock}
+
+    \begin{textblock}{0.5}(0.65,0.5)
+            \begin{block}{Spieldaten}
+                \textit{menu.menuconfig}
+                \begin{itemize}
+                    \item InternalGameConfig
+                    \item SeedConfig
+                    \item GraphicsConfig
+                \end{itemize}
+            \end{block}
+    \end{textblock}
+
+    \begin{textblock}{0.5}(0.05,0.5)
+            \begin{block}{Anzeige}
+                \textit{de.lessvoid.nifty}
+                \begin{itemize}
+                    \item Layout XML
+                \end{itemize}
+            \end{block}
+    \end{textblock}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Menu}
+    \setlength{\TPHorizModule}{\textwidth}
+    \setlength{\TPVertModule}{\textwidth}
+    \setbeamercolor{block title}{use=structure,fg=black,bg=white!75!gray}
+    \setbeamercolor{block body}{use=structure,fg=black,bg=white!90!gray}
+   
+    \begin{textblock}{0.5}(0.35,0.1)
+            \begin{block}{\textcolor{red}{Controller}}
+                \textit{menu.gui}
+                \begin{itemize}
+                    \item KeyInputHandler
+                    \item ScreenController
+                    \item NiftyAppState
+                \end{itemize}
+            \end{block}
+    \end{textblock}
+
+    \begin{textblock}{0.5}(0.65,0.5)
+            \begin{block}{\textcolor{red}{Model}}
+                \textit{menu.menuconfig}
+                \begin{itemize}
+                    \item InternalGameConfig
+                    \item SeedConfig
+                    \item GraphicsConfig
+                \end{itemize}
+            \end{block}
+    \end{textblock}
+
+    \begin{textblock}{0.5}(0.05,0.5)
+            \begin{block}{\textcolor{red}{View}}
+                \textit{de.lessvoid.nifty}
+                \begin{itemize}
+                    \item Layout XML
+                \end{itemize}
+            \end{block}
+    \end{textblock}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Generierung}
+    \begin{itemize}
+        \item[]
+        \item[]
+        \item[]
+        \item[]
+        \item[]
+        \item[]
+        \item \textcolor{red}{\textbf{roadgeneration:}\\Generierung der Strecke in den Segmenten}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Generierung}
+    \includegraphics[width=.3\linewidth]{./Bilder/domegenerationPrototype.PNG}
+    \includegraphics[width=.3\linewidth]{./Bilder/tunnelgenerationPrototype.PNG}
+    \includegraphics[width=.3\linewidth]{./Bilder/roomgenerationPrototype.PNG}
+    \begin{itemize}
+        \item \textcolor{red}{\textbf{domegeneration, tunnelgeneration, roomgeneration:}\\Generierung von Streckensegmenten}\par
+        \item \textcolor{gray}{\textbf{roadgeneration:}\\Generierung der Strecke in den Segmenten}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Generierung}
+    
+    \includegraphics[width=.5\linewidth]{./Bilder/mapgenerationPrototype.PNG}
+    \begin{itemize}
+        \item \textcolor{red}{\textbf{mapgeneration:}\\Zusammensetzung der Streckensegmenten}\par
+        \textcolor{gray}{\item \textbf{domegeneration, tunnelgeneration, roomgeneration:}\\Generierung von Streckensegmenten}\par
+        \textcolor{gray}{\item \textbf{mapgeneration:}\\Generierung der Strecke in den Segmenten}
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Generierung}
+    \begin{lstlisting}
+generate(...) {
+    ...
+    DomeGenerator domeGenerator = new DomeGenerator(...);
+    Map map = new Map(...);
+    ...
+    Dome dome = domeGenerator.generateDome(...);
+    map.getRoad.attach(dome.getRoad);
+    map.addSceneItem(dome);
+    ...
+    rootNode.attachChild(map.generateSceneGraph());
+    return map.getMapBody();
+}
+    \end{lstlisting}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]{Rendering}
+    \begin{itemize}
+        \item Manipulation von SceneGraph
+        \begin{itemize}
+            \item \textcolor{orange}{tick}
+            \item \textcolor{orange}{rendering.tick}
+            \item \textcolor{red}{rendering.effects}
+            \item \textcolor{red}{rendering.animation}
+        \end{itemize}
+        \item Render Pipeline
+        \begin{itemize}
+            \item \textcolor{red}{rendering.postprocessing}
+            \item materialdefinitionen
+            \item shader
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Rendering: Tick und Tickverarbeitung}
+    Ticker
+    \begin{itemize}
+        \item \textbf{simulationTick:} Aktuelle Simulation
+        \item \textbf{currentTick:} Zwischenspeicher
+        \item \textbf{renderBuffer:} Wird aktuell gerendert
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Rendering: Tick und Tickverarbeitung}
+    Simulation
+    \begin{itemize}
+        \item \textbf{Tick:} Gesammtzustand aller Dynamischen Objekte
+        \begin{itemize}
+            \item \textit{TickEvent}
+        \end{itemize}
+        \item \textbf{DynamicGameObject:} Zustand eines Dynamischen Objektes
+        \begin{itemize}
+            \item \textit{DynamicGameObjectEvent}
+        \end{itemize}
+        \item \textbf{IProperty:} Eine Eigenschaft eines Dynamischen Objektes
+    \end{itemize}
+
+    \mbox{}\par
+    Render
+    \begin{itemize}
+        \item \textbf{TickProcessor}
+        \begin{itemize}
+            \item \textit{TickEventProcessor}
+        \end{itemize}
+        \item \textbf{DynamicGameObjectProcessor}
+        \begin{itemize}
+            \item \textit{DynamicGameObjectEventProcessor}
+        \end{itemize}
+        \item \textbf{IPropertyProcessor}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Rendering: Effekt und Animation}
+    \textbf{Partikeleffekt}
+    \begin{itemize}
+        \item \textbf{Partikel}
+        \begin{itemize}
+            \item Position
+            \item Color
+            \item ...\par
+        \end{itemize}
+        \item \textbf{Partikel Strategy}
+        \begin{itemize}
+            \item FirePartikelStrategy
+            \item JetPartikelStrategy
+            \item ...
+        \end{itemize}
+        \item \textbf{EffectMesh}
+        \begin{itemize}
+            \item Darstellung im SceneGraph
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Rendering: Effekt und Animation}
+    \textbf{Animationen}
+    \begin{itemize}
+        \item Steuerung animierter Objekte:
+        \begin{itemize}
+            \item com.jme3.animation.Animation
+            \item com.jme3.animation.AnimChannel
+            \item com.jme3.animation.AnimControl
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Rendering: Pipeline}
+    \setlength{\TPHorizModule}{\textwidth}
+    \setlength{\TPVertModule}{\textwidth}
+    \setbeamercolor{block title}{use=structure,fg=black,bg=white!75!gray}
+    \setbeamercolor{block body}{use=structure,fg=black,bg=white!90!gray}
+    \begin{itemize}
+    \item \begin{textblock}{0.5}(0.05,0.2)
+            \begin{block}{Shader}
+                \begin{itemize}
+                    \item \textbf{VertexShader}
+                    \item \textbf{FragmentShader}
+                \end{itemize}
+            \end{block}
+        \end{textblock}
+    \item \begin{textblock}{0.5}(0.05,0.5)
+            \begin{block}{Postprocessing}
+                \begin{itemize}
+                    \item \textbf{Motionblur}
+                    \item \textcolor{gray}{ShadowFilter}
+                \end{itemize}
+            \end{block}
+        \end{textblock}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Rendering: Pipeline}
+    \setlength{\TPHorizModule}{\textwidth}
+    \setlength{\TPVertModule}{\textwidth}
+    \setbeamercolor{block title}{use=structure,fg=black,bg=white!75!gray}
+    \setbeamercolor{block body}{use=structure,fg=black,bg=white!90!gray}
+
+    \begin{textblock}{0.35}(0.6,0.4)
+        \begin{block}{Materialdefinitionen}
+        \mbox{}
+        \end{block}
+    \end{textblock}
+    \begin{itemize}
+    \item \begin{textblock}{0.5}(0.05,0.2)
+            \begin{block}{Shader}
+                \begin{itemize}
+                    \item \textbf{VertexShader}
+                    \item \textbf{FragmentShader}
+                \end{itemize}
+            \end{block}
+        \end{textblock}
+    \item \begin{textblock}{0.5}(0.05,0.5)
+            \begin{block}{Postprocessing}
+                \begin{itemize}
+                    \item \textbf{Motionblur}
+                    \item \textcolor{gray}{ShadowFilter}
+                \end{itemize}
+            \end{block}
+        \end{textblock}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+
+    \centering
+        {\scshape\LARGE Valaris \par}
+    
+    \vspace{1cm}
+
+    \includegraphics[height=2.5cm]{./Bilder/ValarisLogo.png}
+
+    \vspace{1cm}
+    
+    \tiny{\textbf{Quellen:} Alle Bilder aus Prototypen.}
+
+\end{frame}
+
+\end{document}
+
+
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty-styles>
+    <style id="DefaultText">
+        <attributes font="edu/kit/valaris/menuSkin/Fonts/Franklin-20.fnt" color="#000000"/>
+    </style>
+    <style id="Franklin24">
+        <attributes font="edu/kit/valaris/menuSkin/Fonts/Franklin-24.fnt" color="#000000"/>
+    </style>
+    <style id="Franklin32">
+        <attributes font="edu/kit/valaris/menuSkin/Fonts/Franklin-32.fnt" color="#000000"/>
+    </style>
+    <style id="TitelText">
+        <attributes font="edu/kit/valaris/menuSkin/Fonts/Franklin-40.fnt" color="#000000"/>
+    </style>
+    <style id="Franklin36">
+        <attributes font="edu/kit/valaris/menuSkin/Fonts/Franklin-36.fnt" color="#FFFFFF"/>
+    </style>
+    <style id="LayOfTheLand">
+        <attributes font="edu/kit/valaris/menuSkin/Fonts/LayOfTheLand.fnt" color="#000000"/>
+    </style>
+
+</nifty-styles>

@@ -1,0 +1,67 @@
+@startuml "render-tick"
+
+!include styles.iuml
+
+'!define RENDER_DYNAMICS_ABSTRACT
+
+!ifdef RENDER_ABSTRACT
+/'abstract representation of the package'/
+ABSTRACT_PACKAGE("render.tick")
+!else
+/'non abstract representation'/
+!include JMEUtil.iuml !4
+package rendering.tick #FFF8E1 {
+    /'include subpackage'/
+    !include render-bundles.iuml
+
+    /'list classes'/
+    class TickProcessor {
+        -dgoProcessors: List<DynamicGameObjectProcessor>
+        -eventProcessors: Map<String, ITickEventProcessor>
+
+        -processEvents(events: Stream<TickEvent>): void
+        -processDynamicGameObjects(dgos: List<DynamicGameObject>): void
+        +TickProcessor()
+        +processTick(tick: Tick): void
+        +addDynamicGameObjectProcessor(dgo: Integer, processor: DynamicGameObjectProcessor): void
+        +removeDynamicGameObjectProcessor(dgo: Integer)
+        +setEventProcessor(action: String, processor: ITickEventProcessor): void
+    }
+
+    interface ITickEventProcessor {
+        +setTickProcessor(processor: TickProcessor): void
+        +process(event: TickEvent): void
+    }
+
+    class AddDynamicGameObjectEventProcessor {
+        +AddDynamicGameObjectEventProcessor()
+        +setTickProcessor(processor: TickProcessor): void
+        +process(event: TickEvent): void
+    }
+
+    class RemoveDynamicGameObjectEventProcessor {
+        +RemoveDynamicGameObjectEventProcessor()
+        +setTickProcessor(processor: TickProcessor): void
+        +process(event: TickEvent): void
+    }
+
+    TickProcessor *-right- ITickEventProcessor : contains <
+    ITickEventProcessor <|-down- AddDynamicGameObjectEventProcessor
+    ITickEventProcessor <|-down- RemoveDynamicGameObjectEventProcessor
+
+    /'jme relations'/
+    com.jme3.app.state.AbstractAppState <|-down- TickProcessor
+
+    !ifdef RENDER_DYNAMICS_ABSTRACT
+    TickProcessor .down.> dynamics : <<uses>> >
+    !else
+    TickProcessor "1" *-down--- "*" DynamicGameObjectProcessor : contains >
+    !endif
+}
+/'formatting'/
+AddDynamicGameObjectEventProcessor -[hidden]right- RemoveDynamicGameObjectEventProcessor
+com.jme3.app.state.AbstractAppState -[hidden]down- rendering.tick
+
+!endif
+
+@enduml

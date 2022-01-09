@@ -1,0 +1,436 @@
+\documentclass[parskip=full]{scrartcl}
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2cm, top=3cm, bottom=3cm}
+\usepackage[utf8]{inputenc} % use utf8 file encoding for TeX sources
+\usepackage[T1]{fontenc}    % avoid garbled Unicode text in pdf
+\usepackage[german]{babel}  % german hyphenation, quotes, etc
+\usepackage{hyperref}       % detailed hyperlink/pdf configuration
+\hypersetup{                % ‘texdoc hyperref‘ for options
+pdftitle={Echtzeit-Computergrafik in der Spieleentwicklung},%
+bookmarks=true,%
+}
+
+\usepackage{rotating}
+\usepackage{newclude}
+\usepackage{typearea}
+\newcommand\invisiblesection[1]{%
+  \refstepcounter{section}%
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+  \sectionmark{#1}}
+  
+
+\usepackage{listings}
+
+\usepackage{xcolor}
+\usepackage{graphicx}       % provides commands for including figures
+\usepackage{csquotes}       % provides \enquote{} macro for "quotes"
+\usepackage[nonumberlist]{glossaries}     % provides glossary commands
+\usepackage{enumitem}
+\usepackage{epsf,epsfig,eepic}
+\usepackage[headsepline, footsepline]{scrpage2}
+
+
+%Design für Methoden-/Attributbeschreibungen
+\usepackage{framed}
+\usepackage{color}
+\definecolor{gray}{RGB}{200,200,200}
+\renewenvironment{leftbar}[1][\hsize]
+{%
+\def\FrameCommand
+{%
+{\color{gray}\vrule width 1pt}%     
+}%
+\MakeFramed{\hsize#1\advance\hsize-\width\FrameRestore}%
+}
+{\endMakeFramed}
+
+\definecolor{eclipseStrings}{HTML}{B71C1C}
+\definecolor{eclipseKeywords}{HTML}{0D47A1}
+\definecolor{background}{HTML}{ECEFF1}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    commentstyle=\color{eclipseStrings}, % style of comment
+    stringstyle=\color{eclipseKeywords}, % style of strings
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background}, %only if you like
+    string=[s]{"}{"},
+    comment=[l]{:\ "},
+    morecomment=[l]{:"},
+    literate=
+        *{0}{{{\color{numb}0}}}{1}
+         {1}{{{\color{numb}1}}}{1}
+         {2}{{{\color{numb}2}}}{1}
+         {3}{{{\color{numb}3}}}{1}
+         {4}{{{\color{numb}4}}}{1}
+         {5}{{{\color{numb}5}}}{1}
+         {6}{{{\color{numb}6}}}{1}
+         {7}{{{\color{numb}7}}}{1}
+         {8}{{{\color{numb}8}}}{1}
+         {9}{{{\color{numb}9}}}{1}
+}
+
+%kopf und fusszeilen
+\pagestyle{scrheadings}
+\clearscrheadfoot
+
+%kopfzeile
+\ihead{\codename}
+\ohead{\headmark}
+\automark{section}
+
+%fusszeile
+\ofoot{\pagemark}
+\ifoot{\codename}
+
+\makenoidxglossaries
+%
+% % Glossareinträge
+%
+
+\newglossaryentry{KI}{
+	name={KI},
+	plural={KI's},
+	description={Eine Künstliche Intelligenz (KI) beschreibt hier einen automatisierten, nicht menschlich gesteuerten, Fahrer},
+}
+\newglossaryentry{PBR}{
+	name={PBR},
+	description={Physically Based Rendering},
+}
+\newglossaryentry{Deferred Rendering}{
+	name={Deffered Rendering},
+	description={beschreibt eine Technik, mit deren Hilfe die
+	           Geometrieverarbeitung von der Lichtberechnung getrennt werden kann}
+}
+\newglossaryentry{MotionBlur}{
+	name={MotionBlur},
+	description={Unschärfe von bewegten Objekte in Bildern}
+}
+
+\newglossaryentry{Seed}{
+	name={Seed},
+	plural={Seeds},
+	description={Seed (zu deutsch: Samen) beschreibt einen Ausgangswert zur Generierung einer Folge von Pseudozufallswerten},
+}
+
+\newglossaryentry{Biom}{
+	name={Biom},
+	plural={Biome},
+	description={Ein Biom beschreibt eine bestimmte Ausprägung eines Streckenabschnittes},
+}
+
+\newglossaryentry{Mesh}{
+	name={Mesh},
+	plural={Meshes},
+	description={Polygonnetz welches in der Computergrafik zur Darstellung von Formen im Raum dargestellt werden},
+}
+
+\newglossaryentry{Navigation Mesh}{	
+	name={Navigation Mesh},
+	plural={Navigation Meshes},
+	description={Repräsentiert die von Spieler (und KI) befahrbare Oberfläche}
+}
+
+\newglossaryentry{Scenegraph}{
+	name={Scenegraph},
+	description={Baumartige Datenstruktur zur Repräsentation einer Szene}
+}
+\newglossaryentry{JUnit}{
+	name={JUnit},
+	description={JUnit ist ein Werkzeug welches Quelltext, mit vorher festgelegten Testflällen, automatisiert testet}
+}
+\newglossaryentry{Low-Poly Stil}{
+	name={Low-Poly Stil},
+	description={Low-Poly ist ein Polygonnetz in der 3D-Computergrafik, welches eine relativ kleine Anzahl von Polygonen besizt}
+}
+\newglossaryentry{FXAA}{
+	name={Fast Approximate Anti-Aliasing (FXAA)},
+	description={Reduziert sichtbares Aliasing während Schärfe beibehalten wird}
+}
+\newglossaryentry{HDR}{
+	name={High Dynamic Range (HDR)},
+	description={Ist das Rendern von virtuellen Umgebungen mit einem dynamischen Farbkanalbereich von 65.535: 1 oder höher (in der Computer-, Spiel- und Unterhaltungstechnologie)}}
+%Kommandos
+\newcommand{\codename}{Valaris}
+
+
+\title{Entwurfsdokument}
+\author{Sidney Hansen, Jonas Heinle, Frederik Lingg, Lukas Schölch, Artur Wesner}
+
+\begin{document}
+
+	\begin{titlepage}
+		\centering
+		{\scshape\LARGE Entwurfsdokument\par}
+		\vspace{1cm}
+		{\scshape\Large Echtzeit Computergrafik in der Spieleentwicklung \par}
+		\vspace{1cm}
+		{\huge\bfseries \codename \par}
+		\vspace{1cm}
+		\includegraphics[width=.5\linewidth]{./Bilder/valaris_t_4096.png}
+		\par
+		{\vspace{1cm}}
+		{\Large\itshape Autoren \\}
+		{\Large\itshape Sidney Hansen, Jonas Heinle,\\}
+		{\Large\itshape Frederik Lingg, Lukas Schölch, Artur Wesner\par}
+		
+		\vfill
+		Projektbetreuer\par
+		Alisa Jung \& Tobias Rapp
+		
+		\vfill
+		
+		% Bottom of the page
+		{\large \today\par}
+	\end{titlepage}
+
+	\tableofcontents 
+	\pagebreak
+	
+	
+	\pagebreak
+	
+	\section{Einleitung}
+	Im folgenden Entwurf lässt sich die grundlegende Unterteilung, die bereits im Pflichtenheft unternommen
+	wurde, erkennen: InGameGrafik, GUI und Prozedurale Generierung. Diese lassen sich weitgehend unabhängig voneinander
+	entwerfen, implementieren und testen.\par
+
+	Diese Einteilung lässt sich in noch feinere Glieder erweitern. So ist das Postprocessing 
+	in der Ingamegrafik ein Teil der sich als weitere unabhängige Einheit begreifen lässt. Folgen der Anforderungen
+	die im Pflichtenheft gestellt wurden lassen sich beispielsweise in der Realisierung der Schatten über einen 
+	Postprocessingfilter erkennen, der für viele Lichtquellen in der selben Szene besser geeignet ist als die 
+	Realisierung über einen Schattenrenderer.\par
+
+
+	Einige Wunschkriterien sind nicht konkret im UML modelliert, da deren Implementierung nicht weiter geplant ist.
+	Der Entwurf ist jedoch so konzipiert, dass sich die meisten ohne größere Schwierigkeiten hinzufügen lassen.
+	Dies sind beispielsweise Hindernisse auf der Fahrbahn und Soundeffekte.
+
+
+	Die Schnittstelle zwischen dem Grafik- und Physikteam wurde in Absprache untereinander konkret geplant, entworfen 
+	und mit entsprechenden Sequenzdiagrammen beschrieben.\par
+	Die Sequenzdiagramme haben zum Ziel das Grundverständniss der Zusammenarbeit der verschiedenen Klassen zu beschreiben 
+	indem es unter anderem die wichtigen Testfälle aus dem Pflichtenheft beschreibt.\par
+	Die nachfolgenden Betrachtungen klären nun die genaue Architektur, Organisation der Daten innerhalb des Projekts,
+	erläutert die Klassen und deren Zusammenspiel und schließt mit der Betrachtung eines umfassenden Klassendiagramms.
+	\pagebreak
+
+	
+	\section{Architektur}
+
+	\subsection{Grafik}
+		Grundlegend für die Architektur der Partikeleffekte ist, die Wiederverwendbarkeit der Klassen
+		und Code zu garantieren. So wollen wir auf verschiedene Art und Weise unsere Partikel, je
+		nach Gebrauch, in unterschiedlichen Winkeln, Größen, Farben etc. emittieren. Wir verwenden daher
+		unterschiedliche Strategien, welche untereinander austauschbar sind.
+		Die emitParticle()- sowie die updateParticle(Particle p, float tpf) Methode werden dabei für
+		die jeweilige Strategie im Partikeleffekt unterschiedlich implementiert. \\
+		Man kann auch eine Art Model-View-Controller Trennung erkennen. So haben wir einen Controler, 
+		der den Programmablaufplan steuert, ein Model (eigene Implementierung eines 
+		Mesh in der JMonkeyEngine + weitere eigene Klassen) die das Model eines Partikels bzw. 
+		Partikeleffekts darstellt sowie die View Komponente, repräsentiert durch unsere eigene 
+		Materialdefinition, welche wiederrum eigene Vertex- und Fragmentshader definiert.
+			
+
+	\input{Interface/Architektur_Interface}
+
+	\pagebreak
+
+	\subsection{Generierung}
+		Die Architektur des Moduls zur Generierung entspricht einer \textit{transparenten Schichtenarchitektur}, wobei 
+		\textit{mapgeneration} die oberste Schicht darstellt.\par
+		Die zweite Schicht bilden \textit{domegeneration}, 
+		\textit{tunnelgeneration} und \textit{roomgeneration}, welche von \textit{mapgeneration} verwendet werden, indem 
+		die jeweiligen Generatoren von \textit{MapGenerator} gehalten werden. 
+		Außerdem werden jeweils die \textit{ISceneItems} von \textit{Map gehalten}.\par
+		Die unterste Schicht bildet das Paket \textit{roadgeneration}, welches von den Paketen der beiden oberen 
+		Schichten verwednet wird. Hierbei wird je ein \textit{IRoadGenerator} von den Generatoren der zweiten Schicht 
+		benötigt, und ein Objekt des Typs \textit{Road} für ein \textit{ISceneItem}. Außerdem benötigt \textit{Map} 
+		eine \textit{Road} um den gesamten Streckenverlauf darstellen zu können.\par
+
+		In den Paketen der zweiten Schicht findet sich oft das Entwurfsmuster \textit{Fabrik}. Es findet bei den 
+		Generatoren (z.B. \textit{IDomeGenerator}) Anwendung, hier sind vereinzelt auch \textit{Strategien} zum Einsatz 
+		gekommen, um den Generierungsprozess weiter zu kapseln (z.B. \textit{AbstractNoiseGenerator}). Ein weiteres Beispiel 
+		für Entwurfsmuster in diesem Modul sind \textit{Schablonenmethoden}, welche zum Einstatz kommen um bestimmte Prozesse 
+		in verschiedene Teilprozesse zu kapseln (z.B. \textit{AbstractDomeAssetGenerator.generateObjects(...)}), 
+		dadurch wird das Programm übersichtlicher und austauschbarer gehalten.
+
+
+	\pagebreak
+
+	\subsection{Menü} \par
+		Die Architektur des Menü Paketes ist nach dem Prinzip des 
+		\textit{Model View Controllers (MVC)} aufgebaut.
+		Die von uns verwendete Library zum Erstellen des Menüs ist \textit{Nifty GUI}, da diese 
+		sehr gut in der JMonkeyEngine integriert ist und zu unserem Projekt passt.
+		Durch die Verwendung von Nifty GUI schränkt sich die Architektur folglich ein und passt 
+		sich dem an. Entsprechend wurde \textit{MVC} verwendet.
+
+			\subsubsection{Model}
+			Den Model Part des \textit{MVC} übernehmen die drei .properties Dateien: SeedEntries.properties,
+			Graphics.properties und InternalGame.properties. Verwaltet werden die Dateien 
+			durch das Paket~\nameref{menuconfig} und deren Klassen, die die Speicherung, 
+			Ladung und Änderung der Dateien übernehmen.
+			Um die Speicherung der Seed Einträge zu unterstützen, existiert die Datenstruktur
+			~\nameref{seedentry}.
+			\subsubsection{View}
+			Den View Part des \textit{MVC} übernehmen die XML-Dateien. Zu jeder grafischen Benutzeroberfläche
+			des Spieles existiert eine .xml Datei, welche den Aufbau und das Aussehen des 
+			Bildschirmes definiert. In den .xml Dateien wird die passende 
+			Steuerungsklasse gespeichert.
+			\subsubsection{Controller}
+			Die zuvor erwähnten Steuerungsklassen übernehmen den Controller Part des \textit{MVC}.
+			Sie sind im Paket~\nameref{guipaket} definiert. Hier wird zu jedem Element, 
+			welches in den .XML Dateien erstellt worden ist, die Ausführung implementiert.
+			Auch werden hier Teile der Generierung und der Grafik initialisiert.
+	\pagebreak
+	
+	\section{Dateiorganisation}
+	
+	\input{Assets/Datei_Assets}
+	\pagebreak
+	\input{Generierung/Datei_Generierung}
+	\pagebreak
+	
+	\section{Modulübersicht}
+		\subsection{Grafik}
+
+		Grundlegend für das Modul \textit{Grafik} ist die Bereitstellung eigener Materialdefinitionen nach der 
+		JMonkeyEngine-Konvention(.j3md). Diese definieren wiederum als eine grundlegende 
+		Eigenschaft Vertexshader(.vert) sowie Fragmentshader(.frag). Diese Shader werden nach den 
+		Anforderungen im Pflichtenheft, die unter anderem die physisch korrekte Darstellung von 
+		Materialien fordert, erstellt. Diese Materialdefinitionen decken alle verwendeten Materialien 
+		innerhalb des Scenegraphs ab.
+		Es existieren drei unabhängige Einheiten innerhalb des Moduls die nun in der Klassenübersicht
+		erläutert werden.
+		
+		\begin{figure}[htbp]
+            \centering
+            \includegraphics[width=1\linewidth]{InGameGrafik/Bilder/rendering.pdf}
+            \caption{Klassendiagramm Grafikmodul}
+        \end{figure}
+
+		\pagebreak
+		
+		\input{Interface/Modul_Interface}
+		\input{Assets/Modul_Assets}
+
+		\pagebreak
+			
+		\subsection{Generation}
+			
+			Das Modul \textit{Generation} wird verwendet um vor Spielbeginn eine Karte, abhängig von einem Seed, 
+			zu generieren. Hierzu wird eine Schnittstelle \textit{IMapGenerator} angeboten, welche lediglich eine Methode zum 
+			Generieren bereit stellt. Dieser gibt man einen Seed und eine RootNode für die Karte mit.\\
+			Zum Generieren wird anhand einer Json - Datei ein Objekt der Klasse \textit{GenerationConfig} 
+			erstellt, durch die der Generierungsprozess, anhand verschiedener Parameter, konfiguriert wird.\\
+
+			Beginnt die eigentliche Generierung beim \textit{MapGenerator} so setzt dieser die Karte aus verschiedenen 
+			Teilstücken zusammen. Um diese Teilstücke möglichst austauschbar zu halten, hat der \textit{MapGenerator} auf deren Generierungsprozess 
+			keinen direkten Einfluss, sondern kann lediglich eine Hand voll 'Startparameter' für die Generierung festlegen. 
+			Für jede Art von Teilstück hält der \textit{MapGenerator} genau einen entsprechenden Generator (z.B. \textit{IDomeGenerator}), 
+			welcher sich um die Generierung aller Teilstücke des jeweiligen Types (z.B. \textit{IDome}) kümmert.\\
+
+			Sind alle Teilstücke generiert und zu einer sinnvollen Strecke zusammengestzt worden, so ist der Generierungsprozess abgeschlossen, 
+			und es wird ein \textit{IMapBody} erstellt, welcher alle notwendigen Bestandteile der Strecke für das andere Team beschreibt. 
+			Außerdem wird der Scenegraph erstellt, um die Karte anzeigen zu können.\par
+			
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[scale=0.07,angle=0]{./Bilder/MapGenerator.pdf}
+				\caption{Klassendiagramm Generationsmodul}
+			\end{figure}
+		
+		\pagebreak
+			
+		\subsection{Menü}
+			
+			Im Modul Menü ist die grafische Benutzeroberfläche des Spiels realisiert. 
+			Dabei hat jeder Menü-Bildschirm eine eigene Controller Klasse, welche das 
+			Interface \textit{de.lessvoid.nifty.screen.ScreenController} implementiert, 
+			um zwischen den Bildschirmen wechseln zu können, sowie Benutzeraktionen zu 
+			steuern und umzusetzen. \\
+			Ebenfalls implementiert jede Klasse das Interface 
+			\textit{de.lessvoid.nifty.screen.KeyInputHandler}, um auf Benutzereingaben 
+			reagieren zu können. Dabei wird die Klasse~\nameref{mim} benutzt, welche 
+			Eingaben auf ein NiftyInputEvent konvertiert. Dadurch, dass die Klassen auf
+			NiftyInputEvents reagieren, kann das Mapping individuell angepasst werden. 
+			Unter anderem können so leicht GamePads oder Ähnliches integriert werden, 
+			da nicht alle Methoden überarbeitet werden müssen, sondern lediglich ein 
+			Mapping implementiert werden muss. \\
+			Außerdem erben einige Methoden von der Klasse 
+			\textit{com.jme3.app.state.AbstractAppState} um Zugriff auf die Applikation 
+			zu haben. Dadurch kann aus dem Menü zum Beispiel das Spiel beendet werden. \\
+			Das Menü Modul dient auch als Schnittstelle zur Grafik- und Streckengenerierung,
+			sowie zum anderen Team des PSE-Projektes. \par
+
+			\begin{center}
+				\includegraphics[width=0.9\linewidth]{./GUI/GUI_Bilder/GUIAll.pdf}
+				\captionof{figure}{Klassendiagramm Menü}
+				\label{fig:menu}
+			\end{center}
+
+	\pagebreak
+	
+	\section{Klassenübersicht}
+	
+		\input{InGameGrafik/Klassen_InGameGrafik}
+		\input{Interface/Klassen_Interface}
+		\input{Assets/Klassen_Assets}
+		\input{Generierung/Klassen_Generierung}
+		\input{GUI/Klassen_GUI}
+	\pagebreak
+	
+	\section{Sequenzdiagramme}
+
+		\input{InGameGrafik/Sequenz_InGameGrafik}
+		\pagebreak
+		\input{Interface/Sequenz_Interface}
+		\pagebreak
+		\input{Assets/Sequenz_Assets}
+		\pagebreak
+		\input{Generierung/Sequenz_Generierung}
+		\pagebreak
+		\input{GUI/Sequenz_GUI}
+
+		\pagebreak
+		
+	\section{Gantt - Diagramm}
+		
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=\linewidth]{./Bilder/PSE_Gantt.pdf}
+		\caption{Gantt - Diagramm}
+	\end{figure}
+		
+	\invisiblesection{Umfassendes Klassendiagramm}
+	
+	%OberMegaAllufassendesKlassendiagrammVomPumelChaosDesTodes hier einfügen
+	\storeareas\myvaluesER
+	\clearpage
+	\KOMAoptions{paper=A0,pagesize,paper=landscape}
+	\recalctypearea
+	\thispagestyle{empty}
+	\areaset{\dimexpr \textwidth+.6\paperwidth}{\dimexpr \textheight+.6\paperheight}
+	
+		\begin{figure}[htbp]
+			\centering
+			\includegraphics[scale=0.9,angle=0]{./Bilder/UML_Komplett.pdf}
+			\caption{Klassendiagramm(komplett)}
+		\end{figure}
+	
+	\clearpage
+	\KOMAoptions{paper=A4,pagesize,paper=portrait}
+	\recalctypearea
+	\myvaluesER
+	
+	
+	
+\end{document}

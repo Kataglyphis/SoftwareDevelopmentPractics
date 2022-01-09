@@ -1,0 +1,32 @@
+@startuml
+
+!include styles.iuml
+package com.jme3.post #DDFFFFF{
+    abstract Filter {
+
+    }
+}
+
+package postprocessing #DDDDDD {
+    class FilterPostProcessor {
+        +addPostFilter()
+    }
+    class MotionBlurFilter {
+        +initFilter(manager: AssetManager,
+            renderManager: RenderManager)
+        +preFrame()
+        +postQueue(queue: RenderQueue)
+        +postFrame()
+        +cleanUpFilter(r: Renderer)
+        +getMaterial(): Material
+
+    }
+    class FXAAFilter {
+
+    }
+    FilterPostProcessor "1" *--> "1...n" MotionBlurFilter
+    Filter --^ FXAAFilter
+    Filter --^ MotionBlurFilter
+}
+
+@enduml

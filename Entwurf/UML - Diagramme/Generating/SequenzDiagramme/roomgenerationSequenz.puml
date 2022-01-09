@@ -1,0 +1,43 @@
+@startuml roomGenerationSequenz
+!include styles.puml
+
+participant "__:RoomSelector__"
+participant "__staticRoomGen:AbstractRoomGenerator__"
+participant "__dynamicRoomGen:AbstractRoomGenerator__"
+
+
+-> "__:RoomSelector__": generateRood(seed, target, entryWidth, flags)
+activate "__:RoomSelector__"
+
+
+
+alt staticRoomGen ausgewählt
+
+    "__:RoomSelector__" ->  "__staticRoomGen:AbstractRoomGenerator__": generateRoom(seed, boundingSphereRadius, entryWidth, exitAngle, flags)
+    activate "__staticRoomGen:AbstractRoomGenerator__"
+
+    "__staticRoomGen:AbstractRoomGenerator__" --> "__staticRoomGen:AbstractRoomGenerator__": room = <<create>> StaticRoom(road, roomRootNode)
+    "__staticRoomGen:AbstractRoomGenerator__" --> "__:RoomSelector__": room
+    deactivate "__staticRoomGen:AbstractRoomGenerator__"
+else dynmaicRoomGen ausgewählt
+
+     "__:RoomSelector__" ->  "__dynamicRoomGen:AbstractRoomGenerator__": generateRoom(seed, boundingSphereRadius, entryWidth, exitAngle, flags)
+    activate "__dynamicRoomGen:AbstractRoomGenerator__"
+
+    create "__roadGen:IRoadGenerator__"
+    "__dynamicRoomGen:AbstractRoomGenerator__" --> "__roadGen:IRoadGenerator__": <<create>> RoadGenerator(generationConfig)
+   
+    "__dynamicRoomGen:AbstractRoomGenerator__" -> "__roadGen:IRoadGenerator__": generateCuboidRoad(seed, cuboidDimensions, entryWidth, exitAngle, flags)
+    activate "__roadGen:IRoadGenerator__"
+    "__roadGen:IRoadGenerator__" --> "__dynamicRoomGen:AbstractRoomGenerator__"
+    destroy "__roadGen:IRoadGenerator__"
+
+
+    "__dynamicRoomGen:AbstractRoomGenerator__" --> "__dynamicRoomGen:AbstractRoomGenerator__": room = <<create>> DynamicRoom(grid, road, roomAssetRootNode)
+    "__dynamicRoomGen:AbstractRoomGenerator__" --> "__:RoomSelector__": room
+    deactivate "__dynamicRoomGen:AbstractRoomGenerator__"
+end
+
+<-- "__:RoomSelector__": room
+
+@enduml

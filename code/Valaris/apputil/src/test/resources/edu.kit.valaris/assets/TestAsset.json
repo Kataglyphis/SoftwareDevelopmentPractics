@@ -1,0 +1,14 @@
+{
+  "key" : "TestAsset",
+  "path" : "/edu.kit.valaris/assets/TestAsset.j3o",
+
+  "nodes" : [],
+  "controls" : [
+    {"key" : "RotateControl", "path" : "origin", "isPreload" : false, "type" : "edu.kit.valaris.assets.test.RotateControl", "params" : "3.0"}
+  ],
+  "meshes" : [
+    {"path" : "origin/cube/cubegeom", "material" : "/edu.kit.valaris/assets/red.j3m"},
+    {"path" : "origincube/origincubegeom", "material" : "/edu.kit.valaris/assets/white.j3m"}
+  ],
+  "animations" : []
+}

@@ -1,0 +1,32 @@
+@startuml GUIAll
+!include styles.puml
+
+package menu #EDE7F6{
+
+    '/--------- FOR TOP TO BOTTOM DIRECTION ---------'/
+    
+    !include Seed.iuml
+    !include Config.iuml
+    !include GUI.iuml
+
+    menuconfig -[hidden]down--- gui
+    InternalGameConfig -[hidden] SeedEntry
+    menuconfig -[hidden] SeedEntry
+    
+
+
+    
+
+    '/--------- FOR LEFT TO RIGHT DIRECTION ---------'/
+    /'
+    left to right direction
+    !include Seed.iuml
+    !include Config.iuml
+    !include GUI.iuml
+
+    SeedEntry -[hidden]up- menuconfig
+    '/
+}
+
+
+@enduml

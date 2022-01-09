@@ -1,0 +1,12 @@
+{
+  "key" : "SimpleVentilation",
+  "path" : "/edu.kit.valaris/assets/roomAssets/Ventilation/VentilationA1.j3o",
+
+  "nodes" : [],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "LowerCircle/Circle.0011", "material" : "/edu.kit.valaris/assets/roomAssets/Ventilation/metallicDarkGrey.j3m"},
+    {"path" : "UpperCircle/Circle.0021", "material" : "/edu.kit.valaris/assets/roomAssets/Ventilation/metallicLightGrey.j3m"}
+  ],
+  "animations" : []
+}

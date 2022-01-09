@@ -1,0 +1,19 @@
+@startuml postprocessing
+
+!include styles.puml
+package postprocessing #FFAB91{
+    
+        class MotionBlurFilter {
+            +initFilter(manager: AssetManager,
+                renderManager: RenderManager)
+            +preFrame()
+            +postQueue(queue: RenderQueue)
+            +postFrame()
+            +cleanUpFilter(r: Renderer)
+            +getMaterial(): Material
+        }
+}
+
+'''''''''''''FilterDependencies''''''''''''
+   
+@enduml

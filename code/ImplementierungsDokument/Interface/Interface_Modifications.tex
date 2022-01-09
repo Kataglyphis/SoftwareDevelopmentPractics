@@ -1,0 +1,51 @@
+\subsection{InGame - Interface}
+
+\subsubsection{DynamicGameObjectType}
+\begin{itemize}
+    \item \textit{Enum hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Wird verwendet um DynamicGameObjects zu identifizieren.
+            Wurde auf Hinweis des anderen Teams hinzugefügt um das
+            klassifizieren von DynamicGameObjects zu vereinfachen.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{DynamicGameObject}
+\begin{itemize}
+    \item \textit{Attribut für DynamicGameObjectType hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Enthält einen DynamicGameObjectType welcher während der Lebenszeit eines DynamicGameObjects
+            nicht verändert werden kann. Wurde auf Hinweis des anderen Teams implementiert um das
+            klassifizieren von DynamicGameObjects zu vereinfachen.
+        \end{leftbar}
+
+    \item \textit{Methode addProperty(IProperty, int) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Fügt eine neue IProperty hinzu, aber berücksichtigt freie Ids nur wenn sie mindestens so groß
+            wie der gegebene Index. Wurde hinzugefügt um das finden bestimmter IProperties zur Laufzeit
+            zu vereinfachen.
+        \end{leftbar}
+
+    \item \textit{Methode setProperty(int, IProperty) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Setzt die IProperty an dem gegebenen Index, falls dieser existiert.
+            Wurde hinzugefügt um das Aktualisieren der IProperties im Simulationsthread zu erleichtern.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{Tick}
+\begin{itemize}
+    \item \textit{Signatur von getDynamicGameObjects() geändert}
+        \begin{leftbar}[0.9\linewidth]
+            Die Methode nimmt nun zusätzlich einen Boolean entgegen um zu entscheiden, ob das Resultat die
+            Ids der DynamicGameObjects erhalten soll oder ob NULL elemente aus der Liste entfernt werden
+            sollen.
+        \end{leftbar}
+
+    \item \textit{Methode removeDynamicGameObject(DynamicGameObject) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Entfernt das gegebene DynamicGameObject aus dem Tick, sofern es existiert.
+            Wurde auf Wunsch des anderen Teams implementiert um das Management von DynamicGameObjects
+            im Tick zu vereinfachen.
+        \end{leftbar}
+\end{itemize}

@@ -1,0 +1,12 @@
+{
+  "key" : "SimpleDoor",
+  "path" : "/edu.kit.valaris/assets/checkpoint/simpleDoor/roomArchB3.j3o",
+
+  "nodes" : [],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "Cube.002/Cube.0051", "material" : "/edu.kit.valaris/assets/checkpoint/simpleDoor/glowingBlue.j3m"},
+    {"path" : "Cube/Cube1", "material" : "/edu.kit.valaris/assets/checkpoint/simpleDoor/metallicLightGrey.j3m"}
+  ],
+  "animations" : []
+}

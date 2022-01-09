@@ -1,0 +1,181 @@
+@startuml GUI
+
+!include styles.puml
+
+package gui #D1C4E9 {
+    hide empty members
+
+    'left to right direction
+    
+    /' Classes '/
+    class NiftyAppState{
+        # nifty: Nifty
+        # stateManager: AppStateManager 
+        # app: Application
+
+        # initialisize(stateManager: AppStateManager, app: Application): void
+    }
+
+    together {
+    class MenuInputMapping{
+        + convert(inputEvent: KeyboardInputEvent): NiftyInputEvent
+    }
+
+    abstract AbstractEditGameSettings{
+        # seedConfig: Properties 
+        # internalGameSettings: Properties
+        # seeds: Map<Integer, SeedEntry> 
+
+        + AbstractEditGameSettings(seedConfig: Properties, internalGameSettings: Properties)
+        + editCurrentSeedEntryName(name: String): void
+        + editCurrentSeedEntry(seed: SeedEntry): void
+        + getSortedSeedEntries(): List<SeedEntry>
+        + setNumberOfKIS(count: int): void
+        {abstract} + showSavedSeedEntries(): void
+        {abstract} + backToMainmenu(): void
+        {abstract} + openLoadingScreen(): void
+    }
+    }
+    together {
+    class LobbyScreen {
+        - lobbyName: String
+        - playerList: Map<String, String> 
+
+        + setLobbyName(name: String): void
+        + getLobbyName(): String
+        + changeLobby(name: String): void
+        + openInternalGameSettings(): void
+        + updatePlayerList(name: String, farbe: String): void
+        + showSavedSeedEntries(): void
+        + backToMainmenu(): void
+        + openLoadingScreen(): void
+    }
+    class SinglePlayerModeScreen {
+        + showSavedSeedEntries(): void
+        + backToMainmenu(): void
+        + openLoadingScreen(): void
+    }
+    }
+    
+    together {
+    class MainmenuScreen {
+        + openSinglePlayerMode(): void
+        + openMultiPlayerMode(): void
+        + openSettingsmenu(): void
+        + exit(): void
+    }
+
+    class LoadingScreen {
+        + mapBody: IMapBody
+        + openHUD(): void
+        + startGame(): void
+        + generateMap(): IMapBody
+    }
+
+    class HUD {
+        - playerPositions: Map<String, Position>
+        - playerTimes: Map<String, Integer>
+        - playerRankings: Map<String, Integer>
+
+        + openPausemenu(): void
+        + createMiniMap(): NiftyImage
+        + updatePlayerPositions(player: String, x: int, y: int): void
+        + updatePlayerTime(player: String, time: int): void
+        + updatePlayerRankings(player: String, rank: int): void
+    }
+
+    class PausemenuScreen {
+        + backtoGame(): void
+        + openSettingsmenu(): void
+        + saveSeed(): void
+        + backToMainmenu(): void
+    }
+
+    class SettingsmenuScreen {
+        - seedConfig: Properties
+        - graphicsConfig: Properties
+        - internalGameConfig: Properties
+
+        + backToMainmenu(): void
+        + backToPausemenu(): void
+        + saveSettings(): void
+    }
+
+    class EndmenuScreen {
+        - seedConfig: Properties
+        - playerEndTimes: Map<String, Integer>
+
+        + backToMainmenu(): void
+        + playAgain(): void
+        + saveSeed(): void
+        + updatePlayerEndTime(player: String, time: int): void
+    }
+    }
+    
+    /' Relations '/
+    NiftyAppState <|-- MainmenuScreen 
+    NiftyAppState <|-- PausemenuScreen 
+    NiftyAppState <|-- HUD 
+    NiftyAppState <|-- EndmenuScreen
+    NiftyAppState <|-- LoadingScreen
+    AbstractEditGameSettings <|-- SinglePlayerModeScreen 
+    AbstractEditGameSettings <|-- LobbyScreen 
+
+
+    /' Outside Relations '/
+    
+    interface de.lessvoid.nifty.screen.ScreenController
+
+    NiftyAppState ...|> de.lessvoid.nifty.screen.ScreenController 
+    MainmenuScreen ...|> de.lessvoid.nifty.screen.ScreenController 
+    SinglePlayerModeScreen ...|> de.lessvoid.nifty.screen.ScreenController 
+    LobbyScreen ...|> de.lessvoid.nifty.screen.ScreenController 
+    PausemenuScreen ...|> de.lessvoid.nifty.screen.ScreenController 
+    SettingsmenuScreen ...|> de.lessvoid.nifty.screen.ScreenController 
+    HUD ...|> de.lessvoid.nifty.screen.ScreenController 
+    EndmenuScreen ...|> de.lessvoid.nifty.screen.ScreenController
+    LoadingScreen ...|> de.lessvoid.nifty.screen.ScreenController
+
+
+    '/--------- GUI and KeyInputHandler---------'/
+    interface de.lessvoid.nifty.screen.KeyInputHandler
+
+    NiftyAppState ...|> de.lessvoid.nifty.screen.KeyInputHandler 
+    MainmenuScreen ...|> de.lessvoid.nifty.screen.KeyInputHandler 
+    SinglePlayerModeScreen ...|> de.lessvoid.nifty.screen.KeyInputHandler 
+    LobbyScreen ...|> de.lessvoid.nifty.screen.KeyInputHandler 
+    PausemenuScreen ...|> de.lessvoid.nifty.screen.KeyInputHandler 
+    SettingsmenuScreen ...|> de.lessvoid.nifty.screen.KeyInputHandler 
+    HUD ...|> de.lessvoid.nifty.screen.KeyInputHandler
+    EndmenuScreen ...|> de.lessvoid.nifty.screen.KeyInputHandler
+
+
+
+    '/----------- GUI and AbstractAppstate -----------'/
+
+    class com.jme3.app.state.AbstractAppState
+    com.jme3.app.state.AbstractAppState <|-- NiftyAppState
+
+    NiftyAppState -[hidden]up- com.jme3.app.state.AbstractAppState
+    
+
+    '/--------- GUI and NiftyInputMapping ---------'/
+    
+    interface de.lessvoid.nifty.input.NiftyInputMapping
+    de.lessvoid.nifty.input.NiftyInputMapping <|.. MenuInputMapping
+
+    MenuInputMapping -[hidden]up- de.lessvoid.nifty.input.NiftyInputMapping
+    
+    de.lessvoid.nifty.input.NiftyInputMapping -[hidden]right- com.jme3.app.state.AbstractAppState
+}
+
+
+
+'/----------- Layout -----------'/
+MenuInputMapping -[hidden]- SettingsmenuScreen
+NiftyAppState -[hidden]- EndmenuScreen
+
+MenuInputMapping -[hidden]left- AbstractEditGameSettings
+
+
+@enduml

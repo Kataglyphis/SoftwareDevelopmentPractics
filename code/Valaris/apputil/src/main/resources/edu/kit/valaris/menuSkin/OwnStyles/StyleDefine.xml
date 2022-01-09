@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<nifty>
+    <resourceBundle id="menudialog" filename="MenuLocal/menudialog"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/OwnButtonStyle.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/Font.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/OwnPanelStyles.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/OwnTextfieldStyle.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/OwnListBoxStyle.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/OwnDropDownStyles.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/OwnScrollbarStyle.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/OwnHintStyle.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/OwnCheckboxStyle.xml"/>
+</nifty>

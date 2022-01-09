@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty>
+
+    <useControls filename="nifty-default-controls.xml"/>
+    <useControls filename="edu/kit/valaris/menuSkin/OwnControls/OwnConsoleControl.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/Font.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/OwnPanelStyles.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/OwnTextfieldStyle.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/OwnListBoxStyle.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/OwnScrollbarStyle.xml"/>
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/OwnConsoleStyle.xml"/>
+
+    <screen id="console-manager" controller="de.lessvoid.nifty.screen.DefaultScreenController">
+        <layer id="layer" backgroundColor="#0000" childLayout="vertical">
+            <panel height="2%" width="100%"/>
+            <panel childLayout="horizontal">
+                <panel width="69%"/>
+                <panel id="right_panel" width="30%" height="100%" childLayout="absolute-inside">
+                    <!-- actual console here -->
+                    <control id="console" name="nifty-console" lines="15" width="100%" align="right" valign="top"/>
+                    <text style="Franklin24"  text=" Console (F5)"/>
+                </panel>
+                <panel width="1%"/>
+            </panel>
+
+        </layer>
+    </screen>
+</nifty>

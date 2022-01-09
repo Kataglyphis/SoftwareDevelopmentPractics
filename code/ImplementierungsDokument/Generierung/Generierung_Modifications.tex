@@ -1,0 +1,340 @@
+\subsection{Generierung}
+
+\subsubsection{IColoring}
+\begin{itemize}
+    \item \textit{Schnittstelle IColoring erstellt}
+        \begin{leftbar}[0.9\linewidth]
+            Definiert die nötige Funktionalität für eine Färbungsstrategie, die einem Dome mitgegeben werden kann.
+        \end{leftbar}
+    
+\end{itemize}
+
+\subsubsection{BiomMeadowColoring}
+\begin{itemize}
+    \item \textit{Erste konkrete Strategie zum Färben}
+        \begin{leftbar}[0.9\linewidth]
+            Wird verwendet, um ein Biom vom Typ 'BiomMeadow' einzufärben.
+        \end{leftbar}
+    
+\end{itemize}
+
+\subsubsection{triangulation}
+\begin{itemize}
+    \item \textit{Package von GitHub importiert}
+        \begin{leftbar}[0.9\linewidth]
+            Wird verwendet, um das Gelände eines Domes dem 'low-ploly' Stil anzupassen.
+        \end{leftbar}
+    
+\end{itemize}
+
+
+\subsubsection{GridVertex}
+\begin{itemize}
+    \item \textit{Attribut Color color entfernt}
+        \begin{leftbar}[0.9\linewidth]
+            Color wird im GridVertex nicht mehr benötigt, da im neuen \textit{IColoring} direkt ein colorArray, abhängig
+            von den \textit{GridVertexProperty}, erzeugt wird und als VertexAttribut gesetzt wird.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{CullingManager}
+\begin{itemize}
+    \item \textit{Klasse wurde gelöscht}
+        \begin{leftbar}[0.9\linewidth]
+            \textit{CullingManager} wurde in \textit{Rendering} verschoben.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{MapGenerator}
+\begin{itemize}
+    \item \textit{Signatur des Konstruktors MapGenerator(String confPath, AssetManager assetManager) geändert}
+        \begin{leftbar}[0.9\linewidth]
+            Der \textit{confPath} wurde entfernt, da nun ein Objekt des Typs \textit{GenerationConfig} erzeugt wird
+            und der \textit{paramPath} entsprechend gesetzt wird, der immer gleich bleibt.\par
+
+            Der \textit{appStateManager} wird bnötigt um Zugriff auf den AssetProvider zu erhalten.\par
+
+            Der Parameter \textit{vehileCount} wird benötigt, um alle StartPositionen für Fahrzeuge festzulegen.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{Map}
+\begin{itemize}
+    \item \textit{Signatur dees Konstruktors Map(appStateManager: AppStateManager) geändert}
+        \begin{leftbar}[0.9\linewidth]
+            Der \textit{appStateManager} sollte wegen des CullingManagers übergegben werde, da dieser verschoben wurde
+            ist auch der appStateManager überflüssig geworden.\par
+
+            Es wird nun ein \textit{AssetManager} übergeben, um das Straßen Model laden zu können.
+        \end{leftbar}
+        
+    \item \textit{Signatur von addSceneItem(ISceneItem sceneItem, int cullingIndex)  geändert}
+        \begin{leftbar}[0.9\linewidth]
+            Der Paramter \textit{cullingIndex} wird wegen des neuen CullingManagers nicht mehr benötigt.
+        \end{leftbar}
+        
+    \item \textit{Signatur von generateSceneGraph(): Node  geändert}
+        \begin{leftbar}[0.9\linewidth]
+            Die Methode gibt nun keine Node mehr zurück, sondern bekommt eine \textit{rootNode} als Parameter, an die alle 
+            sceneItems gehängt werden, da der CullingManager die sceneItem direkt an der rootNode erwartet.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{IMapBody}
+\begin{itemize}
+    \item \textit{Signatur von calc3DCoordinates(Vector2f coordinates2D, int index): Vector3f geändert}
+        \begin{leftbar}[0.9\linewidth]
+            Die Methode wurde umbenannt in calc3DTransform und gibt nun ein Transform statt des Vector3f zurück.\par
+
+            Statt des Vektor2f wird nun eine Position übergeben.\par
+
+            Der \textit{index} wird nicht mehr benötigt, stattdessen wird ein \textit{angle} mitgegeben.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{DomeGenerator}
+\begin{itemize}
+    \item \textit{Attribut paramPath wurde hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Das Attribut wurde erstellt um die Navigation in der \textit{GenerationConfig.json} übersichtlicher zu halten.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{AbstractNoiseGenerator}
+\begin{itemize}
+    \item \textit{Attribut paramPath hinzugefügt und biom gelöscht}
+    \begin{leftbar}[0.9\linewidth]
+            paramPath wurde erstellt um die Navigation in der \textit{GenerationConfig.json} übersichtlicher zu halten.\par
+            
+            Das biom wird jetzt in \textit{makeNoise} mitgegeben und wird deshalb nicht mehr benötigt.
+        \end{leftbar}
+    
+        \item \textit{Konstruktor SimplexNoisGenerator(GenerationConfig generationConfig, AssetManager assetManager, String biom) verändert}
+        \begin{leftbar}[0.9\linewidth]
+            Der assetManager wurde entfernt, da er nicht gebraucht wird.\par
+            
+            Das biom wir nicht mehr übergeben, da dies nun in \textit{makeNoise} gemacht wird.
+        \end{leftbar}
+    \end{itemize}
+    
+\subsubsection{OpenSimplexNoise}
+\begin{itemize}
+    \item \textit{Sinatur von  makeNoise(HashMap<GridVertex> grid, int seed) geändert}
+        \begin{leftbar}[0.9\linewidth]
+            Der Parameter \textit{int seed} wurde entfernt, da dieser im Konstruktor benötigt wird.
+            Zusätzlich wurde \textit{String biom} hinzugefügt, um Parameter aus der \textit{GenerationConfig.json}
+            auslesen zu können.
+        \end{leftbar}
+\end{itemize}
+    
+\subsubsection{AbstractDomeAssetGenerator}
+\begin{itemize}
+    \item \textit{Wurde um einen Konstruktor ergänzt}
+        \begin{leftbar}[0.9\linewidth]
+            Der Konstruktor wurde erstellt, da dieser für Funktionalität benötigt wird und Unterklassen diesen einfach verwenden können,
+            damit es nicht zu Problemen kommt.
+        \end{leftbar}
+
+    \item \textit{Die Methode generateObjects(HashMap<GridVertex> grid, Road road, Node domeAssetsRootNode, int seed) wurde entfernt}
+        \begin{leftbar}[0.9\linewidth]
+            Die Shablonenmethode wurde entfernt, damit ein DomeGenerator selbst entscheiden kann, welche Funktionalität er in Anspruch nimmt.
+        \end{leftbar}
+    
+\end{itemize}
+
+\subsubsection{DomeAssetGenerator}
+\begin{itemize}
+    \item \textit{Der Konstruktor DomeObjectGenerator(GenerationConfig generationConfig,String biom, AssetManager assetManager) wurde verändert}
+        \begin{leftbar}[0.9\linewidth]
+            Der Konstruktor wurde dem des AbstractDomeAssetGenerator angepasst.\par
+
+            Das biom wird somit nicht mehr übergeben, da dieses in den Methoden als Parameter übergeben wird.
+        \end{leftbar}
+    
+\end{itemize}
+
+\subsubsection{Dome}
+\begin{itemize}
+    \item \textit{Neue Attribute wurden hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Die landscapeResolution bestimmt , wie viele GridVertecis in ein Dreieck der Map aufgenommen werden, das ist für die Triangulation
+            nötig.\par
+
+            Das material bestimmt das Material für den gesammten Dome.\par
+
+            Das coloring wird verwendet, um eine Strategie für das Färben der Landschaft zu setzen.
+        \end{leftbar}
+
+    \item \textit{Der Konstruktor  Dome(HashMap<GridVertex> gird, Road road, Node domeAssetsRootNode) wurde erweitert}
+        \begin{leftbar}[0.9\linewidth]
+            Konstruktor wurde an die neuen Attribute angepasst.
+        \end{leftbar}
+    
+\end{itemize}
+
+
+
+
+
+
+
+\subsubsection{ISceneItem}
+\begin{itemize}
+    \item \textit{Methoden hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Die Methoden getEntryFram(), getExitFrame wurden hinzugefügt. Diese geben den Querschnitt der Road am ersten und letzten
+            RoadCursor an. Diese Information ist für den CullingManager nötig.\par
+        \end{leftbar}
+\end{itemize}
+
+
+\subsubsection{ITunnelGenerator}
+\begin{itemize}
+    \item \textit{Methodenschnittstelle verändert: ITunnel generate(int seed, Vector3f targetPosition, float horizontalAngle, float verticalAngle,
+    Vector2f entryWidth, Set<GeneratorSettings> flags)}
+        \begin{leftbar}[0.9\linewidth]
+            Zielpunkt wird durch eine Position und zwei Winkel bestimmt anstatt, durch einen RoadCursor.\par
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{TunnelGenerator}
+\begin{itemize}
+    \item \textit{Konstruktorschnittstelle verändert: TunnelGenerator(GenerationConfig generationConfig, AssetProvider assetProvider)}
+        \begin{leftbar}[0.9\linewidth]
+            AssetManager wird AssetProvider ausgetauscht.\par
+        \end{leftbar}
+\end{itemize}
+
+
+\subsubsection{Tunnel}
+\begin{itemize}
+    \item \textit{Konstruktorschnittstelle verändert: Tunnel(Road road, Node tunnelAssetRootNode)}
+        \begin{leftbar}[0.9\linewidth]
+            HashMap von GridVertex verworfen\par
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{RoomSelector}
+\begin{itemize}
+    \item \textit{Konstruktorschnittstelle verändert: RoomSelector(GenerationConfig generationConfig, AssetProvider assetProvider, int vehicleCount)}
+        \begin{leftbar}[0.9\linewidth]
+            AssetManager durch AssetProvider ausgetauscht, Fahrzeugeanzahl hinzugefüht\par
+        \end{leftbar}
+\end{itemize}
+
+
+\subsubsection{DynamicRoomGenerator}
+\begin{itemize}
+    \item \textit{Konstruktorschnittstelle verändert: DynamicRoomGenerator(GenerationConfig generationConfig, AssetProvider assetProvider, int vehicleCount)}
+        \begin{leftbar}[0.9\linewidth]
+            AssetManager durch AssetProvider ausgetauscht, Fahrzeugeanzahl hinzugefüht\par
+        \end{leftbar}
+\end{itemize}
+
+
+\subsubsection{StaticRoomGenerator}
+\begin{itemize}
+    \item \textit{Klasse nicht implementiert}
+        \begin{leftbar}[0.9\linewidth]
+            Alle Räume werden durch den DynamicRoomGenerator generiert.\par
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{StaticRoom}
+\begin{itemize}
+    \item \textit{Klasse nicht implementiert}
+        \begin{leftbar}[0.9\linewidth]
+            Alle Räume sind durch den DynamicRoomGenerator generierte DynamicRooms.\par
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{DynamicRoom}
+\begin{itemize}
+    \item \textit{Konstruktorschnittstelle verändert: DynamicRoom(Road road, Node assetRootNode)}
+        \begin{leftbar}[0.9\linewidth]
+            HashMap von GridVertex verworfen\par
+        \end{leftbar}
+\end{itemize}
+
+
+\subsubsection{IRoadGenerator}
+\begin{itemize}
+    \item \textit{Methodenschnittstellen verändert: Road generateSphereRoad(int seed, float radius, String biom, Vector2f entryWidth, float exitAngle,
+    Set<GeneratorSettings> flags)}
+        \begin{leftbar}[0.9\linewidth]
+            Set<GeneratorSettings> anstatt Collection<GeneratorSettings>\par
+        \end{leftbar}
+    \item \textit{Methodenschnittstelle verändert: Road generateConnectingRoad(int seed, RoadCursor target, Vector2f entryWidth,
+    String settings, Set<GeneratorSettings> flags)}
+        \begin{leftbar}[0.9\linewidth]
+            Set<GeneratorSettings> anstatt Collection<GeneratorSettings> sowie String setting hinzugefügt,
+            welche die Konfiguration zur Streckengenerierung auswählt.\par
+        \end{leftbar}
+    \item \textit{Methodenschnittstelle verändert: Road generateCuboidRoad(int seed, Vector3f cuboidDimensions, Vector2f entryWidth, float exitAngle,
+    String settings, Set<GeneratorSettings> flags)}
+        \begin{leftbar}[0.9\linewidth]
+            Set<GeneratorSettings> anstatt Collection<GeneratorSettings> sowie String setting hinzugefügt,
+            welche die Konfiguration zur Streckengenerierung auswählt.\par
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{RoadCursor}
+\begin{itemize}
+    \item \textit{Methoden aufgeteilt}
+        \begin{leftbar}[0.9\linewidth]
+            getAngle() in 3 separate Methoden für X,Y,Z Winkle aufgeteilt.\par
+        \end{leftbar}getRoadFrame()
+    \item \textit{Methoden hinzugefügt: getRoadFrame()}
+        \begin{leftbar}[0.9\linewidth]
+            Gibt 4 Punkte zurück welche die Querschnittsfläche der Strecke in diesem RoadCursor beschreiben.\par
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{RoadObject}
+\begin{itemize}
+    \item \textit{Konstruktorschnittstelle verändert: RoadObject(Vector3f position, int index)}
+        \begin{leftbar}[0.9\linewidth]
+            Index des RoadCursors hinzugefügt\par
+        \end{leftbar}
+    \item \textit{Methoden hinzugefügts}
+        \begin{leftbar}[0.9\linewidth]
+            Getter und setter für Index\par
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{MathUtility - Klasse hinzugefügt}
+Klasse zur Bereitstellung Mathematischer operationen.
+\begin{itemize}
+    \item \textit{Methode : public static Vector3f rotateVectorCC(Vector3f vec, Vector3f axis, double theta)}
+        \begin{leftbar}[0.9\linewidth]
+            Rotiert Vektor um Achse (Quelle: StackOverlfow)\par
+        \end{leftbar}
+    \item \textit{Methoden : public static float limitAbsValue(float value, float limit)}
+        \begin{leftbar}[0.9\linewidth]
+            Begrenzt absuluten Wert von value\par
+        \end{leftbar}
+\end{itemize}
+
+
+\subsubsection{AssetsUtility - Klasse hinzugefügt}
+Klasse zur Bereitstellung von Operationen welche zur Transformation von Assets bereitstellt.
+\begin{itemize}
+    \item \textit{Methode : public static Node generateRoadAsset(Road road, Spatial asset, Vector3f assetDimensions, int segmentsPerAsset, boolean scaleOnY)}
+        \begin{leftbar}[0.9\linewidth]
+            Skaliert ein Asset über die Länge der Strecke.\par
+        \end{leftbar}
+    \item \textit{Methoden : public static void setLightToRoot(Node rootNode, Node parentNode)}
+        \begin{leftbar}[0.9\linewidth]
+            Hängt rekursiv alle Lichter des Szenen Grafs an die rootNode.\par
+        \end{leftbar}
+    \item \textit{Methoden : public static Node tranformAssetAlongRoadCursor(RoadCursor roadCursor, Spatial asset,
+        Vector3f assetDimensions, boolean scaleOnY)}
+        \begin{leftbar}[0.9\linewidth]
+            Skaliert ein Asset entsprechend der Breite und Höhe der Strecke in gegebenem RoadCursor.\par
+        \end{leftbar}
+    \item \textit{Methoden : public static Spatial transformBetweenPoints(Vector3f pointA, Vector3f pointB,
+    Vector3f pointC, Vector3f pointD, Spatial asset, Vector3f assetDimensions)}
+        \begin{leftbar}[0.9\linewidth]
+            Skaliert ein Asset Zwischen vier Punkten.\par
+        \end{leftbar}
+\end{itemize}

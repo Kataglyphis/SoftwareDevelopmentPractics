@@ -1,0 +1,47 @@
+@startuml domeGenerationSequenz
+!include styles.puml
+
+'title Einfaches __'domegeneration'__ Beispiel
+
+
+
+''''''''''''Creates''''''''''''''''''''''''''
+
+-> "__:DomeGenerator__": generateDome(seed, sphereRadius)
+activate "__:DomeGenerator__"
+
+create "__:IRoadGenerator__"
+"__:DomeGenerator__" --> "__:IRoadGenerator__": <<create>> RoadGenerator(generationConfig)
+
+create "__:AbstractNoiseGenerator__"
+"__:DomeGenerator__" --> "__:AbstractNoiseGenerator__": <<create>> SimplexNoiseGenerator(generationConfig, assetManager, biom)
+
+create "__:AbstractDomeAssetGenerator__"
+"__:DomeGenerator__" --> "__:AbstractDomeAssetGenerator__": <<create>> DomeAssetGenerator(generationConfig, assetManager, biom)
+
+
+
+''''''''''''Generierungsschritte''''''''''''''''''''
+"__:DomeGenerator__" -> "__:IRoadGenerator__": generateSphereRoad(seed, radius, biom, entryWidth, exitAngle, flags)
+activate "__:IRoadGenerator__"
+"__:IRoadGenerator__" --> "__:DomeGenerator__"
+destroy "__:IRoadGenerator__"
+
+"__:DomeGenerator__" -> "__:AbstractNoiseGenerator__": makeNoise(grid, seed)
+activate "__:AbstractNoiseGenerator__"
+"__:AbstractNoiseGenerator__" --> "__:DomeGenerator__" 
+destroy "__:AbstractNoiseGenerator__"
+
+"__:DomeGenerator__" -> "__:AbstractDomeAssetGenerator__": generateObjects(grid, road, domeAssetsRootNode, seed)
+activate "__:AbstractDomeAssetGenerator__"
+"__:AbstractDomeAssetGenerator__" --> "__:DomeGenerator__"
+destroy "__:AbstractDomeAssetGenerator__"
+
+
+"__:DomeGenerator__" --> "__:DomeGenerator__": dome = <<creates>> Dome(grid, road, domeAssetsRootNode)
+
+
+<-- "__:DomeGenerator__" : dome
+deactivate "__:DomeGenerator__"
+
+@enduml

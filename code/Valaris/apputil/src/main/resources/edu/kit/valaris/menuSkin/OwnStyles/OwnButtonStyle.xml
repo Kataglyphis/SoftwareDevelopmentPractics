@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty-styles>
+
+    <style id="DefaultButton#panel">
+        <attributes childLayout="center" childClip="true" backgroundColor="#FFFFFF" padding="0px,2px"/>
+        <effect>
+            <onActive name="border" border="4px" color="#000000" post="true" inset="0px"/>
+            <onHover name="border" color="#FFFFFF" post="true" inset="-4px"/>
+            <onFocus name="border" color="#FFFFFF" post="true" inset="-4px"/>
+        </effect>
+    </style>
+
+    <style id="DefaultButton#text" base="DefaultText">
+        <attributes align="center" valign="center" textHAlign="center" textVAlign="center" visibleToMouse="false"/>
+        <effect>
+            <onEnabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+            <onDisabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="SinglePlayerButton#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/SingleplayButton.png" paddingLeft="7px"
+                    paddingRight="7px" width="20%" height="8%" childLayout="center"
+                    visibleToMouse="true" post="true"/>
+
+        <effect>
+            <onHover name="focus"/>
+            <onFocus name="border" color="#FFFFFF" post="true"/>
+        </effect>
+    </style>
+
+    <style id="SinglePlayerButton#text" base="DefaultText">
+        <attributes align="center" valign="center" textHAlign="center" textVAlign="center" visibleToMouse="false"/>
+        <effect>
+            <onEnabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+            <onDisabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="MultiPlayerButton#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/MultiplayButton.png" paddingLeft="7px"
+                    paddingRight="7px" width="20%" height="8%" childLayout="center"
+                    visibleToMouse="true"/>
+
+        <effect>
+            <onHover name="focus"/>
+            <onFocus name="border" color="#FFFFFF" post="true"/>
+        </effect>
+    </style>
+
+    <style id="MultiPlayerButton#text" base="DefaultText">
+        <attributes align="center" valign="center" textHAlign="center" textVAlign="center" visibleToMouse="false"/>
+        <effect>
+            <onEnabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+            <onDisabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="EinstellungenButton#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/EinstellungenButton_New.png" paddingLeft="7px"
+                    paddingRight="7px" width="20%" height="8%" childLayout="center"
+                    visibleToMouse="true"/>
+
+        <effect>
+            <onHover name="focus"/>
+            <onFocus name="border" color="#FFFFFF" post="true"/>
+        </effect>
+    </style>
+
+    <style id="EinstellungenButton#text" base="DefaultText">
+        <attributes align="center" valign="center" textHAlign="center" textVAlign="center" visibleToMouse="false"/>
+        <effect>
+            <onEnabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+            <onDisabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="BeendenButton#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/CloseButton.png" paddingLeft="7px"
+                    paddingRight="7px" width="20%" height="8%" childLayout="center"
+                    visibleToMouse="true"/>
+
+        <effect>
+            <onHover name="focus"/>
+            <onFocus name="border" color="#FFFFFF" post="true"/>
+        </effect>
+    </style>
+
+    <style id="BeendenButton#text" base="DefaultText">
+        <attributes align="center" valign="center" textHAlign="center" textVAlign="center" visibleToMouse="false"/>
+        <effect>
+            <onEnabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+            <onDisabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="BackButton#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/BackButtonBlack.png"
+                    width="80%" height="140%" childLayout="center" align="right" valign="top"
+                    visibleToMouse="true" />
+
+        <effect>
+            <onHover name="imageOverlay" filename="edu/kit/valaris/menuSkin/Bilder/Buttons/BackButtonGrey.png"
+                     post="true" />
+            <onFocus name="imageOverlay" filename="edu/kit/valaris/menuSkin/Bilder/Buttons/BackButtonGrey.png"
+                     post="true" />
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="EditSeedNameButton#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/helpp.png"
+                    width="30px" height="30px" childLayout="center" align="right" valign="top"
+                    visibleToMouse="true" />
+
+        <effect>
+            <onHover name="border" border="1px" color="#FFFFFF" />
+            <onFocus name="border" border="1px" color="#FFFFFF" />
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="SaveSeedNameButton#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/checkmark.png"
+                    width="23px" height="23px" childLayout="center" align="right" valign="top"
+                    visibleToMouse="true" />
+
+        <effect>
+            <onHover name="border" border="5px" color="#FFFFFF" />
+            <onFocus name="border" border="5px" color="#FFFFFF" />
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="RoundStartButton#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/RoundButton.png" paddingLeft="7px"
+                    paddingRight="7px" width="20%" height="17%" childLayout="center"
+                    visibleToMouse="true" post="true"/>
+
+        <effect>
+            <onHover name="border" color="#FFFFFF" post="true"/>
+            <onFocus name="border" color="#FFFFFF" post="true"/>
+        </effect>
+    </style>
+
+    <style id="RoundStartButton#text">
+        <attributes font="edu/kit/valaris/menuSkin/Fonts/Franklin-36.fnt" color="#000000" align="center" valign="center" textHAlign="center" textVAlign="center" visibleToMouse="false"/>
+        <effect>
+            <onEnabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+            <onDisabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="BackToButton#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/BackToButton_new.png" paddingLeft="7px"
+                    paddingRight="7px" width="20%" height="8%" childLayout="center"
+                    visibleToMouse="true" post="true"/>
+
+        <effect>
+            <onHover name="focus"/>
+            <onFocus name="border" color="#FFFFFF" post="true"/>
+        </effect>
+    </style>
+
+    <style id="BackToButton#text" base="DefaultText">
+        <attributes align="center" valign="center" textHAlign="center" textVAlign="center" visibleToMouse="false"/>
+        <effect>
+            <onEnabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+            <onDisabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="SaveButton#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/SaveButton_New.png" paddingLeft="7px"
+                    paddingRight="7px" width="20%" height="8%" childLayout="center"
+                    visibleToMouse="true" post="true"/>
+
+        <effect>
+            <onHover name="focus"/>
+            <onFocus name="border" color="#FFFFFF" post="true"/>
+        </effect>
+    </style>
+
+    <style id="SaveButton#text" base="DefaultText">
+        <attributes align="center" valign="center" textHAlign="center" textVAlign="center" visibleToMouse="false"/>
+        <effect>
+            <onEnabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+            <onDisabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="BackToMainButtonRound#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/BackToMainButtonRound.png" paddingLeft="7px"
+                    paddingRight="25px" width="10%" height="20%" childLayout="center"
+                    visibleToMouse="true" post="true"/>
+
+        <effect>
+            <onHover name="focus"/>
+            <onFocus name="border" color="#FFFFFF" post="true"/>
+        </effect>
+    </style>
+
+    <style id="BackToMainButtonRound#text" base="DefaultText">
+        <attributes align="right" valign="center" textHAlign="center" textVAlign="center" visibleToMouse="false"/>
+        <effect>
+            <onEnabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+            <onDisabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="SaveTrackButton#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/SaveButtonRound.png" paddingLeft="7px"
+                    paddingRight="25px" width="10%" height="20%" childLayout="center"
+                    visibleToMouse="true" post="true"/>
+
+        <effect>
+            <onHover name="focus"/>
+            <onFocus name="border" color="#FFFFFF" post="true"/>
+        </effect>
+    </style>
+
+    <style id="SaveTrackButton#text" base="DefaultText">
+        <attributes align="right" valign="center" textHAlign="center" textVAlign="center" visibleToMouse="false"/>
+        <effect>
+            <onEnabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+            <onDisabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="PlayAgainButton#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/PlayAgainButton.png" paddingLeft="7px"
+                    paddingRight="25px" width="10%" height="20%" childLayout="center"
+                    visibleToMouse="true" post="true"/>
+
+        <effect>
+            <onHover name="focus"/>
+            <onFocus name="border" color="#FFFFFF" post="true"/>
+        </effect>
+    </style>
+
+    <style id="PlayAgainButton#text" base="DefaultText">
+        <attributes align="right" valign="center" textHAlign="center" textVAlign="center" visibleToMouse="false"/>
+        <effect>
+            <onEnabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+            <onDisabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+        </effect>
+    </style>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <style id="PopupButton#panel">
+        <attributes backgroundImage="edu/kit/valaris/menuSkin/Bilder/Buttons/Button.png"  childLayout="center"
+                    visibleToMouse="true" post="true"/>
+        <effect>
+            <onHover name="border" color="#FFFFFF" post="true"/>
+        </effect>
+    </style>
+
+    <style id="PopupButton#text" base="DefaultText">
+        <attributes align="center" valign="center" textHAlign="center" textVAlign="center" visibleToMouse="false"/>
+        <effect>
+            <onEnabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+            <onDisabled name="textColorAnimated" startColor="#000000" endColor="#000000" post="false" length="150"/>
+        </effect>
+    </style>
+</nifty-styles>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty-controls>
+
+    <controlDefinition style="nifty-progressbar" name="progressbar"
+                       controller="edu.kit.valaris.menu.controls.progressbar.ProgressBarControl">
+        <panel style="#panel" focusable="false" childLayout="absolute">
+            <panel childLayout="absolute" width="100%" height="100%" >
+                <panel id="#indicator" style="#indicator" width="$progress" />
+            </panel>
+            <text id="#text" style="#text" text="$text"/>
+        </panel>
+    </controlDefinition>
+
+</nifty-controls>

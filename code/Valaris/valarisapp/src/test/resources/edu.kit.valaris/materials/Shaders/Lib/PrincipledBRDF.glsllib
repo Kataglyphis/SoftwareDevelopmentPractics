@@ -1,0 +1,186 @@
+//authors: Jonas Heinle, Frederik Lingg
+
+#import "edu.kit.valaris/materials/Shaders/Lib/ImportanceSample.glsllib"
+#import "Common/ShaderLib/Optics.glsllib"
+
+#ifndef PI
+    #define PI 3.1415926535
+#endif
+
+//function signatures
+//material
+vec3 calcPixelColor(in vec3 color, in float roughness, in float specular, in float metalness, in float intensity,
+        in float cosThetaL, in float cosThetaV, in float cosThetaD, in float cosThetaH);
+
+//BRDF Terms
+float D(in float roughness, in float cosThetaH);
+vec3 F(in vec3 isa, in float cosThetaD);
+float G(in float roughness, in float cosThetaL, in float cosThetaV);
+
+//image based lighting
+//G function for image based lighting
+float GIBL(in float roughness, in float cosThetaL, in float cosThetaV);
+
+//view and normal need to be in worldspace to produce accurate reflections
+vec3 sampleImage(in vec3 color, in float roughness, in float specular, in float metalness, in ENVMAP map, in int numSamples,
+        in vec3 view, in vec3 normal);
+
+//end functionprototyps
+
+//calculating resulting pixel color, linear interpolation between dielectric and metallic
+vec3 calcPixelColor(in vec3 color, in float roughness, in float specular, in float metalness, in float intensity,
+        in float cosThetaL, in float cosThetaV, in float cosThetaD, in float cosThetaH) {
+    //convert parameters from param range to values used in brdf
+    float isa = specular * 0.08;
+
+    //clamp dots
+    cosThetaL = clamp(cosThetaL, 0.0, 1.0);
+    cosThetaV = clamp(cosThetaV, 0.0, 1.0);
+    cosThetaD = clamp(cosThetaD, 0.0, 1.0);
+    cosThetaH = clamp(cosThetaH, 0.0, 1.0);
+
+    //only calc lighting if actuall lit
+    if(cosThetaL > 0) {
+        //reflected light
+        vec3 fresnelDE = F(vec3(isa), cosThetaD);
+        vec3 fresnelME = F(color, cosThetaD);
+        vec3 fresnel = mix(fresnelDE, fresnelME, metalness);
+
+        //distribution and microsurface shadow
+        float dist = D(roughness, cosThetaH);
+        float geom = G(roughness, cosThetaL, cosThetaV);
+
+        //shadow coefficient
+        float shadow = 1.0 / 4.0;
+
+        //diffuse term
+        vec3 diff = (color / PI);
+
+        //calc result
+        vec3 resultDiffuse = mix((1 - fresnel) * diff, vec3(0.0), metalness);
+        vec3 resultReflection = (dist * geom * shadow) * fresnel;
+
+        return (resultDiffuse + resultReflection) * cosThetaL * intensity;
+    }
+
+    return vec3(0.0);
+}
+
+//GGX specular
+float D(in float roughness, in float cosThetaH) {
+    float alpha = pow(roughness, 2);
+
+    float alphaSqrd = alpha * alpha;
+    float cosSqrd = cosThetaH * cosThetaH;
+    float tmp = cosSqrd * (alphaSqrd - 1) + 1;
+
+    return alphaSqrd / (PI * tmp * tmp);
+}
+
+//schlick - fresnel
+vec3 F(in vec3 isa, in float cosThetaD) {
+    //gaussian exponent
+    float exp = (-5.55473 * cosThetaD - 6.98316) * cosThetaD;
+    return isa + (1 - isa) * pow(2, exp);
+}
+
+//specular G, geometry
+float G(in float roughness, in float cosThetaL, in float cosThetaV) {
+    //calc k for schlick approximation
+    float k = (roughness + 1);
+    k = (k * k) / 8.0;
+
+    float g1v = 1.0 / (cosThetaV * (1 - k) + k);
+    float g1l = 1.0 / (cosThetaL * (1 - k) + k);
+
+    return g1l * g1v;
+}
+
+float GIBL(in float roughness, in float cosThetaL, in float cosThetaV) {
+    //calc k for schlick approximation
+    float k = roughness;
+    k = (k * k) / 2.0;
+
+    float g1v = 1.0 / (cosThetaV * (1 - k) + k);
+    float g1l = 1.0 / (cosThetaL * (1 - k) + k);
+
+    return g1l * g1v;
+}
+
+//function for image based lighting
+vec3 sampleImage(in vec3 color, in float roughness, in float specular, in float metalness, in ENVMAP map, in int numSamples,
+        in vec3 view, in vec3 normal) {
+    //convert parameters
+    float isa = specular * 0.08;
+    vec3 colorD = color/PI;
+
+    vec3 refColor = vec3(0.0, 0.0, 0.0);
+    for(int i = 0; i < numSamples; i++) {
+        //calculate light and half vector for given sample
+        vec2 xi = hammersley(i, numSamples);
+
+        //sample ggx specular
+        vec3 h = sampleGGX(roughness, xi, normal);
+        vec3 l = calcLight(h, view);
+
+        //calculate dots
+        float cosThetaH = dot(normal, h);
+        float cosThetaL = dot(normal, l);
+        float cosThetaV = dot(normal, view);
+        float cosThetaD = dot(view, h);
+
+        //clamp dots
+        cosThetaL = clamp(cosThetaL, 0.0, 1.0);
+        cosThetaV = clamp(cosThetaV, 0.0, 1.0);
+        cosThetaD = clamp(cosThetaD, 0.0, 1.0);
+        cosThetaH = clamp(cosThetaH, 0.0, 1.0);
+
+        //calculate fresnel, which is important for both, specular and diffuse
+        vec3 fresnelDE = F(vec3(isa), cosThetaD);
+        vec3 fresnelME = F(color, cosThetaD);
+        vec3 fresnel = mix(fresnelDE, fresnelME, metalness);
+
+        //only do sample if is actually lit
+        if(cosThetaL > 0) {
+            //get sample from environment map
+            vec3 reflectionColor = Optics_GetEnvColor(map, -l).rgb;
+
+            //calculate G
+            float geom = GIBL(roughness, cosThetaL, cosThetaV);
+
+            //pdf = D * cosThetaH / (4 * cosThetaD)
+            vec3 reflectionIntensity = (fresnel * geom * cosThetaD) / (cosThetaH);
+
+            refColor += reflectionColor * reflectionIntensity;
+        }
+
+        //sample diffuse
+        //for diffuse, the sampled vector is the light vector
+        vec3 ld = sampleLambert(xi, normal);
+        vec3 hd = normalize(ld + view);
+
+        //calculate dots
+        float cosThetaLd = dot(normal, ld);
+        float cosThetaDd = dot(view, hd);
+
+        //clamp dots
+        cosThetaLd = clamp(cosThetaLd, 0.0, 1.0);
+        cosThetaDd = clamp(cosThetaDd, 0.0, 1.0);
+
+        vec3 fresnelDEd = F(vec3(isa), cosThetaDd);
+        vec3 fresnelMEd = F(color, cosThetaDd);
+        vec3 fresneld = mix(fresnelDEd, fresnelMEd, metalness);
+
+        //only do sample if lit
+        if(cosThetaLd > 0) {
+            //get sample from environment map
+            vec3 reflectionColor = Optics_GetEnvColor(map, -ld).rgb;
+
+            vec3 reflectionIntensity = mix((1 - fresneld) * colorD, vec3(0.0), metalness);
+
+            refColor += reflectionColor * reflectionIntensity;
+        }
+    }
+
+    return refColor / numSamples;
+}

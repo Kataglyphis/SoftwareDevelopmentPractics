@@ -1,0 +1,19 @@
+{
+  "key" : "ComputerDesk",
+  "path" : "/edu.kit.valaris/assets/roomAssets/Computer/ComputerDeskA2.j3o",
+
+  "nodes" : [],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "KeyBoard/Plane.0051", "material" : "/edu.kit.valaris/assets/roomAssets/Computer/BlackPlastik.j3m"},
+    {"path" : "Computer/Cube.0011", "material" : "/edu.kit.valaris/assets/roomAssets/Computer/BlackPlastik.j3m"},
+
+    {"path" : "ScreenFrame1/Plane.0061", "material" : "/edu.kit.valaris/assets/roomAssets/Computer/BlackPlastik.j3m"},
+    {"path" : "ScreenFrame2/Plane.0091", "material" : "/edu.kit.valaris/assets/roomAssets/Computer/BlackPlastik.j3m"},
+    {"path" : "Screen1/Plane.0071", "material" : "/edu.kit.valaris/assets/roomAssets/Computer/GlowingWhiteBlue.j3m"},
+    {"path" : "Screen2/Plane.0081", "material" : "/edu.kit.valaris/assets/roomAssets/Computer/GlowingWhiteBlue.j3m"},
+
+    {"path" : "Table/Plane1", "material" : "/edu.kit.valaris/assets/roomAssets/Computer/WhiteMetal.j3m"}
+  ],
+  "animations" : []
+}

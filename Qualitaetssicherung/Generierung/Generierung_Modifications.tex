@@ -1,0 +1,61 @@
+\subsection{Generierung}
+
+\subsubsection{Neue Features}
+\begin{itemize}
+    \item \textit{Bepflanzung der Kuppeln}
+        \begin{leftbar}[0.9\linewidth]
+            Es können nun für ein bestimmtes Biom eine Menge von Bäumen(bzw. ähnliche Pflanzen) definiert werden,
+            welche dann in einer entsprechenden Kuppel platziert werden. Bei der Platzierung werden die Objekte
+            anhand einer, im \textit{DomeAssetGenerator} definierten, Dichtefunktion verschoben, wie stark 
+            kann durch einen Parameter pro Biom bestimmt werden.
+            Desweiteren kann man pro Biom unter anderem die Asset-Skalierung und Farben der Blätter festlegen.
+        \end{leftbar}
+
+    \item \textit{Assets als Kuppeldach}
+        \begin{leftbar}[0.9\linewidth]
+            Es ist nun möglich Assets als Dach für eine Kuppel zu verwenden. Es können auch verschiedene Assets
+            definiert werden, aus denen dann ein zufälliges(abhängig vom Seed) ausgesucht wird.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{Änderungen existierender Komponenten}
+\begin{itemize}
+    \item \textit{Methode \textit{generateScenegraph()} parallelisiert}
+        \begin{leftbar}[0.9\linewidth]
+            \textit{GenerateScenegraph()} der Klasse Map, ruft nun die \textit{generateScenegraph()} Methoden
+            der ISceneItem parallelisiert auf und beschleunigt so den Generierungsprozess deutlich.
+        \end{leftbar}
+    
+    \item \textit{'Colring' von Landschaften verschönert}
+        \begin{leftbar}[0.9\linewidth]
+            Es entstehen nun keine ungewollten (bunte) Dreiecksstrukturen mehr, da das festlegen der 'Oberflächen'
+            an einem Punkt optimiert wurde.
+        \end{leftbar}
+
+    \item \textit{Verbesserte Räume}
+        \begin{leftbar}[0.9\linewidth]
+            Ein weiterer Raumtyp wurde hinzugefügt, sowie die Asset-Platzierung in räumen optimiert.
+        \end{leftbar}
+
+    \item \textit{Unterschiedliche Strecken}
+        \begin{leftbar}[0.9\linewidth]
+            Unterschiedliches Straßen Assets in Tunneln, Kuppeln und Räumen.
+        \end{leftbar}
+
+    \item \textit{Neue Biome}
+        \begin{leftbar}[0.9\linewidth]
+            Es wurden 4 fertige Biome definiert, die sich in den Punkten Untergrund, Farben und platzierten Objekten
+            unterscheiden.
+        \end{leftbar}
+
+    \item \textit{Kuppeldach wurde durch Asset ersetzt}
+        \begin{leftbar}[0.9\linewidth]
+            Das Dach einer Kuppel besteht nun aus einem, in Blender erstelltem, Asset.
+        \end{leftbar}
+
+    \item \textit{Definition von 3 Kartentypen}
+        \begin{leftbar}[0.9\linewidth]
+            Es wurden ein kleines, ein mittleres und ein großes Biom definiert, die sich in der Anzahl der Kuppeln, 
+            Tunneln und Räumen unterscheiden. Ebenso sind di möglichen Größen eines solchen \textit{ISceneItems} unterschiedlich.
+        \end{leftbar}
+\end{itemize} 

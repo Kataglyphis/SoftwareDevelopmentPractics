@@ -1,0 +1,188 @@
+\subsubsection{generation}
+    \textit{Generation} ist das Modul welches den Gesammten
+    Generierungsprozess enthält. Die gesammte Schnittstelle nach außen
+    ist im Paket \textit{mapgeneration} enthalten.\par
+
+
+
+    \paragraph{\underline{ISceneItem}} \mbox{}\par
+        Elternschnittstelle der Schnittstellen aller Produkte der Subgeneratoren.
+        Es definiert die Funktionalität einen SceneGraph aus einem Objekt generieren zu können.\par
+            
+        \textbf{Methoden}	
+        \begin{itemize}
+            \item  \textit{+ generateSceneGraph(): Node}
+                \begin{leftbar}[0.9\linewidth]
+                    Berechnet den SceneGraph aus diesem Objekt.\\
+                    \textbf{@return} Wurzelknoten, des SceneGraph.
+                \end{leftbar}   
+        \end{itemize}
+
+
+    \paragraph{\underline{GeneratorSettings}} \mbox{}\par
+        Enum welches eine Reihe von Optionen definiert, welche bei unterschiedlichen
+        Schritten der Generation gesetzt und beachtet werden können.\par
+
+    \paragraph{\underline{GenerationConfig}} \mbox{}\par
+        Klasse zu Datenhaltung aller Konfigurationsparameter des Generierungsprozesses.
+        Daten selber werden zu Begin aus einer JSON Datei gelesen.\par
+    
+
+
+    \paragraph{\underline{RandomNumberGenerator}} \mbox{}\par
+        Elternschnittstelle der Schnittstellen aller Produkte der Subgeneratoren.
+        Es definiert die Funktionalität einen SceneGraph aus einem Object generieren zu können.\par
+        
+        \textbf{Attribute}	
+        \begin{itemize}
+            \item  \textit{- Math.Random random}
+                \begin{leftbar}[0.9\linewidth]
+                    Zufallsgenerator zur Generierung von Pseudozufallszahlen.\\
+                \end{leftbar}   
+        \end{itemize}
+
+        \pagebreak
+
+        \textbf{Methoden}
+        \begin{itemize}
+            \item  \textit{+ RandomNumberGenerator(int seed)}
+                \begin{leftbar}[0.9\linewidth]
+                    Erzeugt einen RandomNumberGenerator anhand eines Seeds.\\
+                    \textbf{@param seed} Ganzzahl als Ausgangswert zur Generierung einer Reihe von Pseudozufallszahlen.
+                \end{leftbar}   
+
+            \item  \textit{+ getNewSeed(): int}
+                \begin{leftbar}[0.9\linewidth]
+                    Gibt einen neuen Seed zurück, welcher aus dem aktuellen Seed berechnet wird.\\
+                    \textbf{@return} Ganzzahl als Ausgangswert zur Generierung einer Reihe von Pseudozufallszahlen.
+                \end{leftbar}
+            
+            \item  \textit{+ random(): float}
+                \begin{leftbar}[0.9\linewidth]
+                    Gibt eine Pseudozufallsgleitkommazahl zwischen 0 und 1 zurück.\\
+                    \textbf{@param seed} Pseudozufallsgleitkommazahl zwischen 0 und 1.
+                \end{leftbar}   
+        \end{itemize}
+
+        \paragraph{\underline{GridVertex}} \mbox{}\par
+            Datentyp für eine Punkt in einem 3-dimensionalen Gitter\par
+        
+        \textbf{Attribute}	
+        \begin{itemize}
+            \item  \textit{- Vector3f position}
+                \begin{leftbar}[0.9\linewidth]
+                    Position des \textit{GridVertex}.\\
+                \end{leftbar}
+
+            \item  \textit{- Color color}
+                \begin{leftbar}[0.9\linewidth]
+                    Farbkoordinaten des \textit{GridVertex}.\\
+                \end{leftbar}
+
+            \item  \textit{- final int[] index}
+                \begin{leftbar}[0.9\linewidth]
+                    3-dimensionaler Index des \textit{GridVertex} im Gitter.\\
+                \end{leftbar}
+        \end{itemize}
+
+        \textbf{Methoden}	
+        \begin{itemize}
+            \item  \textit{~ GridVertex(Vector3f position, int indexX, int indexY, int indexZ)}
+                \begin{leftbar}[0.9\linewidth]
+                    \textbf{@param position} Position des \textit{GridVertex}\\
+                    \textbf{@param indexX} X-index des \textit{GridVertex} im Gitter.\\
+                    \textbf{@param indexY} Y-index des \textit{GridVertex} im Gitter.\\
+                    \textbf{@param indexZ} Z-index des \textit{GridVertex} im Gitter.
+                \end{leftbar}
+
+            \item  \textit{+ hashCode(): int}
+                \begin{leftbar}[0.9\linewidth]
+                    Berechnet eine Hashwert aus dem Index des \textit{GridVertex}.\\
+                    \textbf{@return} Den Hashwert.
+                \end{leftbar}
+            \pagebreak
+            \item  \textit{+ equals(Object o): boolean}
+                \begin{leftbar}[0.9\linewidth]
+                    Implementation der \textit{equals} Methode.\\
+                    Vergleicht zwei \textit{GridVertex} auf ihren Index.\\
+                    \textbf{@param o} Das Objekt mit dem Verglichen werden soll.\\
+                    \textbf{@return} Wahr, falls \textit{o} ein \textit{GridVertex} mit gleichem Index ist. Sonst falsch.
+                \end{leftbar}
+
+            \item  \textit{~ getIndex(): int[]}
+                \begin{leftbar}[0.9\linewidth]
+                    Gibt Index zurück.\\
+                    \textbf{@return} Index.
+                \end{leftbar}
+            
+            \item  \textit{~ setPosition(Vector3f position)}
+                \begin{leftbar}[0.9\linewidth]
+                    Setzt Position.\\
+                    \textbf{@param position} Position.
+                \end{leftbar}
+            
+            \item  \textit{~ setColor(float[] color)}
+                \begin{leftbar}[0.9\linewidth]
+                    Setzt Farbkoordinaten.\\
+                    \textbf{@param color} Farbkoordinaten.
+                \end{leftbar}
+
+            \item  \textit{~ getColor(): float[] color}
+                \begin{leftbar}[0.9\linewidth]
+                    Gibt Farbkoordinaten zurück.\\
+                    \textbf{@param color} Farbkoordinaten.
+                \end{leftbar}
+
+            \item  \textit{~ setMaterial(Material material)}
+                \begin{leftbar}[0.9\linewidth]
+                    Setzt Material.\\
+                    \textbf{@param material} Material.
+                \end{leftbar}
+
+            \item  \textit{~ getMaterial()}
+                \begin{leftbar}[0.9\linewidth]
+                    Gibt Material zurück.\\
+                    \textbf{@return} Material.
+                \end{leftbar}
+            \item  \textit{~ hasProperty(GridVertexProperty property): boolean}
+                \begin{leftbar}[0.9\linewidth]
+                    Prüft ob der \textit{GridVertex} die Gegebene \textit{GridVertexProperty} enthält.\\
+                    \textbf{@return} Wahr, falls der \textit{GridVertex} die gegebene \textit{GridVertexProperty} enthält. Sonst falsch.
+                \end{leftbar}
+            \item  \textit{~ setProperty(GridVertexProperty property): boolean}
+                \begin{leftbar}[0.9\linewidth]
+                    Fügt dem \textit{GridVertex} die Gegebene \textit{GridVertexProperty} hinzu.\\
+                    \textbf{@param property} Die \textit{GridVertexProperty}.
+                \end{leftbar}
+        \end{itemize}
+        \paragraph{\underline{GridVertexProperty}} \mbox{}\par
+        Enum welches eine Reihe von Eigenschaften definiert, welche bei unterschiedlichen
+        Schritten der Generation dem \textit{GridVertex} hinzugefügt und beachtet werden können.\par
+        
+        \pagebreak
+
+        \paragraph{\underline{CullingManager}} \mbox{}\par
+            Klasse welche das Abtrennen von von Statischen Objekten aus dem Scenegraph vornimmt, wenn dies durch\\
+            Türen vom Spieler verborgen sind.
+
+            \textbf{Methoden}	
+        \begin{itemize}
+            \item  \textit{+ CullingManager(Node rootNode)}
+                Erstellt einen neuen CullingManager zu einer Node
+                \begin{leftbar}[0.9\linewidth]
+                    \textbf{@param rootNode} Elternknoten der zu verwaltenden Knoten im Scenegraph.\\
+                \end{leftbar}
+            \item  \textit{+ setDoorStatus(int index, boolean isOpen)}
+                Setzt den Status einer Tür und stellt sicher das danach die Richtigen Knoten an der \textit{rootNode}\\
+                befestigt sind.
+                \begin{leftbar}[0.9\linewidth]
+                    \textbf{@param index} Index der Tür.\\
+                    \textbf{@param isOpen} Status der Tür. Wahr entspricht Offen. Falsch entspricht Geschlossen.\\
+                \end{leftbar}
+            \item  \textit{+ addNode(int index, Node node)}
+                Fügt der Menge der zu verwaltenden \textit{Nodes} eine \textit{Node} hinzu.
+                \begin{leftbar}[0.9\linewidth]
+                    \textbf{@param index} Index der nächsten Tür.\\
+                    \textbf{@param rootNode} Zu verwaltende \textit{Node}.\\
+                \end{leftbar}
+        \end{itemize}

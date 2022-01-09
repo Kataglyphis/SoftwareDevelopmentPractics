@@ -1,0 +1,69 @@
+@startuml mapgeneration
+
+scale 2
+!include styles.puml
+hide empty members
+
+
+''''''''''''''Begin'''''''''''''''
+package "mapgeneration" #DCEDC8 {
+
+
+    interface IMapbody {
+        +getRoad(): PhysicsRoad
+        +getItems(): Collection<PhysicsItem>
+
+        
+        +calc3DCoordinates(coordinates2D: Vector2f, index: int): Vector3f
+        +calc3DDirection(direction2D: Vector2f, index: int): Vector3f
+    }
+
+    interface IMapGenerator {
+        -generationConfig: GenerationConfig
+        +generate(seed: int, rootNode: Node: MapBody
+    }
+
+    note right of IMapGenerator : Schnittstelle des Gesammten \nGenerierungsprozesses nach außen
+    
+    class MapGenerator {
+        - domeGen: IDomeGenerator
+        - tunnelGen: ITunnelGenerator
+        - roomGen: IRoomGenerator
+        +MapGenerator(confPath: String, assetManager: AssetManager, appStateManager: AppStateManager))
+    }
+
+    class Map {
+        -road: Road
+        -sceneItems: List<List<ISceneItem>>
+        #Map(appStateManager: AppStateManager)
+        #addSceneItem(sceneItem: ISceneItem, cullingIndex : int)
+        #generateSceneGraph(): Node
+        #getRoad(): Road
+        #createMapBody(): MapBody
+
+    }
+    class MapBody {
+        - physicsRoad: PhysicsRoad
+        - physicItems: Collection<PhysicsItem>
+        - road: Road
+
+        #MapBody(physicsRoad: PhysicsRoad,
+        physicItems: Collection<PhysicsItem>, road: Road)
+
+
+    }
+
+    IMapGenerator <|-- MapGenerator
+    IMapbody <|-- MapBody
+
+
+    MapGenerator ..> Map: <<uses>>
+    MapBody <.. MapGenerator
+
+
+    ''''''''''''format''''''''''''''''''
+    MapBody -[hidden]right- MapGenerator
+
+
+}
+@enduml

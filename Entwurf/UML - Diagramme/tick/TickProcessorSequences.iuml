@@ -1,0 +1,127 @@
+@startuml TickProcessor_processEvents
+
+!include styles.iuml
+
+participant "__:TickProcessor__"
+participant "__events:List__"
+participant "__event:TickEvent__"
+participant "__eventProcessors:List__"
+participant "__processor:DynamicGameObjectProcessor__"
+
+-> "__:TickProcessor__" : processEvents(events)
+activate "__:TickProcessor__"
+
+loop for each event in events
+    "__:TickProcessor__" -> "__event:TickEvent__" : action = getAction()
+    activate "__event:TickEvent__"
+    "__event:TickEvent__" --> "__:TickProcessor__"
+    deactivate "__event:TickEvent__"
+
+    "__:TickProcessor__" -> "__eventProcessors:List__" : processor = get(action)
+    activate "__eventProcessors:List__"
+    "__eventProcessors:List__" --> "__:TickProcessor__"
+    deactivate "__eventProcessors:List__"
+
+    "__:TickProcessor__" -> "__processor:DynamicGameObjectProcessor__" : process(event)
+    activate "__processor:DynamicGameObjectProcessor__"
+    "__processor:DynamicGameObjectProcessor__" -> "__:TickProcessor__"
+    deactivate "__processor:DynamicGameObjectProcessor__"
+end
+
+<-- "__:TickProcessor__"
+deactivate "__:TickProcessor__"
+
+@enduml
+
+@startuml TickProcessor_processBundles
+
+!include styles.iuml
+
+participant "__:TickProcessor__"
+participant "__dgos:List__"
+participant "__dgoProcessors:List__"
+participant "__processor:DynamicGameObjectProcessor__"
+
+-> "__:TickProcessor__" : processBundles(dgos)
+activate "__:TickProcessor__"
+
+loop for each index i of dgos
+    "__:TickProcessor__" -> "__dgos:List__" : bundle = get(i)
+    activate "__dgos:List__"
+    "__dgos:List__" --> "__:TickProcessor__"
+    deactivate "__dgos:List__"
+
+    alt bundle != null
+        "__:TickProcessor__" -> "__dgoProcessors:List__" : processor = get(i)
+        activate "__dgoProcessors:List__"
+        "__dgoProcessors:List__" --> "__:TickProcessor__"
+        deactivate "__dgoProcessors:List__"
+
+        "__:TickProcessor__" -> "__processor:DynamicGameObjectProcessor__" : process(bundle)
+        activate "__processor:DynamicGameObjectProcessor__"
+        "__processor:DynamicGameObjectProcessor__" --> "__:TickProcessor__"
+        deactivate "__processor:DynamicGameObjectProcessor__"
+    end
+end
+
+<-- "__:TickProcessor__"
+deactivate "__:TickProcessor__"
+
+@enduml
+
+@startuml TickProcessor_process
+
+!include styles.iuml
+
+participant "__:TickProcessor__"
+participant "__tick:Tick__"
+
+-> "__:TickProcessor__" : process(tick)
+activate "__:TickProcessor__"
+
+"__:TickProcessor__" -> "__tick:Tick__" : events = getEventsAsStream()
+activate "__tick:Tick__"
+"__tick:Tick__" --> "__:TickProcessor__"
+deactivate "__tick:Tick__"
+
+"__:TickProcessor__" -> "__:TickProcessor__" : processEvents(events)
+ref over "__:TickProcessor__" : processEvents()
+
+"__:TickProcessor__" -> "__tick:Tick__" : dgos = getBundles()
+activate "__tick:Tick__"
+"__tick:Tick__" --> "__:TickProcessor__"
+deactivate "__tick:Tick__"
+
+"__:TickProcessor__" -> "__:TickProcessor__" : processBundles(dgos)
+ref over "__:TickProcessor__" : processBundles()
+
+<-- "__:TickProcessor__"
+deactivate "__:TickProcessor__"
+
+@enduml
+
+@startuml TickProcessor_setEventProcessor
+
+!include styles.iuml
+
+participant "__:TickProcessor__"
+participant "__processor:DynamicGameObjectProcessor__"
+participant "__eventProcessors:List__"
+
+-> "__:TickProcessor__" : setEventProcessor(action, processor)
+activate "__:TickProcessor__"
+
+"__:TickProcessor__" -> "__processor:DynamicGameObjectProcessor__" : setTickProcessor(this)
+activate "__processor:DynamicGameObjectProcessor__"
+"__processor:DynamicGameObjectProcessor__" --> "__:TickProcessor__"
+deactivate "__processor:DynamicGameObjectProcessor__"
+
+"__:TickProcessor__" -> "__eventProcessors:List__" : put(action, processor)
+activate "__eventProcessors:List__"
+"__eventProcessors:List__" --> "__:TickProcessor__"
+deactivate "__eventProcessors:List__"
+
+<-- "__:TickProcessor__"
+deactivate "__:TickProcessor__"
+
+@enduml

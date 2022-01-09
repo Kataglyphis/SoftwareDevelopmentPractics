@@ -1,0 +1,56 @@
+@startuml MVC
+!include styles.puml
+
+package MVC #EDE7F6{
+    
+    hide public members
+    hide protected members
+    hide private members
+    package Model #FFFFFF{
+        '/--------- Config ---------'/
+        !include Config.iuml
+
+        '/--------- Seed ---------'/
+        !include Seed.iuml
+        
+        
+    }
+
+    package View #FFFFFF{
+        note as N1 #D1C4E9
+        <size:55> XML-Dateien 
+        end note
+        class a 
+        class b
+        hide a
+        hide b
+        class aa
+        class bb
+        hide aa
+        hide bb
+        class aaa 
+        class bbb
+        hide aaa 
+        hide bbb
+        class aaaa 
+        class bbbb
+        hide aaaa 
+        hide bbbb
+    }
+
+    package Controller #FFFFFF{
+        '/--------- GUI  ---------'/
+        !include GUI.iuml
+    }
+    
+    Model -[hidden]down-- View
+    View -[hidden]down--- Controller
+
+    
+}
+    heeeeeeeeeeeeee -[hidden]right- Model
+    hide heeeeeeeeeeeeee
+
+    View -[hidden] a
+    hide a
+@enduml

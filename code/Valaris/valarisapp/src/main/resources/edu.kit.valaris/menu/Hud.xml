@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<nifty>
+    <resourceBundle id="menudialog" filename="MenuLocal/menudialog"/>
+    <useControls filename="nifty-default-controls.xml"/>
+
+    <screen id="hud" controller="edu.kit.valaris.menu.gui.Hud">
+        <layer id="foreground" childLayout="vertical">
+            <panel id="blank" childLayout="horizontal" height="15%" width="100%"/>
+            <panel id="countdownPanel" childLayout="center" height="35%" width="100%" align="center" valign="center">
+                <text id="countdown" text="" font="edu/kit/valaris/menuSkin/Fonts/LayOfTheLand70.fnt" align="center"
+                      valign="center" color="#FF0000" width="50%" height="100%" textHAlign="center"/>
+            </panel>
+            <panel id="blank2" childLayout="horizontal" height="20%" width="100%"/>
+            <panel childLayout="horizontal">
+                <panel id="info_panel" childLayout="vertical" width="20%">
+                    <panel childLayout="horizontal">
+                        <panel width="3%"/>
+                        <text id="currentItemText" text="Item: " font="edu/kit/valaris/menuSkin/Fonts/LayOfTheLand30.fnt"
+                              color="#FFFFFF" width="50%" height="100%" textHAlign="right" />
+                        <panel width="5%"/>
+                        <panel childLayout="absolute-inside" height="60px" width="60px" align="center" valign="center">
+                            <image id="shieldItem" align="center" valign="center"
+                                   filename="edu/kit/valaris/menuSkin/Bilder/shield.png"/>
+                            <image id="gravitationItem" align="center" valign="center"
+                                   filename="edu/kit/valaris/menuSkin/Bilder/gravitation.png"/>
+                            <image id="rocketItem" align="center" valign="center"
+                                   filename="edu/kit/valaris/menuSkin/Bilder/rocket.png"/>
+                        </panel>
+
+                    </panel>
+                    <panel  height="15%" width="100%"/>
+                    <panel childLayout="horizontal">
+                        <panel width="3%"/>
+                        <text id="currentRankText" text="Pos: " font="edu/kit/valaris/menuSkin/Fonts/LayOfTheLand30.fnt"
+                              color="#FFFFFF" width="50%" height="100%" textHAlign="right" />
+                        <panel width="9%"/>
+                        <text id="currentRank" text="" font="edu/kit/valaris/menuSkin/Fonts/LayOfTheLand45.fnt"
+                              color="#FFFFFF" width="50%" height="100%" textHAlign="left" />
+                    </panel>
+                    <panel  height="5%" width="100%"/>
+                    <panel childLayout="horizontal">
+                        <panel width="3%"/>
+                        <text id="timerText" text="${menudialog.time}"
+                              font="edu/kit/valaris/menuSkin/Fonts/LayOfTheLand30.fnt" color="#FFFFFF"
+                              width="50%" height="100%" textHAlign="right" />
+                        <panel width="3%"/>
+                        <text id="timer" text="" font="edu/kit/valaris/menuSkin/Fonts/LayOfTheLand45.fnt"
+                              color="#FFFFFF" width="50%" height="100%" textHAlign="left" />
+                    </panel>
+                </panel>
+                <panel width="60%"/>
+            </panel>
+            <panel height="8%" width="100%"/>
+        </layer>
+    </screen>
+
+</nifty>

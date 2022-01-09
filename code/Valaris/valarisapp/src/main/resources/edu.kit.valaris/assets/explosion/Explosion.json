@@ -1,0 +1,14 @@
+{
+  "key" : "Explosion",
+  "path" : "/edu.kit.valaris/assets/explosion/Explosion.j3o",
+  "nodes" : [],
+  "controls" : [
+    {"key" : "Particles", "path" : "Explosion/Explosion", "isPreload" : false, "type" : "edu.kit.valaris.rendering.particleEffect.ParticleEffect", "params" : "Explosion"}
+  ],
+  "meshes" : [
+    {"path" : "Explosion/Explosion", "material" : "/edu.kit.valaris/assets/explosion/Explosion.j3m"}
+  ],
+  "animations" : [
+    {"key" : "dummyanim", "name" : "dummyanim", "path" : "dummypath"}
+  ]
+}

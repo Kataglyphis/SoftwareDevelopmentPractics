@@ -1,0 +1,9 @@
+@startuml
+!include styles.iuml
+
+title
+    Inilization ParticleEmitter
+end title
+
+
+@enduml

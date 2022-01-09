@@ -1,0 +1,185 @@
+@startuml Tick_addBundle
+
+!include styles.iuml
+
+participant "__:Tick__"
+participant "__dgos:List__"
+
+/'enter method '/
+-> "__:Tick__" : addDynamicGameObject(dgo, model)
+activate "__:Tick__"
+
+/'search free space with linear search'/
+==Search Id==
+"__:Tick__" -> "__:Tick__" : i = -1
+loop for each index i of dgos
+    "__:Tick__" -> "__dgos:List__" : tmp = get(i)
+    activate "__dgos:List__"
+    "__dgos:List__" --> "__:Tick__"
+    deactivate "__dgos:List__"
+
+    alt tmp == null
+        "__:Tick__" -> "__:Tick__" : id = i
+        "__:Tick__" -> "__:Tick__" : break
+    end
+end
+
+alt id < 0
+    "__:Tick__" -> "__dgos:List__" : add(dgo)
+    activate "__dgos:List__"
+    "__dgos:List__" --> "__:Tick__"
+    deactivate "__dgos:List__"
+    "__:Tick__" -> "__dgos:List__" : id = size()
+    activate "__dgos:List__"
+    "__dgos:List__" --> "__:Tick__"
+    deactivate "__dgos:List__"
+
+    "__:Tick__" -> "__:Tick__" : id = id - 1;
+else id >= 0
+    "__:Tick__" -> "__dgos:List__" : set(id, dgo)
+    activate "__dgos:List__"
+    "__dgos:List__" --> "__:Tick__"
+    deactivate "__dgos:List__"
+end
+
+==Add Event==
+create "__params:List__"
+"__:Tick__" -> "__params:List__" : new
+
+"__:Tick__" -> "__params:List__" : add(id)
+activate "__params:List__"
+"__params:List__" --> "__:Tick__"
+deactivate "__params:List__"
+
+"__:Tick__" -> "__params:List__" : add(model)
+activate "__params:List__"
+"__params:List__" --> "__:Tick__"
+deactivate "__params:List__"
+
+"__:Tick__" -> "__:Tick__" : addEvent(new TickEvent("AddDynamicGameObject", params))
+activate "__:Tick__"
+deactivate "__:Tick__"
+
+/'leave method'/
+<-- "__:Tick__" : return id
+deactivate "__:Tick__"
+
+@enduml
+
+@startuml Tick_getEventsAsStream
+
+!include styles.iuml
+
+participant "__:Tick__"
+participant "__events:List__"
+
+-> "__:Tick__" : getEventsAsStream()
+activate "__:Tick__"
+
+"__:Tick__" -> "__events:List__" : stream = asStream()
+activate "__events:List__"
+"__events:List__" --> "__:Tick__"
+deactivate "__events:List__"
+
+"__:Tick__" -> "__events:List__" : clear()
+activate "__events:List__"
+"__events:List__" --> "__:Tick__"
+deactivate "__events:List__"
+
+<-- "__:Tick__" : return stream
+deactivate "__:Tick__"
+
+@enduml
+
+@startuml Tick_sync
+
+!include styles.iuml
+
+participant "__:Tick__"
+participant "__dgos:List__"
+participant "__target:Tick__"
+
+participant "__dgo:DynamicGameObject__"
+participant "__tmpDgo:DynamicGameObject__"
+
+-> "__:Tick__" : sync(target)
+activate "__:Tick__"
+
+==Sync DynamicGameObjects==
+"__:Tick__" -> "__target:Tick__" : dgos = getDynamicGameObjects()
+activate "__target:Tick__"
+"__target:Tick__" --> "__:Tick__"
+deactivate "__target:Tick__"
+
+"__:Tick__" -> "__:Tick__" : i = 0
+
+loop for each dgo in dgoList
+    alt i < dgos.size()
+        alt dgo != null
+            "__:Tick__" -> "__dgos:List__" : tmpDgo = get(i)
+            activate "__dgos:List__"
+            "__dgos:List__" --> "__:Tick__"
+            deactivate "__dgos:List__"
+
+            alt tmpDgo != null
+                "__:Tick__" -> "__tmpDgo:DynamicGameObject__" : sync(dgo)
+                activate "__tmpDgo:DynamicGameObject__"
+                ref over "__tmpDgo:DynamicGameObject__" : sync(target)
+                "__tmpDgo:DynamicGameObject__" --> "__:Tick__"
+                deactivate "__tmpDgo:DynamicGameObject__"
+            else tmpDgo == null
+                "__:Tick__" -> "__dgo:DynamicGameObject__" : tmpDgo = deepCopy()
+                activate "__dgo:DynamicGameObject__"
+                'ref over "__dgo:DynamicGameObject__" : deepCopy()
+                "__dgo:DynamicGameObject__" --> "__:Tick__"
+                deactivate "__dgo:DynamicGameObject__"
+
+                "__:Tick__" -> "__dgos:List__" : set(i, tmpDgo)
+                activate "__dgos:List__"
+                "__dgos:List__" --> "__:Tick__"
+                deactivate "__dgos:List__"
+            end
+        else dgo == null
+            "__:Tick__" -> "__dgos:List__" : set(i, null)
+            activate "__dgos:List__"
+            "__dgos:List__" --> "__:Tick__"
+            deactivate "__dgos:List__"
+        end
+    else i >= dgos.size()
+        alt dgo != null
+            "__:Tick__" -> "__dgo:DynamicGameObject__" : tmpDgo = deepCopy()
+            activate "__dgo:DynamicGameObject__"
+            'ref over "__dgo:DynamicGameObject__" : deepCopy()
+            "__dgo:DynamicGameObject__" --> "__:Tick__"
+            deactivate "__dgo:DynamicGameObject__"
+
+            "__:Tick__" -> "__dgos:List__" : add(tmpDgo)
+            activate "__dgos:List__"
+            "__dgos:List__" --> "__:Tick__"
+            deactivate "__dgos:List__"
+        else dgo == null
+            "__:Tick__" -> "__dgos:List__" : add(null)
+            activate "__dgos:List__"
+            "__dgos:List__" --> "__:Tick__"
+            deactivate "__dgos:List__"
+        end
+    end
+end
+
+==Queue events==
+"__:Tick__" -> "__target:Tick__" : eventStream = getEventsAsStream()
+activate "__target:Tick__"
+'ref over "__target:Tick__" : getEventsAsStream()
+"__target:Tick__" --> "__:Tick__"
+deactivate "__target:Tick__"
+
+loop for each event in eventStream
+    "__:Tick__" -> "__:Tick__" : addEvent(event)
+    activate "__:Tick__"
+    deactivate "__:Tick__"
+end
+
+<-- "__:Tick__"
+deactivate "__:Tick__"
+
+@enduml

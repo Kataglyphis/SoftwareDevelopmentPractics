@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty-styles>
+    <style id="nifty-checkbox-style#panel">
+        <attributes width="23px" height="23px" childLayout="center" backgroundColor="#FFFf"/>
+        <effect>
+            <onActive name="border" border="2px" color="#000000" post="true"/>
+            <onFocus name="border" color="#FFFf" post="true" inset="-2px"/>
+            <onHover name="border" color="#FFFf" post="true" inset="-2px"/>
+            <onEnabled name="renderQuad" startColor="#2228" endColor="#2220" post="true" length="150"/>
+            <onDisabled name="renderQuad" startColor="#2220" endColor="#2228" post="true" length="150"/>
+        </effect>
+    </style>
+
+    <style id="nifty-checkbox-style#select">
+        <attributes align="center" valign="center" width="32px" height="32px" backgroundImage="edu/kit/valaris/menuSkin/Bilder/checkbox.png"/>
+        <effect>
+            <onEnabled name="fade" start="#4" end="#f" length="150" />
+            <onDisabled name="fade" start="#f" end="#4" length="150" />
+        </effect>
+    </style>
+</nifty-styles>

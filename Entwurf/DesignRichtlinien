@@ -1,0 +1,51 @@
+
+EntwurfsDokument:
+    
+    - Alle Erwähnungen von beispielsweise Klassen werden kursiv dargestellt 
+        \textit{bla}
+    - Nennung von Entwurfsmustern in einfachen Anführungszeichen 
+        'Muster'
+    - Paramter werden fett geschrieben, die Beschreibung nicht, und diese werden mit 1 Leerzeichen trennen
+        \textbf{@param Beispiel} *Beschreibung hier*
+    - Klassennamen werden unterstrichen
+        \underline{Klasse}
+    - Klassen in sinnvoller Reihenfolge erklären
+    - IMMER einen Punkt am Ende!
+    - "pagebreaks" sinnvoll verteilen
+    
+    
+    Empfehlung: 
+        - mehrere .tex Dokumente, für jedes Packet eins und in euer Klassendokument einbinden mit: \input{"EuerOrdner"/Dokument}
+    
+    
+    Beispiel für eine Klasse: 
+    
+        \paragraph{\underline{Klasse}} \mbox{}\par
+            Klassenbeschreibung mit \textit{Referenz}.\par
+            
+            \textbf{Attribute}
+            \begin{itemize}
+                \item  \textit{Attribut1} 
+                    \begin{leftbar}[0.9\linewidth]
+                        Beschreibung\\
+                        Beschreibung\\
+                        und noch mehr
+                    \end{leftbar}
+            \end{itemize}
+
+            \textbf{Methoden}					
+            \begin{itemize}
+                \item  \textit{Methode1}
+                    \begin{leftbar}[0.9\linewidth]
+                        Beschreibung\\
+                        \textbf{@param Beispiel} Bschreibung des Parameters.\\
+                        \textbf{@return Wert} Beschreibung.
+                    \end{leftbar}
+
+                \item  \textit{Methode2}
+                    \begin{leftbar}[0.9\linewidth]
+                        Beschreibung\\
+                        \textbf{@param Beispiel} Bschreibung des Parameters.\\
+                        \textbf{@return Wert} Beschreibung.
+                    \end{leftbar}    
+            \end{itemize}

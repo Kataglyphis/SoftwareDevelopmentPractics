@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<nifty>
+    <resourceBundle id="menudialog" filename="MenuLocal/menudialog"/>
+    <useControls filename="nifty-default-controls.xml"/>
+
+    <useStyles filename="edu/kit/valaris/menuSkin/OwnStyles/nifty-progressbarStyle.xml"/>
+    <useControls filename="edu/kit/valaris/menuSkin/OwnControls/nifty-progressbarControl.xml"/>
+
+    <screen id="loadingscreen" controller="edu.kit.valaris.menu.gui.LoadingScreen">
+        <layer childLayout="vertical" backgroundColor="#000f">
+            <panel height="10%"/>
+            <panel id="Logo_Panel" height="30%" width="25%" align="center" valign="center" childLayout="center">
+                <image id="Logo" height="100%" width="70%"
+                       filename="edu/kit/valaris/menuSkin/Bilder/Icons/valaris_t_4096.png"
+                       align="center" valign="center">
+                </image>
+            </panel>
+            <panel height="10%"/>
+            <control id="progressbar" name="progressbar" width="75%" text="..." align="center"/>
+        </layer>
+    </screen>
+
+</nifty>

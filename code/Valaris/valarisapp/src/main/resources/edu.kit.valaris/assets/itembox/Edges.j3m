@@ -1,0 +1,12 @@
+Material Thrust : edu.kit.valaris/materials/PBRLighting.j3md {
+    MaterialParameters {
+        Metallic : 1.0
+        Roughness : 0.1
+        Specular : 0.5
+        BaseColor : 0.488 0.51 0.581 1.0
+        Emissive : 0.0 0.0 0.0 0.0
+    }
+
+    AdditionalRenderState {
+    }
+}

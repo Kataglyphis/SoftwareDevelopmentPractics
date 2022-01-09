@@ -1,0 +1,31 @@
+\subsection{GUI}
+\subsubsection{Behoben}
+\begin{itemize}
+    \item Konfigurationspfade wurden erneuert. Sollte diese trotzdem nicht gefunden
+    werden, so wird eine Default-Konfiguration geladen.
+    \item Ändert der Benutzer manuell die Konfigurationsdatei und etwas entspricht
+    keinem korrekten Wert, so wird die Konfiguration zurückgesetzt.
+    \item Die Schrift des aktuellen Stands im Ladebalken war manchmal verschoben.
+    \item Es wird nun die korrekte Anzahl an Fahrzeugen an das Physik-Team 
+    übergeben.
+    \item Der Countdown wird nun korrekt angehalten, wenn das Spiel pausiert.
+    \item Der Wechsel zwischen Pause und Spiel erfolgt nun in jedem Zustand des 
+    Spieles erfolgreich. Eingeblendete Informationen, wie die Zeit, werden 
+    erfolgreich pausiert.
+    \item Nifty Objekte reagierten immer noch auf Events, obwohl dessen 
+    zugehöriger NiftyAppState vom StateManager entfernt wurden.
+    \item Seeds werden nun unter dem Format \glqq SeedZahl\#Streckentyp \grqq{} gespeichert.
+    \item Die Farbe eines Spielers wird nun korrekt im End-Menü angezeigt.
+    \item Änderte man den Namen eines Seed's, wurde der alte Seed beibehalten 
+    und ein neuer Seed mit dem neuen Namen angelegt.
+    \item Die Auflösung konnte nicht während des Vollbildmodus geändert werden.
+    \item Beim Sprachwechsel wurde die aktuelle Drop-Down Auswahl nicht korrekt 
+    gesetzt, da die Inhalte sich verändert haben. Dies ist nun für jedes 
+    Drop-Down behoben. 
+\end{itemize}
+
+\subsubsection{Nicht behoben}
+\begin{itemize}
+    \item Die Sprache kann während dem Zurücksetzen der Konfiguration nicht mit 
+    geändert werden, daher wird eine entsprechende Meldung angezeigt.
+\end{itemize}

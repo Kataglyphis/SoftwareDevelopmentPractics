@@ -1,0 +1,6 @@
+rootProject.name = 'Valaris'
+include 'dummysim'
+include 'valarisapp'
+include 'dummytick'
+include 'apputil'
+

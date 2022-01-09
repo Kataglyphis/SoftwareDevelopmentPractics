@@ -1,0 +1,14 @@
+@startuml animation
+!include styles.puml
+package animation #FFAB91 {
+
+        class Animator  {
+            -animControl: AnimControl
+            +setAnim(name: String, weight: float, position: float): void
+        }
+
+        class AnimatorPropertyProcessor {
+
+        }
+}
+@enduml

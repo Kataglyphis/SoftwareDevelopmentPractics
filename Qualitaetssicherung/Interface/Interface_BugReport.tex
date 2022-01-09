@@ -1,0 +1,11 @@
+\subsection{InGame - Interface}
+\subsubsection{Behoben}
+\begin{itemize}
+    \item Tick-Struckturen waren anfangs nicht Threadsafe, dies wurde durch Einfügen von Locks behoben.
+\end{itemize}
+
+\subsubsection{Nicht behoben}
+\begin{itemize}
+    \item Selten gehen vermutlich bei synchronisationsstrukturen TickEvents verloren, wodurch ein unzulässiger Zustand im TickProcessor hervorgerufen wird,
+    was zum Abbruch des Rennens führt.
+\end{itemize}

@@ -1,0 +1,45 @@
+MaterialDef EffectMatDef{
+    MaterialParameters {
+    		Vector4 Color
+             //the metallicness (0 = dielectric, 1 = metallic).linear blend
+             //The metallic model has no diffuse component and also has a colored
+             //incident specular, equal to the base color
+             Float Metallic : 0.5
+             //controls diffuse shape using a subsurface approximation
+             Float Subsurface : 1.0
+             //surface roughness, controls both diffuse and specular response.
+             Float Roughness : 1.0
+             // Base material color
+             Color BaseColor : 1.0 0.0 1.0 0.1
+             //incident specular amount. This is in lieu of an explicit index-of-refraction.
+             Float Specular : 1.0
+    	}
+    	Technique {
+    	    LightMode SinglePass
+
+    		VertexShader GLSL120 : /edu.kit.edu.kit.edu.kit.valaris/materials/Shaders/PBRLighting.vert
+    		FragmentShader GLSL120: /edu.kit.edu.kit.edu.kit.valaris/materials/Shaders/PBRLighting.frag
+
+    		WorldParameters {
+    			WorldMatrix
+                ViewMatrix
+                ProjectionMatrix
+
+                WorldViewMatrix
+                ViewProjectionMatrix
+
+                WorldViewProjectionMatrix
+
+                NormalMatrix
+                WorldNormalMatrix
+    		}
+
+    		RenderState {
+    			Blend Alpha
+    		}
+
+    		Defines {
+    		    PARTICLE_EFFECT
+    		}
+    	}
+}

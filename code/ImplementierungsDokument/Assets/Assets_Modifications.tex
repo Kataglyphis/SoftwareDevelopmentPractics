@@ -1,0 +1,86 @@
+\subsection{Assets}
+
+\subsubsection{ArchitekturÄnderung}
+Das Asset-Modul soll in der Lage sein AssetInfos und AssetPacks aus einer Vielzahl von Datei-Formaten
+zu lesen. Der Vorschlag des Entwurfs benötigt dafür mehrere AbstractAssetProvider, was zur Laufzeit zu
+Problemen führt, da bekannt sein muss, in welchem Format ein Asset gespeichert ist. Um dieses Problem zu
+umgehen und das Laden von Assets zu zentralisieren wurden InfoLoader eingeführt, welche AssetInfos und
+AssetPacks für einen AssetProvider aus verschiedenen Datei-Formaten lesen, wodurch zur Laufzeit nun
+lediglich ein einzelner AssetProvider existieren muss.
+
+\subsubsection{AbstractAssetProvider}
+\begin{itemize}
+    \item \textit{Klasse entfernt}
+        \begin{leftbar}[0.9\linewidth]
+            AbstractAssetProvider wurde aufgrund von Änderungen der Architektur entfernt.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{JsonAssetProvider}
+\begin{itemize}
+    \item \textit{Klasse entfernt}
+        \begin{leftbar}[0.9\linewidth]
+            JsonAssetProvider wurde aufgrund von Änderungen der Architektur entfernt.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{AssetProvider}
+\begin{itemize}
+    \item \textit{Klasse hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            AssetProvider ist für das laden von Assets anhand von AssetPacks und AssetInfos
+            zuständig. Diese erhält er von InfoLoadern welche zur Laufzeit dynamisch für
+            verschiedene Datei-Typen definiert werden können.
+            Der AssetProvider ist ausserdem in der Lage alles asynchron auf einem anderen Thread
+            auszuführen.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{AssetContainer}
+\begin{itemize}
+    \item \textit{Klasse hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            AssetContainer enthalten den Sub-Scenegraph des geladenen Assets und die dazugehörige AssetInfo
+            um neue Instanzen des Assets bereit zu stellen.
+        \end{leftbar}
+\end{itemize}
+
+\pagebreak
+
+\subsubsection{InfoLoader}
+\begin{itemize}
+    \item \textit{Interface hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            InfoLoader wurden im Zuge der Änderungen der Architektur des AssetModuls eingeführt.
+            Das interface beschreibt die minimale Funktionalität, welche benötigt wird um mit dem
+            AssetProvider zu arbeiten.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{JsonInfoLoader}
+\begin{itemize}
+    \item \textit{Klasse hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Der JsonInfoLoader ist in der Lage AssetPacks und AssetInfos aus Json-Dateien zu lesen.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{MeshInfo}
+\begin{itemize}
+    \item \textit{Klasse hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            MeshInfo enthält daten über einen Mesh im Sub-Scenegraph des Assets um diesem die richtigen
+            Materialien zu zu weisen.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{AnimationInfo}
+\begin{itemize}
+    \item \textit{Klasse hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            AnimationInfo enthält Informationen über Animationen welche auf Objekten im Sub-Scenegraph des
+            Assets ausgeführt werden können. Da Animationen selbst im moment nicht ausgeführt werden können
+            wird diese Information momentan lediglich genutzt um zu entscheiden ob Assets eines bestimmten
+            Typs sich die Meshes teilen können oder nicht.
+        \end{leftbar}
+\end{itemize}

@@ -1,0 +1,29 @@
+@startuml Seed
+
+!include styles.puml
+
+package seedentry #D1C4E9 {
+
+    class SeedEntry {
+        - name: String
+        - number: int
+
+        + SeedEntry(name: String, num: int)
+        + SeedEntry(num: int)
+        + setName(name: String): void
+        + getName(): String
+        + setNumber(num: int): void
+        + getNumber(): int
+        + compareTo(other: SeedEntry): int
+    }
+
+     '/----------- SeedEntry and Comparable -----------'/
+    interface java.lang.Comparable
+    'java.lang.Comparable <|.. SeedEntry
+    SeedEntry ..|> java.lang.Comparable
+    'SeedEntry -[hidden]up- java.lang.Comparable
+    
+    
+}
+
+@enduml

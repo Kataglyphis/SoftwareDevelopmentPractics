@@ -1,0 +1,15 @@
+{
+  "key" : "HoverCart",
+  "path" : "/edu.kit.valaris/Models/Cart/IonHoverCraft0.j3o",
+  "nodes" : [],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "Chassis", "material" : "edu.kit.valaris/Models/Cart/Chassis.j3m"},
+    {"path" : "Seat", "material" : "edu.kit.valaris/Models/Cart/Seat.j3m"},
+    {"path" : "BreakLight", "material" : "edu.kit.valaris/Models/Cart/BreakLight.j3m"},
+    {"path" : "Engines", "material" : "edu.kit.valaris/Models/Cart/Engines.j3m"},
+    {"path" : "Sockets", "material" : "edu.kit.valaris/Models/Cart/Sockets.j3m"},
+    {"path" : "Thrust", "material" : "edu.kit.valaris/Models/Cart/Thrust.j3m"},
+    {"path" : "Strip", "material" : "edu.kit.valaris/Models/Cart/Strip.j3m"}
+  ]
+}

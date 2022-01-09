@@ -1,0 +1,37 @@
+@startuml
+scale 2
+skinparam shadowing false
+
+
+'''''''''''''KlassenDiagramme'''''''''''''''''
+
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+
+skinparam note {
+	BackgroundColor Gainsboro    
+	BorderColor Black
+}
+hide empty members
+
+
+''''''''''''''SequenzDiagramme''''''''''''''''
+
+skinparam sequence {
+	ArrowColor Black
+	ActorBorderColor DeepSkyBlue
+	LifeLineBorderColor DimGray
+	LifeLineBackgroundColor AliceBlue
+	
+	ParticipantBorderColor Gray
+	ParticipantBackgroundColor AliceBlue
+	ParticipantFontName Navy
+	ParticipantFontSize 17
+	ParticipantFontColor Black
+	
+}
+
+@enduml

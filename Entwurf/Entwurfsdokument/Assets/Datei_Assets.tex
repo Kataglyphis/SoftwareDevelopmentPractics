@@ -1,0 +1,32 @@
+\subsection{Assets}
+
+Das Assets Modul verwendet .json Dateien um Modelle und Metadaten zu laden.
+Bei den Dateien wird unterschieden zwischen dem AssetPack und den AssetInfos.\par
+
+\subsubsection{AssetPack}
+
+Das AssetPack ist eine Kollektion von benannten Gruppen, welche verweise auf \textit{AssetInfos} speichern.
+Die Pfade der \textit{AssetInfos} werden dabei relativ zum AssetPack angegeben. \par
+\begin{figure}[htbp]
+    \centering
+    \lstinputlisting[language=json]{Assets/SamplePack.json}
+    \caption{AssetPack Sample}
+\end{figure}
+\pagebreak
+
+\subsubsection{AssetInfo}
+
+Eine \textit{AssetInfo} beinhaltet einen Verweis auf eine .j3o Datei, welche das Model enthält,
+einen Schlüssel, unter dem man es später beim JsonModelProvider wieder finden kann,
+eine Kollektion von Nodes im Model die während dem Spiel erreichbar sein müssen, als \textit{NodeInfo},
+und eine Kollektion von AbstractControls, welche während des Spiels benötigt werden, als ControlInfo. \par
+Eine \textit{NodeInfo} hat dabei einen Schlüssel, mit welchem man sie später über das AssetControl erreichen kann,
+und einen Pfad, welcher den Weg von der Wurzel des Models zur Node beschreibt. Zudem enthalten \textit{ControlInfos}
+noch einen String, welcher den Typ des AbstractControl festlegt, und einen Boolean, welcher festlegt ob nach dem
+Laden des Models durch den AssetManager das AbstractControl noch erstellt werden muss oder nicht. \par
+\begin{figure}[htbp]
+    \centering
+    \lstinputlisting[language=json]{Assets/asset0.json}
+    \caption{AssetInfo Sample}
+\end{figure}
+\pagebreak

@@ -1,0 +1,9 @@
+Material TwistedPipeCross : edu.kit.valaris/materials/PBRLighting.j3md {
+    MaterialParameters {
+            Metallic : 0.0
+            Roughness : 0.8
+            Specular : 0.4
+            BaseColor : 0.7 0.7 0.7 1.0
+        }
+}
+

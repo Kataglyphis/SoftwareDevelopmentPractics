@@ -1,0 +1,104 @@
+@startuml roomgeneration
+
+scale 2
+!include styles.puml
+hide empty members
+
+''''''''''''''Begin'''''''''''''''
+
+package "roomgeneration" #DCEDC8 {
+    
+
+    Interface IRoomGenerator{
+        +generate(seed: int, boundingSphereRadius: float,
+        entryWidth: Vector2f, exitAngle: float, flags: Set<GeneratorSettings>): IRoom
+    }
+
+
+    class RoomSelector{
+        -assetManager: AssetManager
+        -generationConfig: GenerationConfig
+        -roomGeneratros: List<AbstarctRoomGenerator>
+        +RoomSelector(generationConfig: GenerationConfig, assetManager: AssetManager)
+    }
+
+    abstract class AbstractRoomGenerator {
+        #generateRoom(seed: int, boundingSphereRadius: float,
+        entryWidth: Vector2f, exitAngle: float, flags: Set<GeneratorSettings>): IRoom
+    }
+
+    class DynamicRoomGenerator{
+        -generationConfig: GenerationConfig
+        -assetManager: AssetManager
+        -roadGen: RoadGenerator
+        #DynamicRoomGenerator(generationConfig: GenerationConfig, assetManager: AssetManager)
+        #generateRoom(seed: int, boundingSphereRadius: float,
+        entryWidth: Vector2f, exitAngle: float, flags: Set<GeneratorSettings>): IRoom
+        -getRoomDimensions(seed: int): Vector3f
+        -createGrid(road: Road, density: float, dimensions: Vector3f): HashMap<GridVertex>
+        -placeAssets(seed: int, grid: Grid, road: Road, assetRootNode: Node)
+    }
+    note bottom of DynamicRoomGenerator: Generiert einen Raum abhängig vom Seed.
+
+
+    class StaticRoomGenerator{
+        -generationConfig: GenerationConfig
+        -assetManager: AssetManager
+        -roadGen: RoadGenerator
+        #StaticRoomGenerator(generationConfig: GenerationConfig, assetManager: AssetManager)
+        #generateRoom(seed: int, boundingSphereRadius: float,
+        entryWidth: Vector2f, exitAngle: float, flags: Set<GeneratorSettings>): IRoom
+    }
+    note bottom of StaticRoomGenerator: Wählt einen vordefinierten Raum aus.
+
+
+    Interface IRoom{
+        +getRoad(): Road
+
+    }
+
+
+    class DynamicRoom{
+        -road: Road
+        -grid: HashMap<GridVertex>
+        -roomAssetRootNode: Node
+
+        #DynamicRoom(grid: HashMap<Integer,GridVertex>, road: Road, roomAssetRootNode: Node)
+    }
+
+    class StaticRoom{
+        -road: Road
+        -roomAssetRootNode: Node
+
+        #StaticRoom(road: Road, roomRootNode: Node)
+    }
+
+
+
+    'extends
+    IRoomGenerator <|.down. RoomSelector
+
+    AbstractRoomGenerator <|-down- DynamicRoomGenerator
+    AbstractRoomGenerator <|-down- StaticRoomGenerator
+
+    IRoom <|-- DynamicRoom
+    IRoom <|- StaticRoom
+
+    'asso.
+    RoomSelector --"*" AbstractRoomGenerator
+
+
+    StaticRoom <..up. StaticRoomGenerator
+    DynamicRoom <..up. DynamicRoomGenerator
+
+
+    '''''''''''''format''''''''''''''''''''''''''''''
+    AbstractRoomGenerator -[hidden]- StaticRoomGenerator 
+
+    IRoomGenerator -[hidden]down- RoomSelector
+    IRoomGenerator -[hidden]left-- IRoom
+    RoomSelector -[hidden]up- DynamicRoomGenerator
+
+}
+
+@enduml

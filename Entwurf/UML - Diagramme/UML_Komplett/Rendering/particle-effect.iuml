@@ -1,0 +1,49 @@
+@startuml particle-effect
+!include styles.puml
+
+package effects #FFAB91 {
+    class Particle {
+        +velocity : Vector3f
+        +position : Vector3f
+        +size : double
+        +angle : double
+        +color : ColorRGBA
+        +lifetime : double
+        +age : double
+        +rotateSpeed : double
+    }
+    class EffectMesh {
+        #initData(ParticleEffect effect, int numParticles):void;
+        #updateData(Particle[] particles, Camera cam, Matrix3f inverseRotation):void;
+    }
+    
+    class ParticleEffect {   
+        +update(tpf: float):void
+        +killAllParticle():void
+    }
+
+    interface ParticleStrategy {
+        +emitParticles():void
+        +updateParticle(p: Particle, tpf: float): void
+    }
+
+    class FireParticleStrategy {
+        +emitParticles():void
+        +updateParticles(p: Particle, tpf: float): void
+    }
+    class JetParticleStrategy {
+        +emitParticles():void
+        +updateParticles(p: Particle, tpf: float): void
+    }
+    class ExplosionParticleStrategy {
+        +emitParticles():void
+        +updateParticles(p: Particle, tpf: float): void
+    }
+}
+    ParticleEffect "1" *-- "*" Particle
+    ParticleStrategy <|.. JetParticleStrategy
+    ParticleStrategy <|.. FireParticleStrategy
+    ParticleStrategy <|.. ExplosionParticleStrategy
+    ParticleEffect o-- ParticleStrategy : strategy
+    EffectMesh -- "mesh"ParticleEffect
+@enduml

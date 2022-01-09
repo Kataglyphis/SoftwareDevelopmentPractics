@@ -1,0 +1,11 @@
+{
+  "key" : "testkey",
+  "path" : "testpath",
+  "nodes" : [
+    {"key" : "testnode", "path" : "testpath"}
+  ],
+
+  "controls" : [
+    {"key" : "testcontrol", "path" : "testpath", "isPreload" : false, "type" : "edu.kit.valaris.TestControl"}
+  ]
+}

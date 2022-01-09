@@ -1,0 +1,13 @@
+{
+  "key" : "LightedStreet",
+  "path" : "/edu.kit.valaris/assets/road/lightedRoad/SimpleStreetC3.j3o",
+
+  "nodes" : [],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "Borders/Cube.0011", "material" : "/edu.kit.valaris/assets/road/lightedRoad/asphaltWhite.j3m"},
+    {"path" : "Underground/Cube.0021", "material" : "/edu.kit.valaris/assets/road/lightedRoad/asphaltGrey.j3m"},
+    {"path" : "BorderLeds/Cube.0001", "material" : "/edu.kit.valaris/assets/road/lightedRoad/StreetLamps.j3m"}
+  ],
+  "animations" : []
+}

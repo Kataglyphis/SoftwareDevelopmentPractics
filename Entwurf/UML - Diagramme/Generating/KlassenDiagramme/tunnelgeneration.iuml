@@ -1,0 +1,44 @@
+@startuml tunnelgeneration
+
+scale 2
+!include styles.puml
+hide empty members
+
+''''''''''''''Begin'''''''''''''''
+
+
+package "tunnelgeneration" #DCEDC8 {
+
+    interface ITunnelGenerator{
+        +generate(seed: int, target: RoadCursor, entryWidth: Vector2f, flags: Set<GeneratorSettings>): ITunnel
+    }
+    interface ITunnel {
+        +getRoad(): Road
+        
+    }
+
+
+    class TunnelGenerator {
+        -generationConfig: GenerationConfig
+        -assetManager: AssetManager
+        -roadGen: RoadGenerator
+        +TunnelGenerator(generationConfig: GenerationConfig, assetManager:  AssetManager)
+    }
+    class Tunnel {
+        -road: Road
+        -grid: HashMap<GridVertex>
+        -tunnelAssetRootNode: Node
+
+        #Tunnel(grid: HashMap<Grid>,road:  Road, tunnelAssetRootNode: Node)
+    }
+
+    'exentds
+    ITunnelGenerator <|-- TunnelGenerator
+    ITunnel <|-- Tunnel
+
+    'asso.
+    Tunnel <. TunnelGenerator
+
+}
+
+@enduml

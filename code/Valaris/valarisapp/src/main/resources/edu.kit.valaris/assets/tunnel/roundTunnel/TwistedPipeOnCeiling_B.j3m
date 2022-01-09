@@ -1,0 +1,10 @@
+Material TwistedPipeOnCeiling_B : edu.kit.valaris/materials/PBRLighting.j3md {
+    MaterialParameters {
+            Metallic : 0.0
+            Roughness : 0.6
+            Specular : 0.2
+            BaseColor : 0.0 0.0 0.0 0.0
+            Emissive : 0.04 0.15 0.15 1.0
+        }
+}
+

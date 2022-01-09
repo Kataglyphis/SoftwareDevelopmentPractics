@@ -1,0 +1,19 @@
+{
+  "key" : "BaseConnector",
+  "path" : "/edu.kit.valaris/assets/tunnel/baseConnector/BaseConnectorA1.j3o",
+
+  "nodes" : [],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "Lamps/Cube.0021", "material" : "/edu.kit.valaris/assets/tunnel/baseConnector/metallicLightGrey.j3m"},
+    {"path" : "Lamps/Cube.0022", "material" : "/edu.kit.valaris/assets/tunnel/baseConnector/glowingLightBlue.j3m"},
+
+    {"path" : "Pipes/Cube.0011", "material" : "/edu.kit.valaris/assets/tunnel/baseConnector/metallicDarkGrey.j3m"},
+    {"path" : "Pipes/Cube.0012", "material" : "/edu.kit.valaris/assets/tunnel/baseConnector/metallicDarkGrey.j3m"},
+
+    {"path" : "Shell/Cube.0031", "material" : "/edu.kit.valaris/assets/tunnel/baseConnector/metallicLightGrey.j3m"},
+    {"path" : "Shell/Cube.0032", "material" : "/edu.kit.valaris/assets/tunnel/baseConnector/metallicLightGrey.j3m"},
+    {"path" : "Shell/Cube.0033", "material" : "/edu.kit.valaris/assets/tunnel/baseConnector/metallicLightGrey.j3m"}
+  ],
+  "animations" : []
+}

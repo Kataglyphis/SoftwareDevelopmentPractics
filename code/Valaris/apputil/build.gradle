@@ -1,0 +1,72 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'application'
+    id 'checkstyle'
+}
+
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+sourceSets.main {
+    java.srcDirs = ["src/main/java"]
+    resources.srcDirs = ["src/main/resources"]
+}
+
+sourceSets.test {
+    java.srcDirs = ["src/test/java"]
+    resources.srcDirs = ["src/test/resources"]
+}
+
+ext {
+    jmonkeyengine_version = '[3.1,)'
+    jackson_version = '[2.9.4,)'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+dependencies {
+    //basic dependencies
+    compile "org.jmonkeyengine:jme3-core:$jmonkeyengine_version"
+    compile "org.jmonkeyengine:jme3-lwjgl:$jmonkeyengine_version"
+    compile "org.jmonkeyengine:jme3-plugins:$jmonkeyengine_version"
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+    //compile 'org.json:json:20171018'
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+
+    // Nifty
+    compile "org.jmonkeyengine:jme3-niftygui:$jmonkeyengine_version"
+
+
+    //blender model support
+    compile "org.jmonkeyengine:jme3-blender:$jmonkeyengine_version"
+
+    //networking
+    compile "org.jmonkeyengine:jme3-networking:$jmonkeyengine_version"
+
+    //json object mapper
+    compile "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}

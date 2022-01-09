@@ -1,0 +1,35 @@
+{
+    "Maplength": 42,
+
+    "DomeGenerationParam": {
+
+        "maxCurveDegree": 42,
+        "maxGradientAngle": 42,
+        "AcceptedBiom": ["desert", "jungle"],
+        "DomeBiom": {
+
+            "BiomeDesert": {
+
+                "NoiseData": {
+                },
+                "EnvironnementAssets": {
+
+                    "TreeAssets": {
+                        "placementInfo": 42,
+                        "groupId": "ichUndMeinHolz"
+                    }
+                }
+            }
+        }
+    },
+
+    "TunnelGenerationParam": {
+        "maxCurveDegree": 42,
+        "maxGradientAngle": 42
+    },
+
+    "RoomGenerationParam": {
+        "maxCurveDegree": 42,
+        "maxGradientAngle": 42
+    }
+}

@@ -1,0 +1,5 @@
+Package for Module Generation
+
+-using Google-Checks with a few exceptions:
+    -Members begin with "m_[a-z]"
+    -maximum line width is 150 characters instead of 100

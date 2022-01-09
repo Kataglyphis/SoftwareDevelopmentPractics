@@ -1,0 +1,52 @@
+@startuml Assets_loadAsynchronous
+
+!include styles.iuml
+
+participant JsonModelLoader
+participant loadingCallback
+
+-> JsonModelLoader : loadAsynchronous(path, callback)
+activate JsonModelLoader
+
+==Start Thread==
+
+create loadingThread
+JsonModelLoader --> loadingThread : <<create>>
+activate loadingThread
+loadingThread --> JsonModelLoader
+deactivate loadingThread
+
+JsonModelLoader --> loadingThread : start()
+activate loadingThread
+<-- JsonModelLoader
+deactivate JsonModelLoader
+
+==Load Assets==
+
+loadingThread -> loadingThread : load assetpack
+
+loop for each group in assetpack
+    loop for each path in group
+        loadingThread -> loadingThread : load AssetInfo
+        loadingThread -> loadingThread : load .j3o
+        loadingThread -> loadingThread : create AssetControl
+        loadingThread -> loadingThread : add asset-Node to group
+        
+        loadingThread -> loadingCallback : setStatus(progress, text)
+        activate loadingCallback
+        loadingCallback -> loadingCallback : update loadingscreen
+        loadingCallback --> loadingThread
+        deactivate loadingCallback
+    end
+end
+
+loadingThread -> loadingCallback : finished()
+activate loadingCallback
+loadingCallback --> loadingThread
+deactivate loadingCallback
+
+<-- loadingThread
+deactivate loadingThread
+destroy loadingThread
+
+@enduml

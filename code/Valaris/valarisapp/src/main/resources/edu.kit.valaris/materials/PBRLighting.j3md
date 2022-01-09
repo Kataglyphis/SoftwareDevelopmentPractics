@@ -1,0 +1,233 @@
+//authors Jonas Heinle, Frederik Lingg
+
+MaterialDef PBRLighting {
+    //container for all user defined uniform parameters might used in shader
+    //parameters allowed:
+
+
+    MaterialParameters{
+        //the metallicness (0 = dielectric, 1 = metallic).linear blend
+        //The metallic model has no diffuse component and also has a colored
+        //incident specular, equal to the base color
+        Texture2D MetallicTexture
+        Float Metallic : 1.0
+        Boolean UseMetallicAttribute : false
+
+        //surface roughness controls specular response.
+        Texture2D RoughnessTexture
+        Float Roughness : 1.0
+        Boolean UseRoughnessAttribute : false
+        Boolean IsGloss : false
+
+        //incident specular amount. Used instead of explicit index-of-refraction.
+        Texture2D SpecularTexture
+        Float Specular : 1.0
+        Boolean UseSpecularAttribute
+
+        // Base material color
+        Texture2D ColorTexture
+        Color BaseColor : 1.0 1.0 1.0 1.0
+        Boolean UseColorAttribute : false
+
+        //Emissive
+        Texture2D EmissiveTexture
+        Color Emissive : 0.0 0.0 0.0 0.0
+        Boolean UseEmissiveAttribute : false
+
+        //Normal Map
+        Texture2D NormalTexture
+        Boolean Is3DNormal : false
+
+        //environment map for importancesampling
+        Texture2D EnvMap
+        Boolean IsSphereMap : false
+        Boolean IsEquirectMap : false
+        Int EnvSamples : 16
+
+        //Ramps
+        //ramp factor
+        Float RampFactor : 0
+        Boolean UseRampFactorAttribute : false
+
+        //Roughness ramp
+        Int NumRoughnessPoints
+        Vector2Array RoughnessPoints
+
+        //Metallic ramp
+        Int NumMetallicPoints
+        Vector2Array MetallicPoints
+
+        //Specular ramp
+        Int NumSpecularPoints
+        Vector2Array SpecularPoints
+
+        //Color ramp
+        Int NumColorPoints
+        Vector4Array ColorPoints
+
+        //emissive ramp
+        Int NumEmissivePoints
+        Vector4Array EmissivePoints
+
+        //Particles
+        Boolean IsParticle : false
+
+        //shadows are made using standard jme3 shadowmapping
+        Int FilterMode
+        Boolean HardwareShadows
+
+        Texture2D ShadowMap0
+        Texture2D ShadowMap1
+        Texture2D ShadowMap2
+        Texture2D ShadowMap3
+
+        //pointLights
+        Texture2D ShadowMap4
+        Texture2D ShadowMap5
+
+        Float ShadowIntensity
+        Vector4 Splits
+        Vector2 FadeInfo
+
+        Matrix4 LightViewProjectionMatrix0
+        Matrix4 LightViewProjectionMatrix1
+        Matrix4 LightViewProjectionMatrix2
+        Matrix4 LightViewProjectionMatrix3
+
+        //pointLight
+        Matrix4 LightViewProjectionMatrix4
+        Matrix4 LightViewProjectionMatrix5
+
+        Vector3 LightPos
+        Vector3 LightDir
+
+        Float PCFEdge
+        Float ShadowMapSize
+
+        Boolean BackfaceShadows : false
+
+        // Alpha threshold for fragment discarding
+        Float AlphaDiscardThreshold
+    }
+
+    //default technique for our rendering;specifying shaders and opengl version
+    //is indispensable
+    Technique {
+        LightMode SinglePass
+
+        VertexShader GLSL130: /edu.kit.valaris/materials/Shaders/PBRLighting.vert
+        FragmentShader GLSL130: /edu.kit.valaris/materials/Shaders/PBRLighting.frag
+
+        //right here one is specifying which uniforms are necessary for this
+        //specific technique
+        WorldParameters {
+            WorldMatrix
+            ViewMatrix
+            ProjectionMatrix
+
+            WorldViewMatrix
+            ViewProjectionMatrix
+
+            WorldViewProjectionMatrix
+
+            NormalMatrix
+            WorldNormalMatrix
+
+            CameraPosition
+        }
+        Defines {
+            IS_PARTICLE : IsParticle
+            IS_GLOSS : IsGloss
+            IS_3D_NORMAL : Is3DNormal
+
+            USE_METALLIC_ATTRIBUTE : UseMetallicAttribute
+            USE_ROUGHNESS_ATTRIBUTE : UseRoughnessAttribute
+            USE_SPECULAR_ATTRIBUTE : UseSpecularAttribute
+            USE_COLOR_ATTRIBUTE : UseColorAttribute
+            USE_EMISSIVE_ATTRIBUTE : UseEmissiveAttribute
+            USE_RAMP_FACTOR_ATTRIBUTE : UseRampFactorAttribute
+
+            USE_METALLIC_TEXTURE : MetallicTexture
+            USE_ROUGHNESS_TEXTURE : RoughnessTexture
+            USE_SPECULAR_TEXTURE : SpecularTexture
+            USE_COLOR_TEXTURE : ColorTexture
+            USE_EMISSIVE_TEXTURE : EmissiveTexture
+            USE_NORMAL_TEXTURE : NormalTexture
+
+            NUM_METALLIC_POINTS : NumMetallicPoints
+            NUM_ROUGHNESS_POINTS : NumRoughnessPoints
+            NUM_SPECULAR_POINTS : NumSpecularPoints
+            NUM_COLOR_POINTS : NumColorPoints
+            NUM_EMISSIVE_POINTS : NumEmissivePoints
+
+            USE_IBL : EnvMap
+            SPHERE_MAP : IsSphereMap
+            EQUIRECT_MAP : IsEquirectMap
+        }
+    }
+
+    Technique PreShadow {
+
+        VertexShader GLSL100 GLSL150 :   Common/MatDefs/Shadow/PreShadow.vert
+        FragmentShader GLSL100 GLSL150 : Common/MatDefs/Shadow/PreShadow.frag
+
+        WorldParameters {
+            WorldViewProjectionMatrix
+            WorldViewMatrix
+            ViewProjectionMatrix
+            ViewMatrix
+        }
+
+        Defines {
+            DISCARD_ALPHA : AlphaDiscardThreshold
+            //NUM_BONES : NumberOfBones
+            //INSTANCING : UseInstancing
+            //NUM_MORPH_TARGETS: NumberOfMorphTargets
+            //NUM_TARGETS_BUFFERS: NumberOfTargetsBuffers
+        }
+
+        ForcedRenderState {
+            FaceCull Off
+            DepthTest On
+            DepthWrite On
+            PolyOffset 5 3
+            ColorWrite Off
+        }
+
+    }
+
+    Technique PostShadow {
+        VertexShader GLSL100 GLSL150:   Common/MatDefs/Shadow/PostShadow.vert
+        FragmentShader GLSL100 GLSL150: Common/MatDefs/Shadow/PostShadow.frag
+
+        WorldParameters {
+            WorldViewProjectionMatrix
+            WorldMatrix
+            ViewProjectionMatrix
+            ViewMatrix
+            NormalMatrix
+        }
+
+        Defines {
+            HARDWARE_SHADOWS : HardwareShadows
+            FILTER_MODE : FilterMode
+            PCFEDGE : PCFEdge
+            DISCARD_ALPHA : AlphaDiscardThreshold
+            SHADOWMAP_SIZE : ShadowMapSize
+            FADE : FadeInfo
+            PSSM : Splits
+            POINTLIGHT : LightViewProjectionMatrix5
+            //NUM_BONES : NumberOfBones
+            //INSTANCING : UseInstancing
+            BACKFACE_SHADOWS: BackfaceShadows
+            //NUM_MORPH_TARGETS: NumberOfMorphTargets
+            //NUM_TARGETS_BUFFERS: NumberOfTargetsBuffers
+        }
+
+        ForcedRenderState {
+            Blend Modulate
+            DepthWrite Off
+            PolyOffset -0.1 0
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "groups" : [
+    {
+      "key" : "TestGroup",
+      "assets" : [
+        "/edu.kit.valaris/assets/TestAsset.json"
+      ]
+    }
+  ]
+}

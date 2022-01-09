@@ -1,0 +1,226 @@
+\documentclass[parskip=full]{scrartcl}
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2cm, top=3cm, bottom=3cm}
+\usepackage[utf8]{inputenc} % use utf8 file encoding for TeX sources
+\usepackage[T1]{fontenc}    % avoid garbled Unicode text in pdf
+\usepackage[german]{babel}  % german hyphenation, quotes, etc
+\usepackage{hyperref}       % detailed hyperlink/pdf configuration
+\hypersetup{                % ‘texdoc hyperref‘ for options
+pdftitle={Echtzeit-Computergrafik in der Spieleentwicklung},%
+bookmarks=true,
+}
+
+\usepackage{rotating}
+\usepackage{newclude}
+\usepackage{typearea}
+\newcommand\invisiblesection[1]{%
+  \refstepcounter{section}%
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+  \sectionmark{#1}}
+
+
+\usepackage{listings}
+
+\usepackage{xcolor}
+\usepackage{graphicx}       % provides commands for including figures
+\usepackage{csquotes}       % provides \enquote{} macro for "quotes"
+\usepackage[nonumberlist]{glossaries}     % provides glossary commands
+\usepackage{enumitem}
+\usepackage{epsf,epsfig,eepic}
+\usepackage[headsepline, footsepline]{scrpage2}
+
+
+%Design für Methoden-/Attributbeschreibungen
+\usepackage{framed}
+\usepackage{color}
+\definecolor{gray}{RGB}{200,200,200}
+\renewenvironment{leftbar}[1][\hsize]
+{%
+\def\FrameCommand
+{%
+{\color{gray}\vrule width 1pt}%     
+}%
+\MakeFramed{\hsize#1\advance\hsize-\width\FrameRestore}%
+}
+{\endMakeFramed}
+
+\definecolor{eclipseStrings}{HTML}{B71C1C}
+\definecolor{eclipseKeywords}{HTML}{0D47A1}
+\definecolor{background}{HTML}{ECEFF1}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    commentstyle=\color{eclipseStrings}, % style of comment
+    stringstyle=\color{eclipseKeywords}, % style of strings
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background}, %only if you like
+    string=[s]{"}{"},
+    comment=[l]{:\ "},
+    morecomment=[l]{:"},
+    literate=
+        *{0}{{{\color{numb}0}}}{1}
+         {1}{{{\color{numb}1}}}{1}
+         {2}{{{\color{numb}2}}}{1}
+         {3}{{{\color{numb}3}}}{1}
+         {4}{{{\color{numb}4}}}{1}
+         {5}{{{\color{numb}5}}}{1}
+         {6}{{{\color{numb}6}}}{1}
+         {7}{{{\color{numb}7}}}{1}
+         {8}{{{\color{numb}8}}}{1}
+         {9}{{{\color{numb}9}}}{1}
+}
+
+%kopf und fusszeilen
+\pagestyle{scrheadings}
+\clearscrheadfoot
+
+%kopfzeile
+\ihead{\codename}
+\ohead{\headmark}
+\automark{section}
+
+%fusszeile
+\ofoot{\pagemark}
+\ifoot{\codename}
+
+\makenoidxglossaries
+%
+% % Glossareinträge
+%
+
+%Kommandos
+\newcommand{\codename}{Valaris}
+
+
+\title{Implementierungsdokument}
+\author{Sidney Hansen, Jonas Heinle, Frederik Lingg, Lukas Schölch, Artur Wesner}
+
+\begin{document}
+
+	\begin{titlepage}
+		\centering
+		{\scshape\LARGE Implementierungsdokument\par}
+		\vspace{1cm}
+		{\scshape\Large Echtzeit Computergrafik in der Spieleentwicklung \par}
+		\vspace{1cm}
+		{\huge\bfseries \codename \par}
+		\vspace{1cm}
+		\includegraphics[width=.5\linewidth]{./Bilder/valaris_t_4096.png}
+		\par
+		{\vspace{1cm}}
+		{\Large\itshape Autoren \\}
+		{\Large\itshape Sidney Hansen, Jonas Heinle,\\}
+		{\Large\itshape Frederik Lingg, Lukas Schölch, Artur Wesner\par}
+		
+		\vfill
+		Projektbetreuer\par
+		Alisa Jung \& Tobias Rapp
+		
+		\vfill
+		
+		% Bottom of the page
+		{\large \today\par}
+	\end{titlepage}
+
+	\tableofcontents 
+	\pagebreak
+	
+	
+	\pagebreak
+	
+	\section{Einleitung}
+
+	Für die Implementierung von Valaris wurde die Gliederung, welche bereits im Pflichtenheft und Entwurf eingehalten wurde,
+	weiterhin verwendet. Somit wurden die Module InGame-Grafik, InGame-Interface, Assets, Generierung und GUI zunächst unabhängig voneinander implementiert
+	und später zusammen gefügt.
+	
+	Jedoch wurde aufgrund von ungleichem Arbeitsumfang der Module die Arbeitsaufteilung der Module weniger streng gehalten.
+	Zusätzlich ging Zeit verloren, da das zusammenführen der einzelnen Module zum Teil länger dauerte als ursprünglich vorgesehen.
+	Ausserdem wurde die Implementierung der Schnittstelle zum anderen Team mehrfach überarbeitet, um komplexität im Simulationsthread zu verringern.
+	Die Implementierung der Shader für Physik basierte Materialien erwies sich ebenfalls als komplizierter als gedacht, da es häufig zu Rechenfehlern
+	aufgrund der Ungenauigkeit von Gleitkomma-Zahlen kam.
+
+	Das Resultat der Implementierung ist nun eine Anwendung, welche die gesammte Menüführung besitzt, Strecken generieren und vorführen kann.
+	Die eigentliche Simulation des Spiels wurde bisher nicht eingegliedert.
+
+	Im Folgenden wird im Detail erleutert, welche Kriterien umgesetzt, welche Aspekte des Entwurfs geändert und welche Unit-Tests verwendet wurden.
+	Das Dokument schließt mit dem Vergleich des geplanten und dem tatsächlichen Ablauf der Implementierung anhand von Gantt-Diagrammen ab.
+
+	\pagebreak
+
+	\section{Features}
+	\input{Grafik/Grafik_Features}
+	\pagebreak
+	\input{Interface/Interface_Features}
+	\pagebreak
+	\input{Assets/Assets_Features}
+	\pagebreak
+	\input{Generierung/Generierung_Features}
+	\pagebreak
+	\input{GUI/GUI_Features}
+	\pagebreak
+
+	\section{Änderungen}
+	\input{Grafik/Grafik_Modifications}
+	\pagebreak
+	\input{Interface/Interface_Modifications}
+	\pagebreak
+	\input{Assets/Assets_Modifications}
+	\pagebreak
+	\input{Generierung/Generierung_Modifications}
+	\pagebreak
+	\input{GUI/GUI_Modifications}
+	\pagebreak
+
+	\section{Unit Test Überblick}
+	\input{Grafik/Grafik_Test_Overview}
+	\pagebreak
+	\input{Interface/Interface_Test_Overview}
+	\pagebreak
+	\input{Assets/Assets_Test_Overview}
+	\pagebreak
+	\input{Generierung/Generierung_Test_Overview}
+	\pagebreak
+	\input{GUI/GUI_Test_Overview}
+	\pagebreak
+	
+	\section{Gantt}
+	\subsection{Geplanter Ablauf}
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=\linewidth]{./Bilder/PSE_Gantt.pdf}
+		\caption{Gantt - Diagramm}
+	\end{figure}
+
+	\pagebreak
+
+	\subsection{Tatsächlicher Ablauf}
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=\linewidth]{./Bilder/GanttJonas.png}
+		\caption{Jonas - Gantt - Diagramm}
+	\end{figure}
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=\linewidth]{./Bilder/GanttArtur.png}
+		\caption{Artur - Gantt - Diagramm}
+	\end{figure}
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=\linewidth]{./Bilder/GanttFrederik.png}
+		\caption{Frederik - Gantt - Diagramm}
+	\end{figure}
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=\linewidth]{./Bilder/Gantt_Generierung.png}
+		\caption{Lukas und Sidney - Gantt - Diagramm}
+	\end{figure}
+
+\end{document}

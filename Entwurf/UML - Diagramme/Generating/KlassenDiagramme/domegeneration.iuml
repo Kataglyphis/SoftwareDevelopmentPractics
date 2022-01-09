@@ -1,0 +1,98 @@
+@startuml domegeneration
+
+scale 2
+!include styles.puml
+
+
+''''''''''''''Begin'''''''''''''''
+
+package "domegeneration" #DCEDC8 {
+
+    Interface IDomeGenerator{
+        +generateDome(seed: int, sphereRadius: float,
+        entryWidth: Vector2f, exitAngle: float, flags: Set<GeneratorSettings>): IDome
+        
+    }
+        hide IDomeGenerator Attributes
+
+    class DomeGenerator{
+        -generationConfig: GenerationConfig
+        -assetManager: AssetManager
+        -roadGen: IRoadGenerator
+        -noiseGen: AbstractNoiseGenerator
+        -assetGen: AbstractDomeAssetGenerator
+        '''''''''''''''''''''''''''''''''''''''''''
+        +DomeGenerator(generationConfig: GenerationConfig, assetManager: AssetManager)
+        
+    }
+
+    Interface IDome {
+        +getRoad(): Road
+    }
+
+
+    class Dome{
+        -road: Road
+        -domeAssetsRootNode: Node
+        -grid: HashMap<GridVertex>
+        '''''''''''''''''''''''''''''''''''''''''''
+        #Dome(grid: HashMap<GridVertex>, road: Road, domeAssetsRootNode: Node)
+               
+        }
+
+
+    abstract class AbstractNoiseGenerator{
+        #makeNoise(grid: HashMap<GridVertex>, seed: int)
+        -makeHeightNoise(grid: HashMap<GridVertex>, seed: int)
+        -makeColorNoise(grid: HashMap<GridVertex>, seed: int)
+    }
+
+    class SimplexNoiseGenerator {
+        -generationConfig: GenerationConfig
+        -biom: String
+        -assetManager: AssetManager
+        #SimplexNoiseGenerator(generationConfig: GenerationConfig, assetManager: AssetManager, biom: String)
+        -makeHeightNoise(grid: HashMap<GridVertex>, seed: int)
+        -makeColorNoise(grid: HashMap<GridVertex>, seed: int)
+    }
+
+    abstract class AbstractDomeAssetGenerator{
+        #generateObjects(grid: HashMap<GridVertex>, road: Road, domeAssetsRootNode: Node, seed: int)
+        -generateStreet(grid: HashMap<GridVertex>, road: Road, domeAssetsRootNode: Node, seed: int)
+        -generateBridges(grid: HashMap<GridVertex>, road: Road, domeAssetsRootNode: Node, seed: int)
+        -generateEnviromentDeco(grid: HashMap<GridVertex>, road: Road, domeAssetsRootNode: Node, seed: int)
+    }
+
+    class DomeAssetGenerator{
+        -generationConfig: GenerationConfig
+        -biom: String
+        -assetManager: AssetManager
+        #DomeObjectGenerator(generationConfig: GenerationConfig, assetManager: AssetManager)
+        -generateStreet(grid: HashMap<GridVertex>, road: Road, domeAssetsRootNode: Node, seed: int)
+        -generateBridges(grid: HashMap<GridVertex>, road: Road, domeAssetsRootNode: Node, seed: int)
+        -generateEnviromentDeco(grid: HashMap<GridVertex>, road: Road, domeAssetsRootNode: Node, seed: int)
+    }
+
+    
+
+
+
+
+    'extends
+    IDomeGenerator <|.. DomeGenerator
+    AbstractNoiseGenerator <|-- SimplexNoiseGenerator
+    AbstractDomeAssetGenerator <|-- DomeAssetGenerator
+    IDome <|-- Dome
+    
+
+    'asso.
+    DomeGenerator *-down-"1" AbstractNoiseGenerator
+    DomeGenerator *-down-"1" AbstractDomeAssetGenerator
+
+    DomeGenerator .left.> Dome
+
+    ''''''''''format''''''''
+
+}
+
+@enduml

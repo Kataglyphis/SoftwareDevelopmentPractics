@@ -1,0 +1,39 @@
+@startuml Spatial
+
+class com.jme3.scene.Spatial {
+}
+hide com.jme3.scene.Spatial members
+
+@enduml
+
+@startuml AbstractControl
+
+class com.jme3.scene.control.AbstractControl {
+}
+hide com.jme3.scene.control.AbstractControl members
+
+@enduml
+
+@startuml SceneProcessor
+
+interface com.jme3.post.SceneProcessor {
+}
+hide com.jme3.post.SceneProcessor members
+
+@enduml
+
+@startuml Viewport
+
+interface com.jme3.renderer.Viewport {
+}
+hide Viewport members
+
+@enduml
+
+@startuml AbstractAppState
+
+abstract class com.jme3.app.state.AbstractAppState {
+}
+hide com.jme3.app.state.AbstractAppState members
+
+@enduml

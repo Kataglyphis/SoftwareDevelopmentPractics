@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<nifty>
+    <resourceBundle id="menudialog" filename="MenuLocal/menudialog"/>
+    <useControls filename="nifty-default-controls.xml"/>
+
+    <screen id="settingsmenuscreen" controller="edu.kit.valaris.menu.gui.SettingsmenuScreen"
+            inputMapping="edu.kit.valaris.menu.gui.MenuInputMapping">
+        <layer id="background" childLayout="center">
+            <image id="SettingsHintergrund" height="100%" width="100%"
+                   filename="edu/kit/valaris/menuSkin/Bilder/Hintergrund.png"/>
+        </layer>
+        <layer id="foreground" childLayout="vertical">
+            <panel height="2%"/>
+            <panel id="SettingsTitel" height="6%" width="99%"
+                   style="whitepanelwithoutborder" align="center"
+                   childLayout="absolute">
+                <control x="-5px" y="0px" height="100%" width="6%" name="button" id="backButton" align="right" valign="bottom"
+                         style="BackButton">
+                    <interact onClick="backtoMenu()" />
+                </control>
+                <text x="65px" y="11px" style="DefaultText" color="#000000" text="${menudialog.back}"
+                      align="right" valign="center">
+                    <interact onClick="backtoMenu()" />
+                </text>
+                <text x="540px" y="0px" style="TitelText" color="#000000" text="${menudialog.settings}"/>
+            </panel>
+            <panel height="7%"/>
+            <panel childLayout="horizontal" height="7%" width="100%" align="center" valign="center">
+                <panel width="29%"/>
+                <control name="button" label="${menudialog.graphics}" id="switchToGraphicsTab" align="center"
+                         valign="center" style="DefaultButton" height="90%" width="17%" >
+                    <interact onClick="showGraphicsTab()" />
+                </control>
+                <panel width="8%"/>
+                <control name="button" label="${menudialog.intern}" id="switchToInternTab" align="center"
+                         valign="center" style="DefaultButton" height="90%" width="17%">
+                    <interact onClick="showInternTab()" />
+                </control>
+                <panel width="20%"/>
+                <control name="button" label="${menudialog.resetsettings}" id="resetSettingsButton" align="center"
+                         valign="center" style="DefaultButton" height="120%" width="8%">
+                    <interact onClick="resetSettings()" />
+                </control>
+            </panel>
+            <panel height="5%"/>
+            <panel align="center" valign="center" height="60%" width="50%" childLayout="absolute-inside">
+                <panel id="graphicsTab" height="100%" width="100%" align="center" valign="center" childLayout="vertical">
+                    <panel align="center" valign="center" height="7%" width="50%" childLayout="horizontal">
+                        <panel width="9%"/>
+                        <text style="Franklin32" color="#FFFFFF" text="${menudialog.language}" align="center"
+                              valign="center" textHAlign="right" width="25%"/>
+                        <panel width="7%"/>
+                        <control id="languageDropDown" name="dropDown"  style="nifty-drop-down" width="50%" align="center" valign="center">
+                        </control>
+                        <panel width="9%"/>
+                    </panel>
+                    <panel height="5%"/>
+                    <panel align="center" valign="center" height="7%" width="50%" childLayout="horizontal">
+                        <panel width="9%"/>
+                        <text style="Franklin32" color="#FFFFFF" text="${menudialog.resolution}" align="center"
+                              valign="center" textHAlign="right" width="25%"/>
+                        <panel width="7%"/>
+                        <control id="resolutionDropDown" name="dropDown"  style="nifty-drop-down" width="50%" align="center" valign="center">
+                        </control>
+                        <panel width="9%"/>
+                    </panel>
+                    <panel height="5%"/>
+                    <panel align="center" valign="center" height="7%" width="50%" childLayout="horizontal">
+                        <panel width="9%"/>
+                        <text style="Franklin32" color="#FFFFFF" text="${menudialog.fullscreen}" align="center"
+                              valign="center" textHAlign="right" width="25%"/>
+                        <panel width="7%"/>
+                        <control id="fullscreenCheckbox" name="checkbox" align="center" valign="center" style="nifty-checkbox-style"/>
+                        <panel width="9%"/>
+                    </panel>
+                    <panel height="5%"/>
+                    <panel align="center" valign="center" height="7%" width="50%" childLayout="horizontal">
+                        <panel width="9%"/>
+                        <text style="Franklin32" color="#FFFFFF" text="V-Sync:" align="center"
+                              valign="center" textHAlign="right" width="25%"/>
+                        <panel width="7%"/>
+                        <control id="vsyncCheckbox" name="checkbox" align="center" valign="center" style="nifty-checkbox-style"/>
+                        <panel width="9%"/>
+                    </panel>
+                    <panel height="5%"/>
+                    <panel align="center" valign="center" height="7%" width="50%" childLayout="horizontal">
+                        <panel width="9%"/>
+                        <text style="Franklin32" color="#FFFFFF" text="${menudialog.quality}" align="center"
+                              valign="center" textHAlign="right" width="25%"/>
+                        <panel width="7%"/>
+                        <control id="qualityDropDown" name="dropDown"  style="nifty-drop-down" width="50%" align="center" valign="center">
+                        </control>
+                        <panel width="9%"/>
+                    </panel>
+                </panel>
+                <panel id="internTab" height="50%" width="100%" valign="center" childLayout="vertical" visible="false">
+                    <panel align="center" valign="center" height="7%" width="50%" childLayout="horizontal">
+                        <panel width="9%"/>
+                        <text style="Franklin32" color="#FFFFFF" text="${menudialog.kidifficulty}" align="center"
+                              valign="center" textHAlign="right" width="25%"/>
+                        <panel width="7%"/>
+                        <control id="kidiffDropDown" name="dropDown"  style="nifty-drop-down" width="50%" align="center" valign="center">
+                        </control>
+                        <panel width="9%"/>
+                    </panel>
+                    <panel height="35%"/>
+                    <panel childLayout="horizontal" width="80%" height="50%">
+                        <panel childLayout="vertical" width="40%">
+                            <panel height="10%" childLayout="vertical" align="right">
+                                <text style="Franklin32" color="#ff0" text="${menudialog.keymapping}" align="right" valign="bottom"/>
+                            </panel>
+                            <panel height="40px"/>
+                            <text style="Franklin32" color="#fff" text="${menudialog.forward}" align="right" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="${menudialog.left}" align="right" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="${menudialog.right}" align="right" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="${menudialog.backward}" align="right" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="${menudialog.stealenergy}" align="right" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="${menudialog.useitem}" align="right" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="${menudialog.lookback}" align="right" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="${menudialog.pausekey}" align="right" valign="center"/>
+                        </panel>
+                        <panel width="15%"/>
+                        <panel childLayout="vertical" width="20%">
+                            <image id="keyboard" height="40px" width="40px" align="center" valign="center"
+                                   filename="edu/kit/valaris/menuSkin/Bilder/Icons/keyboard.png">
+                            </image>
+                            <panel height="10%"/>
+                            <text style="Franklin32" color="#fff" text="W" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="A" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="D" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="S" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="E" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="F" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="R" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="Esc" align="center" valign="center"/>
+                        </panel>
+                        <panel width="5%"/>
+                        <panel childLayout="vertical" width="20%">
+                            <image id="controller" height="40px" width="40px" align="center" valign="center"
+                                   filename="edu/kit/valaris/menuSkin/Bilder/Icons/Controller.png">
+                            </image>
+                            <panel height="10%"/>
+                            <text style="Franklin32" color="#fff" text="RT" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="Stick" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="Stick" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="LT" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="B" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="A" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="X" align="center" valign="center"/>
+                            <text style="Franklin32" color="#fff" text="Y" align="center" valign="center"/>
+                        </panel>
+                    </panel>
+
+                </panel>
+            </panel>
+        </layer>
+    </screen>
+    <!-- Popup for changing the language -->
+    <popup id="messagePopup" childLayout="center" backgroundColor="#000c">
+        <effect>
+            <onStartScreen name="fade" startColor="#0000" endColor="#000a" length="200" />
+            <onEndScreen name="fade" startColor="#000a" endColor="#0000" length="250" startDelay="200" />
+        </effect>
+        <panel id="messagePopupMainPanel" style="glass-panel" padding="28px,18px,28px,18px" width="30%" height="20%" align="center" valign="center" childLayout="vertical">
+            <panel id="messagePopupTextPanel" height="30%" width="100%" childLayout="center">
+                <control name="label" style="Franklin24" id="messagePopupTitel"
+                         text="" color="#FFFFFF"
+                         height="20%" width="100%" align="right" valign="center" childLayout="vertical"/>
+            </panel>
+            <panel height="40%"/>
+            <panel id="messagePopupButtonsPanel" height="30%" width="50%" childLayout="center" align="center"
+                   valign="center">
+                <control name="button" label="OK" id="messagePopupButton" align="center"
+                         valign="center" style="PopupButton" height="100%" width="80%" >
+                    <interact onClick="quitPopup()" />
+                </control>
+            </panel>
+        </panel>
+    </popup>
+</nifty>

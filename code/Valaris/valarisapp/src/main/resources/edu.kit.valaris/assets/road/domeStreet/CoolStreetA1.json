@@ -1,0 +1,15 @@
+{
+  "key" : "DomeStreet",
+  "path" : "/edu.kit.valaris/assets/road/domeStreet/SimpleStreetB7.j3o",
+
+  "nodes" : [],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "Borders/Cube.0011", "material" : "/edu.kit.valaris/assets/road/domeStreet/RoadBorderMat.j3m"},
+    {"path" : "Underground/Cube.0021", "material" : "/edu.kit.valaris/assets/road/domeStreet/DarkMetal.j3m"},
+    {"path" : "OutherLedBorder/Plane.0031", "material" : "/edu.kit.valaris/assets/road/domeStreet/GlowingRed.j3m"},
+    {"path" : "SteelBeams/Cylinder1", "material" : "/edu.kit.valaris/assets/road/domeStreet/LightGreyMetal.j3m"},
+    {"path" : "Pillars/Cylinder.0021", "material" : "/edu.kit.valaris/assets/road/domeStreet/Pillars.j3m"}
+  ],
+  "animations" : []
+}

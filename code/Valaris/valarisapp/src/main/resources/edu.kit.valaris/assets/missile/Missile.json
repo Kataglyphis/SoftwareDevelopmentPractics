@@ -1,0 +1,19 @@
+{
+  "key" : "Missile",
+  "path" : "/edu.kit.valaris/assets/missile/Missile.j3o",
+  "nodes" : [],
+  "controls" : [
+    {"key" : "Thrust", "path" : "ThrustParticle/ThrustParticle", "isPreload" : false, "type" : "edu.kit.valaris.rendering.particleEffect.ParticleEffect", "params" : "Jet"}
+  ],
+  "meshes" : [
+    {"path" : "Rocket/Base", "material" : "/edu.kit.valaris/assets/missile/Base.j3m"},
+    {"path" : "Rocket/Tube", "material" : "/edu.kit.valaris/assets/missile/Tube.j3m"},
+    {"path" : "Rocket/Wings", "material" : "/edu.kit.valaris/assets/missile/Wings.j3m"},
+    {"path" : "Rocket/Tip", "material" : "/edu.kit.valaris/assets/missile/Tip.j3m"},
+    {"path" : "Rocket/Thrust", "material" : "/edu.kit.valaris/assets/missile/Thrust.j3m"},
+    {"path" : "ThrustParticle/ThrustParticle", "material" : "/edu.kit.valaris/assets/missile/ThrustParticles.j3m"}
+  ],
+  "animations" : [
+    {"key" : "dummyanim", "name" : "dummyanim", "path" : "dummypath"}
+  ]
+}

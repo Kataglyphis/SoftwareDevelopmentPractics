@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty-controls>
+
+    <controlDefinition name="intervalbox" controller="edu.kit.edu.kit.valaris.profiling.IntervalBox">
+        <panel id="#backdrop" backgroundColor="#0000" childLayout="vertical">
+            <!--box indicating the color of the interval-->
+            <panel id="#box" width="100%" height="50%" backgroundColor="#ffff"/>
+
+            <!--label displaying the name of the interval-->
+            <panel id="#label-backdrop" width="100%" height="50%" backgroundColor="#0000" childLayout="center">
+                <text id="#label" align="left" valign="center" font="$font" text="$title" />
+            </panel>
+
+        </panel>
+    </controlDefinition>
+
+</nifty-controls>

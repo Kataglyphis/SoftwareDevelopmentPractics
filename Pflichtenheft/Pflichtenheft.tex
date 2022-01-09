@@ -1,0 +1,741 @@
+\documentclass[parskip=full]{scrartcl}
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2cm, top=3cm, bottom=3cm}
+\usepackage[utf8]{inputenc} % use utf8 file encoding for TeX sources
+\usepackage[T1]{fontenc}    % avoid garbled Unicode text in pdf
+\usepackage[german]{babel}  % german hyphenation, quotes, etc
+\usepackage{hyperref}       % detailed hyperlink/pdf configuration
+\hypersetup{                % ‘texdoc hyperref‘ for options
+pdftitle={Echtzeit-Computergrafik in der Spieleentwicklung},%
+bookmarks=true,%
+}
+
+\usepackage{xcolor}
+\usepackage{graphicx}       % provides commands for including figures
+\usepackage{csquotes}       % provides \enquote{} macro for "quotes"
+\usepackage[nonumberlist]{glossaries}     % provides glossary commands
+\usepackage{enumitem}
+\usepackage{epsf,epsfig,eepic}
+\usepackage[headsepline, footsepline]{scrpage2}
+
+%kopf und fusszeilen
+\pagestyle{scrheadings}
+\clearscrheadfoot
+
+%kopfzeile
+\ihead{\codename}
+\ohead{\headmark}
+\automark{section}
+
+%fusszeile
+\ofoot{\pagemark}
+\ifoot{\codename}
+
+\makenoidxglossaries
+%
+% % Glossareinträge
+%
+
+\newglossaryentry{KI}{
+	name={KI},
+	plural={KI's},
+	description={Eine Künstliche Intelligenz (KI) beschreibt hier einen automatisierten, nicht menschlich gesteuerten, Fahrer},
+}
+\newglossaryentry{PBR}{
+	name={PBR},
+	description={Physically Based Rendering},
+}
+\newglossaryentry{Deferred Rendering}{
+	name={Deffered Rendering},
+	description={beschreibt eine Technik, mit deren Hilfe die
+	           Geometrieverarbeitung von der Lichtberechnung getrennt werden kann}
+}
+\newglossaryentry{MotionBlur}{
+	name={MotionBlur},
+	description={Unschärfe von bewegten Objekte in Bildern}
+}
+
+\newglossaryentry{Seed}{
+	name={Seed},
+	plural={Seeds},
+	description={Seed (zu deutsch: Samen) beschreibt einen Ausgangswert zur Generierung einer Folge von Pseudozufallswerten},
+}
+
+\newglossaryentry{Biom}{
+	name={Biom},
+	plural={Biome},
+	description={Ein Biom beschreibt eine bestimmte Ausprägung eines Streckenabschnittes},
+}
+
+\newglossaryentry{Mesh}{
+	name={Mesh},
+	plural={Meshes},
+	description={Polygonnetz welches in der Computergrafik zur Darstellung von Formen im Raum dargestellt werden},
+}
+
+\newglossaryentry{Navigation Mesh}{	
+	name={Navigation Mesh},
+	plural={Navigation Meshes},
+	description={Repräsentiert die von Spieler (und KI) befahrbare Oberfläche}
+}
+
+\newglossaryentry{Scenegraph}{
+	name={Scenegraph},
+	description={Baumartige Datenstruktur zur Repräsentation einer Szene}
+}
+\newglossaryentry{JUnit}{
+	name={JUnit},
+	description={JUnit ist ein Werkzeug welches Quelltext, mit vorher festgelegten Testflällen, automatisiert testet}
+}
+\newglossaryentry{Low-Poly Stil}{
+	name={Low-Poly Stil},
+	description={Low-Poly ist ein Polygonnetz in der 3D-Computergrafik, welches eine relativ kleine Anzahl von Polygonen besizt}
+}
+\newglossaryentry{FXAA}{
+	name={Fast Approximate Anti-Aliasing (FXAA)},
+	description={Reduziert sichtbares Aliasing während Schärfe beibehalten wird}
+}
+\newglossaryentry{HDR}{
+	name={High Dynamic Range (HDR)},
+	description={Ist das Rendern von virtuellen Umgebungen mit einem dynamischen Farbkanalbereich von 65.535: 1 oder höher (in der Computer-, Spiel- und Unterhaltungstechnologie)}}
+%Kommandos
+\newcommand{\codename}{Valaris}
+
+%
+% % Abkürzungen
+%
+%TODO
+
+\title{Pflichtenheft}
+\author{Sidney Hansen, Jonas Heinle, Frederik Lingg, Lukas Schölch, Artur Wesner}
+
+\begin{document}
+
+	\begin{titlepage}
+		\centering
+		{\scshape\LARGE Pflichtenheft Praxis der Softwareentwicklung\par}
+		\vspace{1cm}
+		{\scshape\Large Echtzeit Computergrafik in der Spieleentwicklung \par}
+		\vspace{1cm}
+		{\huge\bfseries \codename \par}
+		\vspace{1cm}
+		\includegraphics[width=.5\linewidth]{./Bilder/valaris_t_4096.png}
+		\par
+		{\vspace{1cm}}
+		{\Large\itshape Autoren \\}
+		{\Large\itshape Sidney Hansen, Jonas Heinle,\\}
+		{\Large\itshape Frederik Lingg, Lukas Schölch, Artur Wesner\par}
+		
+		\vfill
+		Projektbetreuer\par
+		Alisa Jung \& Tobias Rapp
+		
+		\vfill
+		
+		% Bottom of the page
+		{\large \today\par}
+	\end{titlepage}
+
+	\tableofcontents 
+	
+	\pagebreak
+	
+	\section{Einleitung}
+	
+	%Benutzer-Erfahrung
+	\codename\ ist ein lineares futuristisches Weltraumrennspiel. Spieler können gegen andere Spieler oder virtuelle Gegner in kontrollpunktbasierten Wettrennen antreten.
+	Das Rennen wird auf schwebenden Fahrzeugen bestritten. Die Strecke führt durch eine prozedural generierte Planetbasisstation, welche abwechslungsreiche Umgebungen
+	für spannende Wettkämpfe bietet. Während des Rennens können Spieler Energie-Kugeln klauen um schneller als die Konkurrenz zu sein. An Kontrollpunkten erhalten Spieler
+	abhängig von ihrer Position Energie-Kugeln, um die Anzahl der Energie-Kugeln der Spieler auszugleichen. Zusätzlich sind Powerups auf der Strecke verteilt, um den Spielern
+	weitere taktische Möglichkeiten zur Verfügung zu stellen. \par
+
+	%Entwicklungs Ziele
+	\textcolor{gray}{[Team Grafik]}\\
+	\codename\ soll als Echtzeit-Java-Anwendung realisiert werden. Die Render-Pipeline soll für andere Projekte wiederverwendbar sein. Für die Strecken soll ein modularer
+	Generator entwickelt werden, sodass das Hinzufügen neuer Features für die Strecke mit minimalem Aufwand möglich ist. Weiter soll eine intuitive Menüführung für
+	\codename\ erstellt werden, welche es dem Nutzer ermöglicht die Steuerung auf seine Vorlieben und die Grafik auf sein System anzupassen. \par
+
+	\textcolor{gray}{[Team Gameplay]}\\
+	\codename\ simuliert den oben beschriebenen Rennablauf. Hierzu wird ein physikalisches Modell des Rennens gebildet. In diesem Modell wird das Fahrverhalten
+	des Fahrzeuges berechnet. Indem Kollisionen, unterschiedliche Streckenuntergründe und die Steuerung des Spielers die Berechnungen beeinflussen.
+	Dies soll sowohl lokal (Einzelspieler) als auch über Netzwerkverbindung (Mehrspieler) erfolgen. \par
+
+	%Programmablauf
+	\textcolor{gray}{[Team Grafik]}\\
+	Nach dem Start von \codename\ befindet sich der Nutzer in einem Hauptmenü, von dem aus er entweder zu den Einstellungen oder zum Spiel navigieren kann. Vor dem Start eines Rennens
+	können die Spieler verschiedene Rennwagen aussuchen, währenddessen wird das Level im Hintergrund geladen. Danach startet das Rennen.
+	Nach dem Rennen können die Spieler gegenseitig ihre Leistung ansehen, woraufhin sie zurück ins Hauptmenü gelangen. \par
+
+	\textcolor{gray}{[Team Gameplay]}\\
+	Das Rennen startet an einer Startlinie mit einem visuellen Signal. Während des Rennens kann das Fahrzeug mit einem Kontroller 
+	oder einer Tastatur gesteuert werden. Jeder Spieler startet mit X Energie-Kugeln. Die Energiekugeln erhöhen die 
+	Maximalgeschwindigkeit des Fahrzeuges. Diese Energiekugeln kann man von Gegenspielern klauen. 
+	Zudem erhält man Energiekugeln an jedem Kontrollpunkt basierend auf der aktuellen Position.
+	Auf der Strecke verteilt liegen Items, die beim hindurchfahren automatisch eingesammelt werden. Wer die Ziellinie zuerst überquert hat gewonnen. \par
+
+	%Aussehen
+	\codename\ hat einen futuristischen \gls{Low-Poly Stil}. Modelle besitzen keine Texturen, jedoch sollen die Materialien physikalisch akkurat dargestellt werden. Die Strecken
+	verlaufen durch Raumstationen, welche hauptsächlich durch viele künstliche Lichtquellen beleuchtet werden. Die Stationen bestehen aus engen Tunneln und großen Kuppeln um Dynamik
+	in das Spielgeschehen zu bringen. Die Checkpoints sollen für Spieler sichtbar und erkennbar dargestellt sein. Wichtige Momente während dem Rennen sollen durch visuelle Effekte hervorgehoben
+	werden. \par
+
+	\pagebreak
+	
+	\section{Zielbestimmung}
+
+	%Grafik
+	\subsection{InGame - Grafik}
+	\subsubsection{Musskriterien}
+	\begin{itemize}
+		\item Darstellung physikalisch akkurater Materialien
+		\item Rendern von undurchsichtigen Objekten
+		\item Viele dynamische Lichtquellen gleichzeitig verarbeiten
+		\item Schatten von dynamischen Lichtquellen
+		\item Effekte
+		\begin{itemize}
+			\item Partikeleffekte (z.B. Explosionen)
+		\end{itemize}
+		\item Postprocessing (z.B. \gls{MotionBlur})
+		\item Frei fliegende Kamera zum Ansehen der Strecke
+	\end{itemize}
+	
+	\subsubsection{Wunschkriterien}
+	\begin{itemize}
+		\item Animationen an Spielfigur und Fahrzeug
+		\begin{itemize}
+			\item Klauen der Energie am vorderen Fahrzeug
+			\item Animieren der Düsen des Fahrzeuges
+		\end{itemize}
+			\item Verschiedene Fahrzeuge
+		\item Leuchtende Oberflächen
+		\item \gls{HDR}
+		\item \gls{FXAA}
+		\item Soundeffekte
+	\end{itemize}
+	
+	\pagebreak
+	
+	%Generirung
+	\subsection{Prozedurale Generierung}
+	\subsubsection{Musskriterien}
+	\begin{itemize}
+		\item Zusammenhängende Strecke mit Start und Ziel
+		\item Checkpoints in sinnvollen Abständen
+		\item Generierung von unterschiedlichen Streckenführungen
+		\item Deterministisch vom \gls{Seed} abhängig
+		\item Keine unbefahrbaren Streckenabschnitte
+		\item Definieren von Extremparametern (Bsp. Steigung, Schärfe der Kurven, ...)
+		\item Konform zum Streckenmodell des anderen Teams
+		\item Generierung von Streckenumgebung
+	\end{itemize}
+
+
+	\subsubsection{Wunschkriterien}
+	\begin{itemize}
+		\item Verschiedene \glspl{Biom}
+		\item Verschiedene befahrbare Untergründe
+		\item Einfügen von Hindernissen auf die Rennbahn
+		\item Dynamische Strecken- bzw. Umgebungselemente
+	\end{itemize}
+	
+	\pagebreak
+	
+	%Menü, Pause, Hud
+	\subsection{GUI}
+	\subsubsection{Musskriterien} 
+	\begin{itemize}
+		\item Allgemeines Start-Menü
+		\item Einstellungsfenster
+		\begin{itemize}
+			\item Diverse Möglichkeiten zur Konfiguration des Spielverhaltens
+			\item Diverse Möglichkeiten zur Konfiguration der Grafik
+		\end{itemize}
+		\item Vor dem Spiel:
+		\begin{itemize}
+			\item Konfiguration des \glspl{Seed}
+			\item Auswählen eines gespeicherten \glspl{Seed}
+			\item Auswählen des Spielmodus
+			\item Definition der Anzahl an optionaler \glspl{KI}
+		\end{itemize}
+		\item Ein während des Spiels aufrufbares Pause-Menü mit den Funktionen:
+		\begin{itemize}
+			\item Zurückkehren zum Spiel
+			\item Zurückkehren zum Start-Menü
+			\item Öffnen der Einstellungen
+			\item Speichern des aktuellen \glspl{Seed}
+		\end{itemize}
+		\item Nach dem Spiel:
+		\begin{itemize}
+			\item Möglichkeit zur Speicherung des aktuellen \glspl{Seed}
+			\item Eine Ergebnisanzeige mit Visualisierung der Endposition und der gefahrenen Zeit eines jeden Spielers
+			\item Möglichkeit die Strecke erneut zu fahren
+			\item Zurückkehren zum Start-Menü
+		\end{itemize}
+		\pagebreak
+		\item Anzeige eines Head-up-Displays(HUD) während dem Spiel
+		\begin{itemize}
+			\item Mini-Map in 2D inklusive Visualisierung der Fahrer
+			\item Anzeige der Rundenzahl
+			\item Aktuell gefahrene Zeit
+			\item Visualisierung des aufgesammelten Powerups
+			\item Anzeige der Geschwindigkeit des Fahrers
+			\item Anzeige der aktuellen Ranglistenplatzierung
+		\end{itemize}
+	\end{itemize}
+
+	\subsubsection{Wunschkriterien}
+	\begin{itemize}
+		\item Konfigurationseinstellung für den Ton
+		\item Fahrzeugauswahl
+		\item Beispielvorschau eines \glspl{Seed}
+		\item Abstimmmöglichkeit unter Spielern, ob eine Strecke erneut gespielt werden soll
+	\end{itemize}
+
+	\pagebreak
+	
+	\subsection{Assets}
+	\subsubsection{Musskriterien}
+	\begin{itemize}
+		\item Verbindungstunnel der Raumstation
+		\item Dekorationen für Raumstationselemente
+		\item Kuppeln mit planetarischer Umgebung
+		\item Hover-Cart (fliegendes Go-Cart)
+		\item Energie-Kugeln hinten auf dem Hover-Cart
+		\item Fahrer für Hover-Carts
+	\end{itemize}
+	
+	\subsubsection{Wunschkriterien}
+	\begin{itemize}
+		\item Weitere Verbindungstunnel-Typen
+		\item Weitere Fahrzeugmodelle
+		\item Animation für Fahrer
+	\end{itemize}
+	
+	\subsection{Abgrenzungskriterien}
+	\begin{itemize}
+		\item Das Spiel muss nicht auf Mobilgeräten oder Konsolen laufen
+		
+	\end{itemize}
+	
+	\pagebreak
+
+	\section{Produkteinsatz}
+	\subsection{Einsatzgebiet und Zielgruppe}
+	Dieses Programm wird als Echtzeitcomputerspiel entwickelt.
+	Dieses Spiel soll sich gezielt bei allen Familienmitgliedern etablieren.
+	Lediglich eine Altersrestriktion von 6 Jahren aufwärts wird
+	festgelegt. 
+	Es soll gezielt der Gelegenheitsspieler angesprochen werden.
+	Dabei sollte für die Vorkenntnisse des Benutzers die Altersrestriktion 
+	beachtet werden. Es soll intuitiv benutzbar sein und einen einfachen 
+	Zugang bieten. Lediglich minimalste Anforderungen an die Bedienung
+	des Homecomputers sowie der Sprache werden vorausgesetzt.
+	
+	
+	\subsection{Hard- und Softwareanforderungen}
+	\begin{itemize}
+		\item CPU: Intel i5 4.Generation aufwärts; AMD Ryzen 5 1600
+		\item Grafikkarte: Nvidia GeForce GTX 960; Radeon RX 480 
+		\item Eingabegeräte: Tastatur oder XBOX-Controller
+		\item Arbeitsspeicher: 8GB
+		\item Betriebssystem: Windows 10
+	\end{itemize}
+	\subsection{Laufzeit- und Speicherverbrauch}
+	\begin{itemize}
+		\item Rechenzeit pro Bild = 16ms (60bps)
+		\item Speicherverbrauch maximal 3-4GB
+		\item Interaktives Programm
+	\end{itemize}
+	
+	\pagebreak
+	
+	\section{Anforderungen}
+
+	\subsection{InGame - Grafik}
+	\subsubsection{Funktionale Anforderungen}
+	\begin{itemize}[label={}]
+		\item \textbf{/FA000/} Darstellung physikalisch korrekter Materialien
+		\item \textbf{/FA001/} Darstellung metallener bzw. dielektrischer Materialien
+		\item \textbf{/FA002/} Darstellung untransparenter Objekte
+		\item \textbf{/FA003/} Darstellung leuchtender Oberflächen
+		
+		\item \textbf{/FA010/} Darstellung von dynamischen Kegellichtquellen
+		\item \textbf{/FA011/} Darstellung von statischen Kegellichtquellen
+		\item \textbf{/FA012/} Darstellung von dynamischen Punktlichtquellen
+		\item \textbf{/FA013/} Darstellung von statischen Punktlichtquellen
+		\item \textbf{/FA014/} Darstellung von richtungsbasierten Lichtquellen(Sonne)
+		\item \textbf{/FA015/} Berechnung  von dynamischen Schatten
+		\item \textbf{/FA016/} Detailgrad der Schatten an Priorität der Lichter anpassen
+		
+		\item \textbf{/FA020/} Einbindung von Bildfiltern
+		\item \textbf{/FA021/} Bewegungsunschärfe
+		\item \textbf{/FA022/} Kantenglättungsfilter
+		\item \textbf{/FA023/} Skalierung des Outputs der Renderpipeline
+		\item \textbf{/FA024/} \gls{HDR}
+		
+		\item \textbf{/FA030/} Partikelsysteme
+		\item \textbf{/FA031/} Variable Partikelgröße
+		\item \textbf{/FA032/} Variable Partikelfarbe
+		\item \textbf{/FA033/} Variable Partikelgeschwindigkeit
+		\item \textbf{/FA034/} Beeinflussung der Partikel durch Gravitation
+		\item \textbf{/FA035/} Funkenspritzen
+		
+		\item \textbf{/FA040/} Skelettbasierte Animation
+		\item \textbf{/FA041/} Zweidimensionale Interpolation von Animationen
+		\item \textbf{/FA042/} Animationsstatemachine
+		\item \textbf{/FA043/} Schichten von Animationen
+		\item \textbf{/FA044/} Animationsevents und Callbacks
+		
+		\item \textbf{/FA050/} Frei fliegende Kamera
+	\end{itemize}
+
+	
+	\subsubsection{Nichtfunktionale Anforderungen}
+	\begin{itemize}[label={}]
+		\item \textbf{/NFA000/} Konstante Bildrate (ca. 60bps)
+		\item \textbf{/NFA010/} Mindestens 4 gleichzeitig aktive Lichter
+		\item \textbf{/NFA011/} Berechnung von dynamischen Schatten für mindestens 2 Lichter gleichzeitig
+		\item \textbf{/NFA020/} Mindestens 2 aktive Bildfilter gleichzeitig
+		\item \textbf{/NFA030/} Darstellung von mindestens 100 Partikeln
+		\item \textbf{/NFA040/} Skelette mit mindestens 26 Knochen
+		\item \textbf{/NFA041/} Mindestens 2 Schichten von Animationen
+	\end{itemize}
+	
+	\pagebreak
+	
+	\subsection{Prozedurale Generierung}
+	\subsubsection{Funktionale Anforderungen}
+	\begin{itemize} [label={}]
+		\item \textbf{/FA100/} Generierung einer durchgehenden Strecke mit Start und Ziel
+		\item \textbf{/FA101/} Ein \gls{Seed} produziert deterministisch immer die gleiche Ausgabe des Generators
+		\item \textbf{/FA102/} Ausgabe von \gls{Navigation Mesh}
+		\item \textbf{/FA103/} Ausgabe von \gls{Scenegraph}
+		
+		\item \textbf{/FA110/} Festlegen von Checkpoints
+		\item \textbf{/FA111/} Visuelle Repräsentation von Start, Ziel und Checkpoints
+		\item \textbf{/FA112/} Generieren der Startpositionen für Fahrzeuge
+		\item \textbf{/FA113/} Generieren der Positionen für Powerups
+		\item \textbf{/FA114/} Generieren von unterschiedlichen Fahruntergründen
+		
+		\item \textbf{/FA120/} Unterteilung der Strecke in \glspl{Biom}
+		\item \textbf{/FA121/} Generieren der Streckenumgebung
+		\item \textbf{/FA122/} Generieren von Objekten auf der Strecke
+		
+		\item \textbf{/FA130/} Algorithmus durch verschiedene Parameter konfigurierbar
+		\item \textbf{/FA131/} Berücksichtigung von Extremparametern
+	\end{itemize}
+	
+	\subsubsection{Nichtfunktionale Anforderungen}
+	\begin{itemize} [label={}]
+		\item \textbf{/NFA100/} Checkpoints in gleichmäßigen Abständen
+		
+		\item \textbf{/NFA110/} Abwechslungsreiches Fahrerlebnis innerhalb einer Strecke
+		\item \textbf{/NFA111/} Strecken sollen sich für den Spieler merklich Unterscheiden, bei unterschiedlichen \glspl{Seed}
+		
+		\item \textbf{/NFA120/} Strecke muss durchgehend bis zum Ziel befahrbar sein
+		\item \textbf{/NFA121/} Die Generierung muss in unter 30 Sekunden erfolgen
+	\end{itemize}
+		
+	\pagebreak
+	
+	\subsection{GUI}
+	\subsubsection{Funktionale Anforderungen}
+	\begin{itemize} [label={}]
+		\item \textbf{/FA200/} Das Spiel startet mit einem auf dem Bildschirm erscheinenden Start-Menü
+		\item \textbf{/FA201/} Durch Drücken eines Buttons lässt sich das Einstellungsfenster öffnen
+		\item \textbf{/FA203/} Das Spiel kann im Einzelspielermodus gestartet werden
+		\item \textbf{/FA204/} Das Spiel kann im Mehrspielermodus gestartet werden
+		
+		\item \textbf{/FA210/} Im Einstellungsfenster können spielinterne Einstellungen vorgenommen werden
+		\item \textbf{/FA211/} Im Einstellungsfenster können grafische Einstellungen vorgenommen werden
+		\item \textbf{/FA212/} Im Einstellungsfenster kann der Spieler zwischen Vollbild- und Fenstermodus wechseln
+		\item \textbf{/FA213/} In den spielinternen Einstellungen kann die Steuerung eingestellt werden
+		
+		\item \textbf{/FA220/} Nach Auswählen des Einzelspielermodus öffnet sich ein neues Fenster zur Streckenauswahl
+		\item \textbf{/FA221/} In der Streckenauswahl kann der \gls{Seed} konfiguriert werden werden	
+		\item \textbf{/FA222/} In der Streckenauswahl kann ein gespeicherter \gls{Seed} ausgewählt werden
+		\item \textbf{/FA223/} In der Streckenauswahl kann der Name eines gespeicherten \glspl{Seed} bearbeitet werden
+		\item \textbf{/FA224/} In der Streckenauswahl kann im Einzelspielermodus die Anzahl an \glspl{KI} eingestellt werden	
+		\item \textbf{/FA225/} In der Streckenauswahl kann das Spiel durch Drücken eines Buttons gestartet werden
+		
+		\item \textbf{/FA230/} Nach Auswählen des Mehrspielermodus öffnet sich eine Lobby
+		\item \textbf{/FA231/} In der Lobby werden alle bisher verbundenen Spieler angezeigt
+		\item \textbf{/FA232/} In der Lobby existiert eine Fahrzeugauswahl
+		\item \textbf{/FA233/} In der Lobby kann man ein Einstellungsfenster öffnen, in dem man spielinterne Einstellungen vornehmen kann
+		\item \textbf{/FA234/} In der Lobby kann das Spiel gestartet werden
+		\item \textbf{/FA235/} In der Lobby besteht die Möglichkeit den Namen der Lobby zu ändern
+		\item \textbf{/FA236/} Eine Lobby kann per Knopfdruck verlassen wiederverwendbar
+		\item \textbf{/FA237/} Der Spieler kann einer anderen Lobby beitreten
+		
+		\item \textbf{/FA240/} Im Spiel kann durch Drücken des entsprechenden Knopfes das Pause-Menü geöffnet werden
+		\item \textbf{/FA241/} Im Pause-Menü kann man zum Spiel zurückkehren
+		\item \textbf{/FA242/} Im Pause-Menü kann man zum Start-Menü wechseln
+		\item \textbf{/FA243/} Im Pause-Menü kann man das Einstellungsfenster öffnen
+		\item \textbf{/FA244/} Im Pause-Menü kann man den aktuellen \glspl{Seed} speichern
+		
+		\item \textbf{/FA250/} Im Spiel wird die Geschwindigkeit des eigenen Fahrzeugs an diesem angezeigt
+		\item \textbf{/FA251/} Die Anzahl an Energiekugeln ist am Heck des Fahrzeuges zu sehen
+		\item \textbf{/FA252/} Die Position und Fahrzeit wird angezeigt
+		\item \textbf{/FA253/} Eine Mini-Map mit den Positionen aller Fahrer wird dargestellt
+		\item \textbf{/FA254/} Das momentan ausgerüstete Power-Up wird dargestellt
+		
+		\item \textbf{/FA260/} Erreicht der Spieler das Ziel, erscheint eine Ergebnisanzeige, die eine Rangliste aller Fahrer anzeigt sowie deren Fahrzeiten
+		\item \textbf{/FA261/} In der Ergebnisanzeige kann der \glspl{Seed} gespeichert werden
+		\item \textbf{/FA262/} In der Ergebnisanzeige kann durch Drücken eines Buttons die Strecke erneut gefahren werden
+		\item \textbf{/FA263/} In der Ergebnisanzeige besteht die Möglichkeit zum Start-Menü zurückzukehren
+	\end{itemize}
+
+	\subsubsection{Nichtfunktionale Anforderungen}
+	\begin{itemize} [label={}]
+		\item \textbf{/NFA200/} Das Start-Menü öffnet sich innerhalb von 30 Sekunden
+		\item \textbf{/NFA201/} Jegliche Menüs reagieren nur auf gültige Eingaben/Klicks
+		\item \textbf{/NFA202/} Jegliche Benutzereinstellungen werden korrekt angewendet
+		\item \textbf{/NFA203/} Der End-Bildschirm sollte sich nach Ende des Rennens öffnen
+	\end{itemize}
+
+	\pagebreak
+		
+	\subsection{Assets}
+	\subsubsection{Funktionale Anforderungen}
+	\begin{itemize} [label={}]
+		\item \textbf{/FA300/} Modelle für Tunnel-Segmente
+		\item \textbf{/FA301/} Modelle für Dekorationselmente
+		\item \textbf{/FA302/} Modelle für Kuppel-Ränder
+		\item \textbf{/FA303/} Modelle für Vegetation innerhalb der Kuppeln
+		\item \textbf{/FA310/} Modelle für Hover-Carts
+		\item \textbf{/FA311/} Modelle für Energie-Kugeln
+		\item \textbf{/FA312/} Modelle für Fahrer
+		\item \textbf{/FA313/} Animationen für Fahrer
+		\item \textbf{/FA314/} Animationen für Hover-Carts
+	\end{itemize}
+	
+	\pagebreak
+	
+	\section{Systemmodell}
+	
+	\begin{figure}[!h]
+	\centering
+    \centering
+    	\includegraphics[width=.85\linewidth]{./Bilder/Systemmodell_Hauptmenu.png}
+  		\caption{Systemmodell des Hauptmenüs}
+  	 	\label{fig:Systemmodell_Hauptmenu}
+  	 	
+  	 	\vspace{0.7cm}
+  	 	
+    	\includegraphics[width=.85\linewidth]{./Bilder/Systemmodell_Multiplayer_Lobby.png}
+  		\caption{Systemmodell der Multiplayer-Lobby}
+  	 	\label{fig:Systemmodell_Multiplayer_Lobby}
+
+	\end{figure}
+	
+	\begin{figure}[h]
+	\centering
+	\centering
+    	\includegraphics[width=.85\linewidth]{./Bilder/Systemmodell_System_Kommunikation.png}
+  		\caption{Systemmodell vom Systemkommunikation}
+  	 	\label{fig:Systemmodell_System_Kommunikation}
+	\end{figure}	 
+	 
+	%wegen Einfügen der Bilder so nötig
+	\newpage
+	\ \\
+	\newpage
+	 
+	\section{Bedienoberfläche}
+	
+	\begin{center}
+    	\includegraphics[width=.58\linewidth]{./Bilder/startmenue.png}
+  		\captionof{figure}{Startmenü}
+  	 	\label{fig:Startmenue}		
+	
+    	\includegraphics[width=.58\linewidth]{./Bilder/streckenauswahl_einzel.png}
+  		\captionof{figure}{Streckenauswahl im Einzelspielermodus}
+  	 	\label{fig:Streckenauswahl_Einzel}
+
+    	\includegraphics[width=\linewidth]{./Bilder/lobby.png}
+  		\captionof{figure}{Lobby im Mehrspielermodus}
+  	 	\label{fig:Lobby}
+
+    	\includegraphics[width=\linewidth]{./Bilder/spielinterne_einstellungen.png}
+  		\captionof{figure}{Spielinterne Einstellungen in der Lobby}
+		   \label{fig:Spielinterne_einstellungen}
+
+		\includegraphics[width=\linewidth]{./Bilder/HudMockUp.png}
+		\captionof{figure}{HUD während des Rennens}
+			\label{fig:HUD}
+
+    	\includegraphics[width=.4\linewidth]{./Bilder/pausemenue.png}
+  		\captionof{figure}{Pausemenü}
+  	 	\label{fig:Pausemenue}
+  	 	
+  	 	\includegraphics[width=.6\linewidth]{./Bilder/einstellungen.png}
+  		\captionof{figure}{Einstellungsfenster}
+  	 	\label{fig:Einstellungen}
+
+    	\includegraphics[width=.8\linewidth]{./Bilder/endscreen.png}
+  		\captionof{figure}{Endbildschirm}
+  	 	\label{fig:Endbildschirm}
+	\end{center}
+	
+	\newpage
+	
+	\section{Qualitätssicherung}
+	
+	Für eine möglichst umfassende Qualitätssicherung wird der gesamte Testablauf in zwei verschiedene Arten aufgeteilt.
+	Die \textit{internen Testabläufe}, welche Fehler aufdecken sollen, die direkt im Programmcode auftreten.
+	Des weiteren dienen die \textit{externen Testabläufe} dazu, unbeabsichtigtes Verhalten der Anwendung aufzudecken wie beispielsweise inkonsistente Menüführung
+	und für das Rennen ungeeignete Parameter in der Generierung.
+	
+	\subsection{Interner Testablauf}
+	
+	Durch die \textit{internen Testabläufe} soll sichergestellt werden, dass das Projekt im Programmcode möglichst wenige Fehler enthält und außerdem möglichst sicher ist,
+	um beispielsweise Probleme bei falschen Konfigurationen zu vermeiden.\par
+	
+	Um dies zu erreichen wird unser Code schon während der Entwicklung getestet, mit Werkzeugen wie beispielsweise \gls{JUnit}. Hierbei wird eine Testabdeckung von mindestens 80\% angestrebt.
+	Ausgenommen ist jedoch Programmcode, welcher auf der Grafikkarte ausgeführt wird, da dieser sich nicht mit \gls{JUnit} testen lässt.
+	Die Tests beinhalten dann beispielsweise falsche Konfigurationen und ungewöhnliche Eingaben, um möglichst alle Randfälle des Programms zu überprüfen.
+	
+	
+	\subsection{Externe Testabläufe}
+	
+	Die \textit{externen Testabläufe} werden verwendet um Fehler zu finden, welche nicht durch automatisierte Tests erkannt werden können. Um dies zu erreichen wird das Spiel in seiner Ausführung beobachtet
+	und analysiert.
+	Um möglichst viele dieser Fehler beheben zu können werden diese Tests in wohl überlegten Szenarien und Abläufen durchgeführt, welche im Folgenden definiert werden.\par
+	
+	Nachdem diese Tests alle absolviert wurden wird das Spiel des weiteren ohne konkrete Vorgaben gespielt, also Tests von Anwendungsstart bis zum Beenden des Spiels durchgeführt.
+	Da dies ohne Vorgaben geschieht, versucht man so anschließend Fehlerquellen zu finden, an die zuvor möglicherweise nicht gedacht wurde.
+	
+	\pagebreak
+	
+	\subsubsection{InGame - Grafik}
+	\begin{itemize} [label={}]
+		\item \textbf{ET010}\par
+			\textbf{STAND} Szene mit dynamischem Licht.\\
+			\textbf{AKTION} Licht wird bewegt.\\
+			\textbf{RESULTAT} Beleuchtung der Szene ist der neuen Lichtposition angepasst.\\\par
+		
+		\item \textbf{ET011}\par
+			\textbf{STAND} Szene mit dynamischem Licht.\\ 
+			\textbf{AKTION} Objekt wird bewegt.\\
+			\textbf{RESULTAT} Beleuchtung der Szene ist der neuen Objektposition angepasst.\\\par
+
+		\item \textbf{ET012}\par
+			\textbf{STAND} Szene mit dynamischem Licht.\\
+			\textbf{AKTION} Kamera wird bewegt.\\
+			\textbf{RESULTAT} Perspektive wird der neuen Kameraposition angepasst. Lichteffekte (wie Reflektionen) werden ebenfalls angepasst.\\\par
+		
+		\item \textbf{ET013}\par
+			\textbf{STAND} Szene mit dynamischen Lichtern.\\
+			\textbf{AKTION} Kamera wird bewegt.\\
+			\textbf{RESULTAT} Menge der Lichter, für welche Schatten berechnet werden, wird angepasst.\\\par
+
+		\item \textbf{ET020}\par
+			\textbf{STAND} Szene mit dynamischen Lichtern.\\
+			\textbf{AKTION} Bildeffekt wird hinzugefügt.\\
+			\textbf{RESULTAT} Bildeffekt wird angewendet.\\\par
+
+		\item \textbf{ET030}\par
+			\textbf{STAND} Szene mit inaktivem Partikel-Emitter.\\
+			\textbf{AKTION} Partikel-Emitter wird aktiviert.\\
+			\textbf{RESULTAT} Animiertes Partikelsystem ist zu sehen.\\\par
+
+		\pagebreak
+		\item \textbf{ET040}\par
+			\textbf{STAND} Objekt, welches animiert werden kann.\\
+			\textbf{AKTION} Animation wird gestartet.\\
+			\textbf{RESULTAT} Objekt ist animiert und Animationsevents werden aufgerufen.\\\par
+	\end{itemize}
+
+	\subsubsection{Prozedurale Generierung}
+	\begin{itemize} [label={}]
+		\item \textbf{ET100}\par
+			\textbf{STAND} Startmenü.\\ 
+			\textbf{AKTION} Benutzer startet Strecken-Generierung mit beliebigem \gls{Seed}.\\
+			\textbf{RESULTAT} Strecke wird generiert.\\\par
+		
+		\item \textbf{ET101}\par
+			\textbf{STAND} Startmenü.\\ 
+			\textbf{AKTION} Benutzer startet Strecken-Generierung nacheinander min. 2 mal mit dem gleichen \gls{Seed} und analysiert anschließend die Strecke.\\
+			\textbf{RESULTAT} Die generierten Strecken müssen alle identisch sein.\\\par
+			
+		\item \textbf{ET102}\par
+			\textbf{STAND} Startmenü.\\ 
+			\textbf{AKTION} Benutzer startet Strecken-Generierung nacheinander min. 2 mal mit paarweise verschiedenen \glspl{Seed} und analysiert anschließend die Strecke.\\
+			\textbf{RESULTAT} Alle generierten Strecken müssen sich unterscheiden.\\\par
+		
+		\item \textbf{ET110}\par
+			\textbf{Stand} Strecke wurde fertig generiert.\\
+			\textbf{AKTION} Strecke wird überquert und der grobe Aufbau analysiert.\\
+			\textbf{RESULTAT} Strecke ist zusammenhängend (mit Start und Ziel).\\\par
+			
+		\item \textbf{ET111}\par
+			\textbf{Stand} Strecke wurde fertig generiert.\\
+			\textbf{AKTION} Strecke wird überquert und der grobe Aufbau analysiert.\\
+			\textbf{RESULTAT} Alle Checkpoints stehen auf der Strecke und in regelmäßigen Abständen.\\\par
+			
+		\pagebreak
+		\item \textbf{ET112}\par
+			\textbf{Stand} Strecke wurde fertig generiert.\\
+			\textbf{AKTION} Strecke wird überquert und die Fahrbahn analysiert.\\
+			\textbf{RESULTAT} Fahrbahn muss gut befahrbar sein, d.h. innerhalb der Extremparameter sein.\\\par
+			
+		\item \textbf{ET113}\par
+			\textbf{STAND} Strecke wurde fertig generiert.\\
+			\textbf{AKTION} Strecke wird überquert und in Bezug auf die Umgebung analysiert.\\
+			\textbf{RESULTAT} Strecke interagiert sinnvoll mit der Umgebung (d.h. Strecke schwebt nicht ungewollt über oder unter dem Boden).\\\par
+			
+		\item \textbf{ET114}\par
+			\textbf{STAND} Strecke wurde fertig generiert.\\ 
+			\textbf{AKTION} Strecke wird überquert und Objekte auf und um die Fahrbahn beobachtet.\\
+			\textbf{RESULTAT} Es dürfen keine Objekte in die Fahrbahn ragen, welche dort nicht sein sollen. Außerdem dürfen Objekte auf der Fahrbahn diese nicht gänzlich blockieren (unbefahrbar machen).\\\par
+			
+		
+	\end{itemize}
+
+	\subsubsection{GUI}
+		\begin{itemize} [label={}]
+			
+		\item \textbf{ET200}\par
+			\textbf{STAND} Startmenü\\ 
+			\textbf{AKTION} Benutzer navigiert zum Einzelspielermodus, wählt eine gespeicherte Strecke oder generiert eine Neue und startet das Spiel.\\
+			\textbf{RESULTAT} Spiel wird mit entsprechender Strecke gestartet.\\\par	
+		
+		\item \textbf{ET201}\par
+			\textbf{STAND} Startmenü\\ 
+			\textbf{AKTION} Der Benutzer navigiert ins Einstellungsmenü, nimmt einige Einstellungen vor und überprüft diese im Spiel.\\
+			\textbf{RESULTAT} Einstellungen wurden gespeichert und werden angewendet.\\\par
+		
+		\item \textbf{ET202}\par
+			\textbf{STAND} Startmenü\\ 
+			\textbf{AKTION} Benutzer startet eine Multiplayerlobby mit mindestens einem Mitspieler.\\
+			\textbf{RESULTAT} Lobbymenü wird aufgerufen und zeigt alle Einstellungen und Spieler korrekt an.\\\par
+		
+		\item \textbf{ET210}\par
+			\textbf{STAND} Einstellungsmenü\\ 
+			\textbf{AKTION} Der Benutzer nimmt Einstellungen im Einstellungsmenü vor, startet das Spiel anschließend neu und überprüft, ob Einstellungen angewandt werden.\\
+			\textbf{RESULTAT} Einstellungen wurden gespeichert und werden angewendet.\\\par
+			
+		\item \textbf{ET220}\par
+			\textbf{STAND} Beliebiges Menü\\
+			\textbf{AKTION} Der Benutzer navigiert über die entsprechenden Knöpfe ins Hauptmenü.\\
+			\textbf{RESULTAT} Hauptmenü wird aufgerufen und ggf. das laufende Rennen verlassen.\\\par
+		
+		\item \textbf{ET230}\par
+			\textbf{STAND} Im laufenden Rennen\\ 
+			\textbf{AKTION} Der Benutzer ruft das Pausemenü auf und verwendet dieses.\\
+			\textbf{RESULTAT} Das Menü angezeigt. Entsprechende Aktionen werden ausgeführt.\\\par
+			
+		\item \textbf{ET240}\par
+			\textbf{STAND} Im laufenden Rennen\\ 
+			\textbf{AKTION} Der Benutzer fährt das Rennen und beobachtet die Anzeigen des HUD.\\
+			\textbf{RESULTAT} Alle Anzeigen entsprechen dem Spielgeschehen.\\\par
+	
+		\end{itemize}
+
+	
+	\pagebreak
+	
+	\section{Glossar}
+	\printnoidxglossaries
+	
+\end{document}

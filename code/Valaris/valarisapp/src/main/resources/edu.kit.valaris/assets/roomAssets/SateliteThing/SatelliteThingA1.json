@@ -1,0 +1,20 @@
+{
+  "key" : "SatelliteThing",
+  "path" : "/edu.kit.valaris/assets/roomAssets/SateliteThing/satelittenDing.j3o",
+
+  "nodes" : [],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "Circle.003/Circle.0071", "material" : "/edu.kit.valaris/assets/roomAssets/SateliteThing/metallicLightGrey.j3m"},
+    {"path" : "Circle.004/Circle.0041", "material" : "/edu.kit.valaris/assets/roomAssets/SateliteThing/metallicLightGrey.j3m"},
+
+    {"path" : "Circle/Circle1", "material" : "/edu.kit.valaris/assets/roomAssets/SateliteThing/metallicLightGrey.j3m"},
+
+    {"path" : "Circle.002/Circle.0021", "material" : "/edu.kit.valaris/assets/roomAssets/SateliteThing/metallicDarkGrey.j3m"},
+    {"path" : "Circle.001/Circle.0011", "material" : "/edu.kit.valaris/assets/roomAssets/SateliteThing/metallicDarkGrey.j3m"},
+
+    {"path" : "Sphere.001/Sphere.0011", "material" : "/edu.kit.valaris/assets/roomAssets/SateliteThing/glowingLightRed.j3m"},
+    {"path" : "Sphere/Sphere1", "material" : "/edu.kit.valaris/assets/roomAssets/SateliteThing/glowingLightRed.j3m"}
+  ],
+  "animations" : []
+}

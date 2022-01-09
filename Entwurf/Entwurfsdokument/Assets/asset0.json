@@ -1,0 +1,28 @@
+{
+    "path"    : "asset0.j3o",
+    "key"     : "asset0",
+    "nodes"   : [
+        {
+            "path"     : "node/child0",
+            "key"      : "child0"
+        },
+        {
+            "path"     : "node/child0/child1",
+            "key"      : "child1"
+        }
+    ],
+    "controls": [
+        {
+            "type"     : "com.jme3.animation.AnimControl",
+            "isPreload":  true,
+            "path"     : "node/child0",
+            "key"      : "anim"
+        },
+        {
+            "type"     : "valaris.render.tick.dynamics.DynamicGameObjectProcessor",
+            "isPreload":  false,
+            "path"     : "",
+            "key"      : "dgoProcessor"
+        }
+    ]
+}

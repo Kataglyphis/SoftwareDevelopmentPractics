@@ -1,0 +1,27 @@
+{
+  "key" : "RoundTunnel",
+  "path" : "/edu.kit.valaris/assets/tunnel/roundTunnel/roundTunnelB7.j3o",
+
+  "nodes" : [],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "Arch/Circle.0071", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/Arch.j3m"},
+    {"path" : "SteelGirderInnerPart/Cylinder.0171", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/SteelGirderInnerPart.j3m"},
+    {"path" : "SteelGirderOuterPart/Cylinder.0151", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/SteelGirderOuterPart.j3m"},
+    {"path" : "Pipes/Cylinder.0211", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/Pipes.j3m"},
+
+    {"path" : "PipeCaps/Cylinder.0081", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/PipeCaps.j3m"},
+    {"path" : "TwistedPipeRing/Circle.0011", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/TwistedPipeRing.j3m"},
+    {"path" : "OuterTwistedPipe/Plane.0161", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/OuterTwistedPipe.j3m"},
+    {"path" : "TwistedPipeOnWall_A/Plane.0121", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/TwistedPipeOnWalls_A.j3m"},
+
+    {"path" : "TwistedPipeOnWall_B/Plane.0131", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/TwistedPipeOnWalls_B.j3m"},
+    {"path" : "TwistedPipeEnd/Cylinder.0011", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/TwistedPipeEnd.j3m"},
+    {"path" : "TwistedPipeCross/Cube.0011", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/TwistedPipeCross.j3m"},
+    {"path" : "TwistedPipeOnCeiling_A/Plane.0041", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/TwistedPipeOnCeiling_A.j3m"},
+
+    {"path" : "TwistedPipeOnCeiling_B/Plane.0031", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/TwistedPipeOnCeiling_B.j3m"},
+    {"path" : "Walls/Circle1", "material" : "/edu.kit.valaris/assets/tunnel/roundTunnel/Walls.j3m"}
+  ],
+  "animations" : []
+}

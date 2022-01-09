@@ -1,0 +1,16 @@
+{
+  "key" : "IceTree0",
+  "path" : "/edu.kit.valaris/assets/trees/IceTree0.j3o",
+  "nodes" : [
+    {"key" : "Trunk", "path" : "Tree/Trunk"},
+    {"key" : "Leaves", "path" : "Tree/Leaves"}
+  ],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "Tree/Trunk", "material" : "/edu.kit.valaris/assets/trees/IceTree0Trunk.j3m"},
+    {"path" : "Tree/Leaves", "material" : "/edu.kit.valaris/assets/trees/IceTree0Leaves.j3m"}
+  ],
+  "metadata" : [
+    {"key" : "scale", "value" : "1"}
+  ]
+}

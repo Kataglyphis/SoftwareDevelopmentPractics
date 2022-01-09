@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'application'
+}
+
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+sourceSets.main {
+    java.srcDirs = ["src/main/java"]
+    resources.srcDirs = ["src/main/resources"]
+}
+
+sourceSets.test {
+    java.srcDirs = ["src/test/java"]
+    resources.srcDirs = ["src/test/resources"]
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+
+    flatDir {
+        dirs 'lib'
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+dependencies {
+    //project dependencies
+    //compile project(':dummytick')
+    compile project(':apputil')
+    compile name: 'simulationlib-1.0'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}

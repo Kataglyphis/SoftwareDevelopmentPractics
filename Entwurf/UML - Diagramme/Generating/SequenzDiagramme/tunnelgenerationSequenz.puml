@@ -1,0 +1,20 @@
+@startuml tunnelGenerationSequenz
+!include styles.puml
+
+-> "__:TunnelGenerator__": generateTunnel(seed, target, entryWidth, flags)
+activate "__:TunnelGenerator__"
+
+create "__:IRoadGenerator__"
+"__:TunnelGenerator__" --> "__:IRoadGenerator__": <<create>> RoadGenerator(generationConfig)
+"__:TunnelGenerator__" -> "__:IRoadGenerator__": generateConnectingRoad(seed, radius, biom, entryWidth, exitAngle, flags)
+activate "__:IRoadGenerator__"
+"__:IRoadGenerator__" --> "__:TunnelGenerator__"
+destroy "__:IRoadGenerator__"
+
+
+"__:TunnelGenerator__" --> "__:TunnelGenerator__": tunnel = <<create>> Tunnel(grid, road, tunnelAssetRootNode)
+
+<-- "__:TunnelGenerator__": tunnel
+deactivate "__:TunnelGenerator__"
+
+@enduml

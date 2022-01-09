@@ -1,0 +1,143 @@
+@startuml render-tick-dynamics-properties
+
+!include styles.iuml
+
+!ifdef RENDER_DYNAMICS_PROPERTIES_ABSTRACT
+ABSTRACT_PACKAGE(properties)
+!else
+
+!include JMEUtil.iuml !4
+
+package properties #FFE082 {
+
+    /'list classes'/
+    interface IPropertyProcessor {
+        +process(property: IProperty, bundleProcessor: BundleProcessor): void
+    }
+    hide IPropertyProcessor attributes
+
+    interface IPropertyProcessorFactory {
+        +newProcessor(target: Node): IPropertyProcessor
+    }
+    hide IPropertyProcessorFactory attributes
+
+    class TransformPropertyProcessor {
+        -target: Node
+
+        +TransformPropertyProcessor(target: Node)
+        +process(property: IProperty, bundleProcessor: BundleProcessor): void
+    }
+
+    class TransformPropertyProcessorFactory {
+        +TransformPropertyProcessorFactory()
+        +newProcessor(target: Node): IPropertyProcessor
+    }
+    hide TransformPropertyProcessorFactory attributes
+
+    class VelocityPropertyProcessor {
+        -target: Node
+
+        +VelocityPropertyProcessor(target: Node)
+        +process(property: IProperty, bundleProcessor: BundleProcessor)
+    }
+
+    class VelocityPropertyProcessorFactory {
+        +VelocityPropertyProcessorFactory()
+        +newProcessor(target: Node): IPropertyProcessor
+    }
+    hide VelocityPropertyProcessorFactory attributes
+
+    class CameraPropertyProcessor {
+        -target: Node
+
+        +CameraPropertyProcessor(target: Node)
+        +process(property: IProperty, bundleProcessor: BundleProcessor): void
+    }
+
+    class CameraPropertyProcessorFactory {
+        +CameraPropertyProcessorFactory()
+        +newProcessor(target: Node): void
+    }
+    hide CameraPropertyProcessorFactory attributes
+
+    class VehiclePropertyProcessor {
+        -target: Node
+
+        +VehiclePropertyProcessor(target: Node)
+        +process(property: IProperty, bundleProcessor: BundleProcessor): void
+    }
+
+    class VehiclePropertyProcessorFactory {
+        +VehiclePropertyProcessorFactory()
+        +newProcessor(target: Node): IPropertyProcessor
+    }
+    hide VehiclePropertyProcessorFactory attributes
+
+    class AnimatorPropertyProcessor {
+        -target: Node
+
+        +AnimatorPropertyProcessor(target: Node)
+        +process(property: IProperty, bundleProcessor: BundleProcessor): void
+    }
+
+    class AnimatorPropertyProcessorFactory {
+        +AnimatorPropertyProcessorFactory()
+        +newProcessor(target: Node): void
+    }
+    hide AnimatorPropertyProcessorFactory attributes
+
+    class DoorPropertyProcessor {
+        -target: Node
+
+        +DoorPropertyProcessor(target: Node)
+        +process(property: IProperty, bundleProcessor: BundleProcessor): void
+    }
+
+    class DoorPropertyProcessorFactory {
+        +DoorPropertyProcessorFactory()
+        +newProcessor(target: Node): IPropertyProcessor
+    }
+
+    class PropertyProcessorFactoryRegister {
+        -factories: Map<Class, IPropertyProcessorFactory>
+
+        +PropertyProcessorFactoryRegister()
+        +setPropertyProcessorFactory(property: Class, factory: IPropertyProcessorFactory): void
+        +getPropertyProcessorFactory(property: Class): IPropertyProcessorFactory
+    }
+
+    'left to right direction
+
+    /'list relations'/
+    IPropertyProcessor <|.down. TransformPropertyProcessor
+    IPropertyProcessor <|.down. VehiclePropertyProcessor
+    IPropertyProcessor <|.down. VelocityPropertyProcessor
+    IPropertyProcessor <|.down. CameraPropertyProcessor
+    IPropertyProcessor <|.down. AnimatorPropertyProcessor
+    IPropertyProcessor <|.down. DoorPropertyProcessor
+
+    IPropertyProcessorFactory <|.up. TransformPropertyProcessorFactory
+    IPropertyProcessorFactory <|.up. VehiclePropertyProcessorFactory
+    IPropertyProcessorFactory <|.up. VelocityPropertyProcessorFactory
+    IPropertyProcessorFactory <|.up. CameraPropertyProcessorFactory
+    IPropertyProcessorFactory <|.up. AnimatorPropertyProcessorFactory
+    IPropertyProcessorFactory <|.up. DoorPropertyProcessorFactory
+
+    TransformPropertyProcessorFactory .up.> TransformPropertyProcessor : <<creates>>
+    VehiclePropertyProcessorFactory .up.> VehiclePropertyProcessor : <<creates>>
+    VelocityPropertyProcessorFactory .up.> VelocityPropertyProcessor : <<creates>>
+    CameraPropertyProcessorFactory .up.> CameraPropertyProcessor : <<creates>>
+    AnimatorPropertyProcessorFactory .up.> AnimatorPropertyProcessor : <<creates>>
+    DoorPropertyProcessorFactory .up.> DoorPropertyProcessor : <<creates>>
+
+    PropertyProcessorFactoryRegister "1" *-left- "1..n" IPropertyProcessorFactory : contains >
+
+    /'jme relations'/
+    com.jme3.app.state.AbstractAppState <|-down---- PropertyProcessorFactoryRegister
+}
+
+'com.jme3.app.state.Appstate -[hidden]left- properties
+
+!endif
+
+@enduml

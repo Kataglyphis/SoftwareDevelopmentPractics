@@ -1,0 +1,104 @@
+@startuml assets
+
+!include styles.iuml
+
+!include JMEUtil.iuml !4
+!include JMEUtil.iuml !1
+
+package assets #B2DFDB {
+
+    interface LoadingCallback {
+        +setStatus(progress: float, text: String): void
+        +finished(): void
+    }
+
+    abstract class AbstractModelProvider {
+        +loadAsynchronous(path: String, callback: LoadingCallback): void
+        +provide(groupKey: String, key: String): Node
+        +provideGroup(groupKey: String): Map<String, Node>
+    }
+
+    class JsonModelProvider {
+        -assets: Map<String, Map<String, Node>>
+
+        +loadAsynchronous(path: String, callback: LoadingCallback): void
+        +provide(groupKey: String, key: String): Node
+        +provideGroup(groupKey: String): Map<String, Node>
+    }
+
+    class GroupInfo {
+        -key: String
+        -assets: String[]
+
+        +getKey(): String
+        +getAssets(): Stream<String>
+    }
+
+    class AssetPack {
+        -groups: GroupInfo[]
+
+        +getGroups(): Stream<GroupInfo>
+    }
+
+    class NodeInfo {
+        -path: String
+        -key: String
+
+        +getPath(): String
+        +getKey(): String
+    }
+
+    class ControlInfo {
+        -path: String
+        -type: String
+        -key: String
+        -isPreload: boolean
+
+        +getPath(): String
+        +getType(): String
+        +getKey(): String
+        +isPreload(): boolean
+    }
+
+    class AssetInfo {
+        -path: String
+        -key: String
+        -nodes: NodeInfo[]
+        -controls: ControlInfo[]
+
+        +getPath(): String
+        +getKey(): String
+        +getNodes(): Stream<NodeInfo>
+        +getControls(): Stream<ControlInfo>
+    }
+
+    class AssetControl {
+        -nodes: Map<String, Node>
+        -controls: Map<String, AbstractControl>
+        -info: AssetInfo
+
+        #AssetControl(info: AssetInfo)
+        +getSubNode(key: String): Node
+        +getActiveControl(key: String): AbstractControl
+    }
+
+    AssetInfo "1" *-down- "*" NodeInfo : contains >
+    AssetInfo "1" *-down- "*" ControlInfo : contains >
+
+    AssetPack "1" *-down- "*" GroupInfo : contains >
+    GroupInfo "*" .left. "*" AssetInfo : References >
+
+    JsonModelProvider .down.> AssetInfo : <<uses>> >
+    JsonModelProvider .left.> AssetPack : <<uses>> >
+    JsonModelProvider .right.> AssetControl : <<creates>>
+
+    AssetControl "1" o-- "1" AssetInfo : contains >
+
+    AbstractModelProvider .left.> LoadingCallback : <<uses>> >
+}
+
+com.jme3.app.state.AbstractAppState <|-down- AbstractModelProvider
+com.jme3.scene.control.AbstractControl <|-down-- AssetControl
+AbstractModelProvider <|-down- JsonModelProvider
+
+@enduml

@@ -1,0 +1,9 @@
+Material Pipes : edu.kit.valaris/materials/PBRLighting.j3md {
+    MaterialParameters {
+            Metallic : 0.0
+            Roughness : 0.6
+            Specular : 0.5
+            BaseColor : 0.3 0.3 0.3 1.0
+        }
+}
+

@@ -1,0 +1,9 @@
+Material OuterTwistedPipe : edu.kit.valaris/materials/PBRLighting.j3md {
+    MaterialParameters {
+            Metallic : 1.0
+            Roughness : 0.5
+            Specular : 0.6
+            BaseColor : 0.5 0.5 0.5 1.0
+        }
+}
+

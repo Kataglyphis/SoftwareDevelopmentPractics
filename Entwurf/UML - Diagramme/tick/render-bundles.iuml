@@ -1,0 +1,86 @@
+@startuml render-tick-dynamics
+
+!include styles.iuml
+
+'!define RENDER_DYNAMICS_PROPERTIES_ABSTRACT
+
+!ifdef RENDER_DYNAMICS_ABSTRACT
+/'abstract representation of the package'/
+ABSTRACT_PACKAGE(dynamics)
+!else
+/'non abstract representation'/
+/'jme relations'/
+!include JMEUtil.iuml !0
+!include JMEUtil.iuml !1
+
+package dynamics #FFECB3 {
+
+    /'include subpackages'/
+    !include render-bundles-properties.iuml
+
+    interface IDynamicGameObjectEventProcessor {
+        +setDynamicGameObjectProcessor(processor: DynamicGameObjectProcessor): void
+        +process(event: DynamicGameObjectEvent): void
+    }
+    hide IDynamicGameObjectEventProcessor attributes
+
+    class CreatePropertyEventProcessor {
+        -dgoProcessor: DynamicGameObjectProcessor
+        -propertyProcessorFactories: Map<Class, IPropertyProcessorFactory>
+
+        +CreatePropertyEventProcessor()
+        +setDynamicGameObjectProcessor(processor: DynamicGameObjectProcessor): void
+        +process(event: DynamicGameObjectEvent): void
+    }
+
+    class RemovePropertyEventProcessor {
+        -dgoProcessor: DynamicGameObjectProcessor
+
+        +RemovePropertyEventProcessor()
+        +setDynamicGameObjectProcessor(processor: DynamicGameObjectProcessor): void
+        +process(event: DynamicGameObjectEvent): void
+    }
+
+    class DynamicGameObjectProcessor {
+        -tickProcessor: TickProcessor
+        -propertyProcessors: List<IPropertyProcessor>
+        -eventProcessors: Map<String, IDynamicGameObjectEventProcessor>
+
+        -processEvents(dgo: DynamicGameObject): void
+        -processProperties(dgo: DynamicGameObject): void
+        +DynamicGameObjectProcessor()
+        +setTickProcessor(tickProcessor: TickProcessor): void
+        +getTickProcessor(): TickProcessor
+        +addPropertyProcessor(property: Integer, processor: IPropertyProcessor): void
+        +removePropertyProcessor(property: Integer): void
+        +setEventProcessor(action: String, processor: IDynamicGameObjectEventProcessor): void
+        +processDynamicGameObject(dgo: DynamicGameObject): void
+    }
+
+    /'list relations '/
+    IDynamicGameObjectEventProcessor <|-down- CreatePropertyEventProcessor
+    IDynamicGameObjectEventProcessor <|-down- RemovePropertyEventProcessor
+
+    DynamicGameObjectProcessor *-right- IDynamicGameObjectEventProcessor : contains >
+
+    com.jme3.scene.control.AbstractControl <|-down- DynamicGameObjectProcessor
+    com.jme3.scene.Spatial "1" *-down- "1" DynamicGameObjectProcessor : contains < 
+
+    !ifdef RENDER_DYNAMICS_PROPERTIES_ABSTRACT
+    DynamicGameObjectProcessor .down.> properties : <<uses>> >
+    !else
+    DynamicGameObjectProcessor "1" *-down-- "*" IPropertyProcessor : contains >
+    !endif
+}
+
+
+com.jme3.scene.Spatial -[hidden]down- dynamics
+com.jme3.scene.control.AbstractControl -[hidden]down- dynamics
+
+!ifdef !RENDER_DYNAMICS_PROPERTIES_ABSTRACT
+com.jme3.app.state.AbstractAppState -[hidden]down- dynamics
+!endif
+
+!endif
+
+@enduml

@@ -1,0 +1,162 @@
+\documentclass[10pt]{beamer}
+
+\usetheme[numbering=none]{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{verbatim}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+
+\title{Valaris}
+\subtitle{Echtzeit Computergrafik in der Spieleentwicklung}
+\date{29. Mai 2018}
+\author{Lukas Schölch}
+\titlegraphic{\hfill\includegraphics[height=2.5cm]{./Bilder/ValarisLogo.png}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}[fragile]{Spielkonzept}
+
+  \begin{itemize}
+    \item Futuristisches Weltraumrennspiel für Gelegenheitsspieler
+        \begin{itemize}
+            \item Lineare Strecken mit Checkpoints
+        \end{itemize}
+    \item Prozedural generierte Planetenbasisstationen
+    \item Energiekugeln die Maximalgeschwindigkeit erhöhen
+        \begin{itemize}
+            \item Können dem Gegner geklaut werden
+            \item Werden an Checkpoints anhand der Position des Spielers wieder aufgefüllt
+        \end{itemize}
+    \item Powerups auf Strecke einsammelbar
+    
+  \end{itemize}
+  
+  
+\end{frame}
+
+\begin{frame}{Inspiration}
+
+    \hfil \includegraphics[width=.45\linewidth]{./Bilder/PlanetBase.png}
+    \hfil \includegraphics[width=.53\linewidth]{./Bilder/MinimumSpaceStation.jpg}
+    \vfil \centering \includegraphics[width=.63\linewidth]{./Bilder/StyleExample.png}
+
+\end{frame}
+
+\begin{frame}[standout]{Entwürfe}
+
+    \begin{center}
+        \includegraphics [width=.90\linewidth]{./Bilder/VehicleSelectionMockup.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}[fragile]{Entwürfe}
+
+  \centering\centering
+  \includegraphics [width=1.0\linewidth]{./Bilder/HudMockBackground.png}
+
+\end{frame}
+
+\begin{frame}[fragile]{Anforderungen}
+    \begin{itemize}  
+        \item InGame - Grafik  
+        \begin{itemize}
+            \item Physikalisch akurate Darstellung von Materialien
+            \item Mehrere dynamsische Lichtquellen mit passenden Schatten
+            \item Partikel Effekte
+            \item Postprocessing
+            \item Frei fliegende Kamera zum Testen
+        \end{itemize}
+        \pause
+
+        \item Prozedurale Generierung
+        \begin{itemize}
+            \item Zusammenhängende Strecken mit Start, Ziel und Checkpoints
+            \item Deterministisch vom Seed abhängig
+            \item Unterschiedliche Streckenführungen, aber keine unmöglichen Abschnitte
+            \item Definieren von Extremparametern
+        \end{itemize}
+        \pause
+
+        \item GUI
+        \begin{itemize}
+            \item Intuitive Menüführung
+            \item Alle Funktionen des Spiels ansteuerbar
+            \item HUD
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Menüführung}
+
+  \begin{center}
+    \begin{tikzpicture}
+      \node (img1) {\includegraphics[width=.45\linewidth]{./Bilder/Startmenue.png}};
+      \pause
+      \node (img2) at (img1.south east) [yshift=1cm] {\includegraphics[width=.45\linewidth]{./Bilder/einstellungen.png}};
+      \pause
+      \node (img3) at (img2.north east) {\includegraphics[width=.45\linewidth]{./Bilder/pausemenue.png}};
+    \end{tikzpicture}
+  \end{center}
+  
+\end{frame}
+
+
+\begin{frame}{Menüführung}
+
+  \begin{center}
+    \begin{tikzpicture}
+      \node (img1) {\includegraphics[width=.45\linewidth]{./Bilder/streckenauswahl_einzel.png}};
+      \pause
+      \node (img2) at (img1.south east) [yshift=1cm] {\includegraphics[width=.53\linewidth]{./Bilder/lobby.png}};
+      \pause
+      \node (img3) at (img2) {\includegraphics[width=.53\linewidth]{./Bilder/spielinterne_einstellungen.png}};
+      \pause
+      \node (img4) at (img2.north east) [yshift=0.5cm]{\includegraphics[width=.45\linewidth]{./Bilder/endscreen.png}};
+    \end{tikzpicture}
+  \end{center}
+
+  \end{frame}
+
+\begin{frame}{HUD}
+
+    \begin{center}
+        \includegraphics[width=1.0\linewidth]{./Bilder/HudMockUp.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+
+    \centering
+        {\scshape\LARGE Valaris \par}
+    
+    \vspace{1cm}
+
+    \includegraphics[height=2.5cm]{./Bilder/ValarisLogo.png}
+
+    \vspace{1cm}
+    
+    \tiny{\url{http://www.4players.de/4players.php/screenshot_list/Allgemein/35673/Screenshots/77064/92491909/Minimum.html}}\par
+    \url{https://medium.com/@Jacob_Vo/low-poly-models-are-the-future-626034311c46}\par
+    \url{https://www.pinterest.de/pin/444308319480944820/?lp=true}
+
+\end{frame}
+
+%\appendix
+
+
+\end{document}

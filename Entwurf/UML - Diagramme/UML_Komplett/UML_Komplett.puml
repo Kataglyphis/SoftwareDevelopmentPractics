@@ -1,0 +1,40 @@
+@startuml MapGenerator
+scale 2
+
+!include styles.puml
+
+''''''''''''''''''''''Begin Document''''''''''''''''''''''''
+
+!include Generierung/Generator.iuml
+!include Rendering/Rendering.iuml
+!include Tick/Tick.iuml
+!include Tick/Assets.iuml
+!include Menü/GUIAll.iuml
+
+
+''''''''''''''''''''link''''''''''''''''''''
+
+LoadingScreen .[#red].> IMapGenerator: <<creates>>
+LoadingScreen .[#red].> PropertyProcessorFactoryRegister: <<creates>>
+LoadingScreen .[#red].> Ticker: <<creates>>
+LoadingScreen .[#red].> TickProcessor: <<creates>>
+MapGenerator .[#red].> JsonModelProvider: <<uses>>
+AddDynamicGameObjectEventProcessor .[#red].> JsonModelProvider: <<uses>>
+
+
+
+'AnimatorPropertyProcessor "*" o-------------------------------- "1" Animator
+Animator "1"----------------------o "*" AnimatorPropertyProcessor
+
+''''''''''''''''''''format''''''''''''''''''
+
+    rendering.tick --[hidden]- tick
+menu -[hidden]down-------------------------------------------------------------------rendering.tick
+menu -[hidden]down-------------------rendering.tick
+'menu -[hidden]down-------------------- tick
+'generation -[hidden]right--------- menu
+'generation -[hidden]down---------------- rendering
+rendering -[hidden]down- rendering.tick
+
+
+@enduml

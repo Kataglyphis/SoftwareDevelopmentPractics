@@ -1,0 +1,45 @@
+{
+  "key" : "HoverCart",
+  "path" : "/edu.kit.valaris/assets/cart/Cart.j3o",
+  "nodes" : [
+    {"key" : "PlayerStrip", "path" : "Player/Strip"},
+    {"key" : "VehicleStrip", "path" : "Body/Strip"}
+  ],
+  "controls" : [
+    {"key" : "BreakLightControl", "path" : "Body/BreakLight", "isPreload" : false, "type" : "edu.kit.valaris.assets.controls.VelocityControl"},
+    {"key" : "Energy0", "path" : "Energy0", "isPreload" : false, "type" : "edu.kit.valaris.assets.controls.VisibilityControl"},
+    {"key" : "Energy1", "path" : "Energy1", "isPreload" : false, "type" : "edu.kit.valaris.assets.controls.VisibilityControl"},
+    {"key" : "Energy2", "path" : "Energy2", "isPreload" : false, "type" : "edu.kit.valaris.assets.controls.VisibilityControl"},
+    {"key" : "Energy3", "path" : "Energy3", "isPreload" : false, "type" : "edu.kit.valaris.assets.controls.VisibilityControl"},
+    {"key" : "Energy4", "path" : "Energy4", "isPreload" : false, "type" : "edu.kit.valaris.assets.controls.VisibilityControl"},
+    {"key" : "Energy5", "path" : "Energy5", "isPreload" : false, "type" : "edu.kit.valaris.assets.controls.VisibilityControl"},
+    {"key" : "Energy6", "path" : "Energy6", "isPreload" : false, "type" : "edu.kit.valaris.assets.controls.VisibilityControl"},
+    {"key" : "Energy7", "path" : "Energy7", "isPreload" : false, "type" : "edu.kit.valaris.assets.controls.VisibilityControl"},
+    {"key" : "Shield", "path" : "Shield", "isPreload" : false, "type" : "edu.kit.valaris.assets.controls.VisibilityControl"},
+    {"key" : "ShieldParticles", "path" : "Shield", "isPreload" : false, "type" : "edu.kit.valaris.rendering.particleEffect.ParticleEffect", "params" : "Shield"},
+    {"key" : "ThrustBL", "path" : "ThrustParticleBL/ThrustParticleBL", "isPreload" : false, "type" : "edu.kit.valaris.rendering.particleEffect.ParticleEffect", "params" : "Jet"},
+    {"key" : "ThrustBR", "path" : "ThrustParticleBR/ThrustParticleBR", "isPreload" : false, "type" : "edu.kit.valaris.rendering.particleEffect.ParticleEffect", "params" : "Jet"}
+  ],
+  "meshes" : [
+    {"path" : "Body/Chassis", "material" : "edu.kit.valaris/assets/cart/Chassis.j3m"},
+    {"path" : "Body/Seat", "material" : "edu.kit.valaris/assets/cart/Seat.j3m"},
+    {"path" : "Body/BreakLight", "material" : "edu.kit.valaris/assets/cart/BreakLight.j3m"},
+    {"path" : "Body/Engines", "material" : "edu.kit.valaris/assets/cart/Engines.j3m"},
+    {"path" : "Body/Sockets", "material" : "edu.kit.valaris/assets/cart/Sockets.j3m"},
+    {"path" : "Body/Thrust", "material" : "edu.kit.valaris/assets/cart/Thrust.j3m"},
+    {"path" : "Body/Strip", "material" : "edu.kit.valaris/assets/cart/Strip.j3m"},
+    {"path" : "Player/Body", "material" : "edu.kit.valaris/assets/cart/Body.j3m"},
+    {"path" : "Player/Strip", "material" : "edu.kit.valaris/assets/cart/Strip.j3m"},
+    {"path" : "Energy0/Ball", "material" : "edu.kit.valaris/assets/cart/Energy.j3m"},
+    {"path" : "Energy1/Ball", "material" : "edu.kit.valaris/assets/cart/Energy.j3m"},
+    {"path" : "Energy2/Ball", "material" : "edu.kit.valaris/assets/cart/Energy.j3m"},
+    {"path" : "Energy3/Ball", "material" : "edu.kit.valaris/assets/cart/Energy.j3m"},
+    {"path" : "Energy4/Ball", "material" : "edu.kit.valaris/assets/cart/Energy.j3m"},
+    {"path" : "Energy5/Ball", "material" : "edu.kit.valaris/assets/cart/Energy.j3m"},
+    {"path" : "Energy6/Ball", "material" : "edu.kit.valaris/assets/cart/Energy.j3m"},
+    {"path" : "Energy7/Ball", "material" : "edu.kit.valaris/assets/cart/Energy.j3m"},
+    {"path" : "ThrustParticleBR/ThrustParticleBR", "material" : "edu.kit.valaris/assets/cart/ThrustParticles.j3m"},
+    {"path" : "ThrustParticleBL/ThrustParticleBL", "material" : "edu.kit.valaris/assets/cart/ThrustParticles.j3m"},
+    {"path" : "Shield", "material" : "edu.kit.valaris/assets/cart/ShieldParticles.j3m"}
+  ]
+}

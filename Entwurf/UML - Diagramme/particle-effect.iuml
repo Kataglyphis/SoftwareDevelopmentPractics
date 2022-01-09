@@ -1,0 +1,52 @@
+@startuml
+!include styles.iuml
+package effects #DFFFFFF {
+    class Particle {
+        +Vector3f: velocity
+        +Vector3f: position
+        +double: size
+        +double: angle
+        +ColorRGBA: color
+        +double: lifetime
+        +double: age
+        +double: rotateSpeed
+    }
+    
+    class ParticleEffect {
+        
+        +update(tpf: float): void
+    }
+
+    abstract class ParticleStrategy {
+        -double: randomAngle
+        -double: particlePerSec
+        -double: timeDifference
+        -Vector3f: gravity
+        -double: rotateSpeed
+        -double: startSize
+        -double: endSize
+        +emitParticle() ;
+        +updateParticle(p: Particle, tpf: float): void;
+    }
+
+    class FireParticleStrategy {
+        +emitParticle() ;
+        +updateParticle(p: Particle, tpf: float): void;
+    }
+    class JetParticleStrategy {
+        +emitParticle() ;
+        +updateParticle(p: Particle, tpf: float): void;
+    }
+    class ExplosionParticleStrategy {
+        +emitParticle() ;
+        +updateParticle(p: Particle, tpf: float): void;
+    }
+
+    ParticleEffect "1" *-- "1..n" Particle
+    ParticleStrategy <|-- JetParticleStrategy : <<extends>>
+    ParticleStrategy <|-- FireParticleStrategy : <<extends>>
+    ParticleStrategy <|-- ExplosionParticleStrategy : <<extends>>
+    ParticleEffect o-- ParticleStrategy : strategy
+}
+
+@enduml

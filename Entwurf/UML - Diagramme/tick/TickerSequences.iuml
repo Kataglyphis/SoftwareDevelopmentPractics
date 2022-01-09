@@ -1,0 +1,65 @@
+@startuml Ticker_swapSimulationTick
+
+participant "__:Ticker__"
+participant "__tickLock:Lock__"
+participant "__currentTick:Tick__"
+
+-> "__:Ticker__" : swapSimulationTick()
+activate "__:Ticker__"
+
+/'aquire lock '/ 
+ "__:Ticker__" -> "__tickLock:Lock__" : aquire()
+ activate "__tickLock:Lock__"
+ "__tickLock:Lock__" --> "__:Ticker__"
+ deactivate "__tickLock:Lock__"
+
+/'set buffer'/
+"__:Ticker__" -> "__currentTick:Tick__" : sync(simulationBuffer)
+activate "__currentTick:Tick__"
+"__currentTick:Tick__" --> "__:Ticker__"
+deactivate "__currentTick:Tick__"
+
+/'release lock'/
+"__:Ticker__" -> "__tickLock:Lock__" : release()
+activate "__tickLock:Lock__"
+"__tickLock:Lock__" --> "__:Ticker__"
+deactivate "__tickLock:Lock__"
+
+/' leave method '/
+<-- "__:Ticker__"
+deactivate "__:Ticker__"
+
+@enduml
+
+@startuml Ticker_SwapRenderTick
+
+participant "__:Ticker__"
+participant "__tickLock:Lock__"
+participant "__renderBuffer:Tick__"
+
+-> "__:Ticker__" : swapRenderTick()
+activate "__:Ticker__"
+
+/'aquire lock '/ 
+ "__:Ticker__" -> "__tickLock:Lock__" : aquire()
+ activate "__tickLock:Lock__"
+ "__tickLock:Lock__" --> "__:Ticker__"
+ deactivate "__tickLock:Lock__"
+
+/'set buffer'/
+"__:Ticker__" -> "__renderBuffer:Tick__" : sync(currentTick)
+activate "__renderBuffer:Tick__"
+"__renderBuffer:Tick__" --> "__:Ticker__"
+deactivate "__renderBuffer:Tick__"
+
+/'release lock'/
+"__:Ticker__" -> "__tickLock:Lock__" : release()
+activate "__tickLock:Lock__"
+"__tickLock:Lock__" --> "__:Ticker__"
+deactivate "__tickLock:Lock__"
+
+/' leave method '/
+<-- "__:Ticker__"
+deactivate "__:Ticker__"
+
+@enduml

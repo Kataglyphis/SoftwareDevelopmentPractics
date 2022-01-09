@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty-styles>
+    <style id="panel-with-black-border">
+        <attributes padding="8px,16px,24px,16px"
+                    backgroundImage="edu/kit/valaris/menuSkin/Bilder/Panels/test.png"
+                    />
+        <effect>
+            <onEnabled name="border" color="#3ADF00"/>
+        </effect>
+    </style>
+
+    <style id="glass-panel">
+        <attributes padding="16px" backgroundImage="edu/kit/valaris/menuSkin/Bilder/Panels/glass-panel.png"
+                    imageMode="resize:15,70,15,15,15,70,15,70,15,70,15,15"/>
+    </style>
+
+    <style id="whitepanelwithoutborder">
+        <attributes childLayout="center" childClip="true" backgroundColor="#FFFFFF" padding="0px,2px"/>
+        <effect>
+            <onActive name="border" border="7px" color="#000000" post="true" inset="0px"/>
+        </effect>
+    </style>
+
+    <style id="whitepanelwithborder">
+        <attributes childLayout="center" childClip="true" backgroundColor="#FFFFFF" padding="0px,2px"/>
+        <effect>
+            <onActive name="border" border="7px" color="#000000" post="true" inset="0px"/>
+            <onFocus name="colorBar" color="#FFFFFF" post="true" inset="1px"/>
+        </effect>
+    </style>
+
+    <style id="creditspanel">
+        <attributes childLayout="center" childClip="true" backgroundColor="#170B3Bcc" padding="0px,2px"/>
+        <effect>
+            <onActive name="border" border="7px" color="#fffc" post="true" inset="0px"/>
+        </effect>
+    </style>
+
+</nifty-styles>

@@ -1,0 +1,202 @@
+@startuml tick
+
+!include styles.iuml
+
+'!define RENDER_BUNDLES_ABSTRACT
+'!define RENDER_BUNDLES_PROPERTIES_ABSTRACT
+'!define RENDER_ABSTRACT
+
+    /'include subpackages'/
+    !include render.iuml
+
+package tick #FFF8E1 {
+
+    !include JMEUtil.iuml !5
+
+    /'list classes'/
+    class Tick {
+        -dgos: List<DynamicGameObject>
+        -events: List<TickEvent>
+        -time: long
+
+        #Tick()
+        +addDynamicGameObject(dgo: DynamicGameObject, model: String): Integer
+        +removeDynamicGameObjects(id: Integer): void
+        +getDynamicGameObject(id: Integer): DynamicGameObject
+        +getDynamicGameObjects(): List<DynamicGameObject>
+        +addEvent(event: TickEvent): void
+        +getEventsAsStream(): Stream<TickEvent>
+        +getTime(): long
+        +sync(target: Tick): void
+    }
+
+    class TickEvent {
+        -action: String
+        -params: List<Object>
+
+        +TickEvent(action: String, params: List<Object>)
+        +getAction(): String
+        +getParams(): List<Object>
+    }
+
+    class DynamicGameObject {
+        -properties: List<IProperty>
+        -events: List<DynamicGameObjectEvent>
+
+        +DynamicGameObject()
+        +addProperty(property: IProperty): Integer
+        +removeProperty(id: Integer): void
+        +getProperty(id: Integer): IProperty
+        +getProperties(): List<IProperty>
+        +addEvent(event: DynamicGameObjectEvent): void
+        +getEventsAsStream(): Stream<DynamicGameObjectEvent>
+        +sync(target: DynamicGameObject): void
+    }
+
+    class DynamicGameObjectEvent {
+        -action: String
+        -params: List<Object>
+
+        +DynamicGameObjectEvent(action: String, params: List<Object>)
+        +getAction(): String
+        +getParams(): List<Object>
+    }
+
+    class Ticker {
+        -currentTick: Tick
+        -renderBuffer: Tick
+        -simulationBuffer: Tick
+        -tickLock: Lock
+
+        +Ticker()
+        +getSimulationTick(): Tick
+        +getRenderTick(): Tick
+        +swapSimulationTick(): void
+        +swapRenderTick(): void
+    }
+
+    interface IProperty {
+        +deepCopy(): IProperty
+        +canSync(target: IProperty) : boolean
+        +sync(target: IProperty): void
+    }
+    hide IProperty attributes
+
+    class TransformProperty {
+        -transform: Transform
+
+        +TransformProperty()
+        +deepCopy(): IProperty
+        +canSync(target: IProperty) : boolean
+        +sync(target: IProperty): void
+        +setTransform(transform: Transform): void
+        +getTransform(): Transform
+    }
+
+    class VelocityProperty {
+        -momentum: Vector3f
+        -angularMomentum: Vector3f
+
+        +VelocityProperty()
+        +deepCopy(): IProperty
+        +canSync(target: IProperty) : boolean
+        +sync(target: IProperty): void
+        +setMomentum(momentum: Vector3f): void
+        +setAngularMomentum(momentum: Vector3f): void
+        +getMomentum(): Vector3f
+        +getAngularMomentum(): Vector3f
+    }
+
+    class CameraProperty {
+        -position: Vector3f
+        -direction: Vector3f
+        -left: Vector3f
+
+        +CameraProperty()
+        +deepCopy(): IProperty
+        +canSync(target: IProperty) : boolean
+        +sync(target: IProperty): void
+        +setPosition(position: Vector3f): void
+        +setDirection(direction: Vector3f): void
+        +setLeft(left: Vector3f): void
+        +getPosition(): Vector3f
+        +getDirection(): Vector3f
+        +getLeft(): Vector3f
+    }
+
+    class VehicleProperty {
+        -energyLevel: Integer
+
+        +VehicleProperty()
+        +deepCopy(): IProperty
+        +canSync(target: IProperty) : boolean
+        +sync(target: IProperty): void
+        +setEnergyLevel(energyLevel: Integer): void
+        +getEnergyLevel(): Integer
+    }
+
+    class AnimatorProperty {
+        -weight: Float
+        -animation: String
+
+        +AnimatorProperty()
+        +deepCopy(): IProperty
+        +canSync(target: IProperty) : boolean
+        +sync(target: IProperty): void
+        +setWeight(weight: Float): void
+        +setAnimation(animation: String): void
+        +getWeight(): Float
+        +getAnimation(): String
+    }
+
+    class DoorProperty {
+        -open: boolean
+        -index: Integer
+
+        +DoorProperty()
+        +deepCopy(): IProperty
+        +canSync(target: IProperty) : boolean
+        +sync(target: IProperty): void
+        +setOpen(flag: boolean): void
+        +isOpen(): boolean
+    }
+}
+/'list tick relations'/
+Ticker "1" *-down- "*" Tick : contains >
+Tick "1" *-down- "*" DynamicGameObject : contains >
+Tick "1" *-left- "*" TickEvent : contains >
+
+DynamicGameObject "1" *-left- "*" DynamicGameObjectEvent : contains >
+DynamicGameObject "1" *-down- "*" IProperty : contains >
+
+IProperty <|-left- TransformProperty
+IProperty <|-right- VelocityProperty
+IProperty <|-down- CameraProperty
+IProperty <|-down- VehicleProperty
+IProperty <|-down- AnimatorProperty
+IProperty <|-down- DoorProperty
+
+/'jme relations'/
+!include JMEUtil.iuml !4
+com.jme3.app.state.AbstractAppState <|-down- Ticker
+
+/'formatting'/
+com.jme3.app.state.AbstractAppState -[hidden]down- tick
+
+/'list relations to subpackage'/
+!ifdef RENDER_ABSTRACT
+render .left.> Ticker : <<uses>> >
+!else
+TickProcessor .left. Ticker : <<uses>> <
+
+com.jme3.scene.Spatial -[hidden]down- tick
+com.jme3.scene.control.AbstractControl -[hidden]down- tick
+
+!ifdef !RENDER_BUNDLES_ABSTRACT
+DynamicGameObject -[hidden]left- TickEvent
+DynamicGameObjectEvent -[hidden]right- IProperty
+!endif
+
+!endif
+
+@enduml

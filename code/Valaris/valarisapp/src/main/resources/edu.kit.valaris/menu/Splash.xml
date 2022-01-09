@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<nifty>
+<useControls filename="nifty-default-controls.xml"/>
+    <screen id="splash" controller="edu.kit.valaris.menu.gui.SplashScreen">
+        <layer childLayout="center" backgroundColor="#000f" aling="center" valign="center">
+            <text id="currentRank" text="Valaris" font="edu/kit/valaris/menuSkin/Fonts/LayOfTheLand70.fnt"
+                    width="100%" height="100%" aling="center" valign="center">
+                <effect>
+                    <onStartScreen name="fade" startColor="#0000" endColor="#ffff" length="500" startDelay="0"
+                                   inherit="true" />
+                    <onEndScreen name="fade" startColor="#ffff" endColor="#0000" length="1000" startDelay="3000"
+                                 inherit="true" />
+                </effect>
+            </text>
+        </layer>
+    </screen>
+</nifty>

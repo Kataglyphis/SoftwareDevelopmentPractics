@@ -1,0 +1,15 @@
+{
+  "key" : "SteelRoof",
+  "path" : "/edu.kit.valaris/assets/domeRoof/Dome2.j3o",
+
+  "nodes" : [],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "Lamps/Sphere.0031", "material" : "/edu.kit.valaris/assets/domeRoof/DomeLamps.j3m"},
+    {"path" : "LampHolder/Cylinder1", "material" : "/edu.kit.valaris/assets/domeRoof/DomeLampHolder.j3m"},
+    {"path" : "Lampshade/Circle1", "material" : "/edu.kit.valaris/assets/domeRoof/DomeLampshade.j3m"},
+    {"path" : "Roof/Icosphere.0011", "material" : "/edu.kit.valaris/assets/domeRoof/DomeRoof.j3m"},
+    {"path" : "SteelBeams/Icosphere1", "material" : "/edu.kit.valaris/assets/domeRoof/DomeSteelBeams.j3m"}
+  ],
+  "animations" : []
+}

@@ -1,0 +1,9 @@
+Material SteelGirderInnerPart : edu.kit.valaris/materials/PBRLighting.j3md {
+    MaterialParameters {
+            Metallic : 0.0
+            Roughness : 0.3
+            Specular : 0.7
+            BaseColor : 0.6 0.6 0.6 1.0
+        }
+}
+

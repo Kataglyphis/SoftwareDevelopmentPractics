@@ -1,0 +1,697 @@
+{
+  "_comment": "Version 1.2.01",
+
+  "roadgeneration": {
+    "sphereRoad": {
+      "cofigurations": {
+        "testsettings": {
+          "MaxSlopeDerivative": 0.02,
+          "MaxSlope": 0.1,
+          "MaxCurveAngle": 0.3,
+          "RepulsiveForceRadius": 25.0,
+          "RepulsiveForceGradientPower": 0.6,
+          "RecenterPower": 4,
+          "DecenterPower": 20,
+          "RepulsiveForceIndexDistance": 7,
+          "RoadCursorDistance": 4,
+          "RoadCursorUntilExitProcedure": 50,
+          "CollisionGridDistance": 20,
+          "SlopeDerivativeRandomnes": 0.2,
+          "CurveRandomnes": 1,
+          "MinRoadCollisionDistance" : 10,
+          "HightRecenterCoefficient" : 100,
+          "MaxIterations" : 5000,
+          "MinWidht" : 10,
+          "MaxWidht" : 12,
+          "MinHeight" : 4,
+          "MaxHeight" : 6,
+          "MaxWidhtDerivative" : 0.3,
+          "WidthRecenterPower" : 5,
+          "WidhtSmoothness" : 0.5,
+          "MaxExitOffset" : 0.02
+        }
+      }
+    },
+    "tunnelRoad": {
+      "configurations": {
+        "testsettings": {
+          "RoadCursorDistance": 4,
+          "MaxAngle": 0.3,
+          "MinWidht" : 10,
+          "MaxWidht" : 12,
+          "MinHeight" : 4,
+          "MaxHeight" : 6,
+          "MaxWidhtDerivative" : 0.1,
+          "WidthRecenterPower" : 5,
+          "WidhtSmoothness" : 8
+        }
+      }
+    },
+    "roomRoad": {
+      "configurations": {
+        "testsettings": {
+          "RoadCursorDistance": 4,
+          "MaxAngle": 0.6,
+          "MinWidht" : 10,
+          "MaxWidht" : 12,
+          "MinHeight" : 4,
+          "MaxHeight" : 6,
+          "MaxWidhtDerivative" : 0.2,
+          "WidthRecenterPower" : 5,
+          "WidhtSmoothness" : 0.2
+        }
+      }
+    }
+  },
+
+  "domegeneration": {
+
+    "PossibleBioms" : ["GreenBiom", "BlueBiom", "RedBiom", "canyon"],
+
+    "LandscapeParameters" : {
+
+      "TestBiom" : {
+
+        "RoadSetting" : "testsettings",
+        "maxSecondDerivationDeltaForLandscapeResolution" : 0.9,
+        "MinPitchForRock" : 2.0,
+        "MinHeightForSnow" : 20
+      },
+
+      "GreenBiom" : {
+
+        "RoadSetting" : "testsettings",
+        "maxSecondDerivationDeltaForLandscapeResolution" : 0.75,
+        "MinPitchForRock" : 2.0,
+        "MinHeightForSnow" : 30
+      },
+
+      "RedBiom" : {
+
+        "RoadSetting" : "testsettings",
+        "maxSecondDerivationDeltaForLandscapeResolution" : 0.9,
+        "MinPitchForRock" : 2.0,
+        "MinHeightForSnow" : 30
+      },
+
+      "BlueBiom" : {
+
+        "RoadSetting" : "testsettings",
+        "maxSecondDerivationDeltaForLandscapeResolution" : 0.8,
+        "MinPitchForRock" : 100,
+        "MinHeightForSnow" : 6
+      },
+
+      "canyon" : {
+
+        "RoadSetting" : "testsettings",
+        "maxSecondDerivationDeltaForLandscapeResolution" : 1.27,
+        "MinPitchForRock" : 0,
+        "MinHeightForSnow" : 100
+      }
+    },
+
+    "NoiseGenerator" : {
+
+      "TestBiom" : {
+
+        "StartFrequenzy": 0.014,
+        "FreqChange" : 2,
+        "StartAmp": 15,
+        "AmpChange" : 0.5,
+        "NumberOfIterations": 10
+      },
+
+      "GreenBiom" : {
+
+        "StartFrequenzy": 0.014,
+        "FreqChange" : 2,
+        "StartAmp": 12,
+        "AmpChange" : 0.5,
+        "NumberOfIterations": 10
+      },
+
+      "RedBiom" : {
+
+        "StartFrequenzy": 0.014,
+        "FreqChange" : 2,
+        "StartAmp": 13,
+        "AmpChange" : 0.5,
+        "NumberOfIterations": 10
+      },
+
+      "BlueBiom" : {
+
+        "StartFrequenzy": 0.014,
+        "FreqChange" : 2,
+        "StartAmp": 15,
+        "AmpChange" : 0.5,
+        "NumberOfIterations": 10
+      },
+
+      "canyon" : {
+
+        "StartFrequenzy": 0.014,
+        "FreqChange" : 2,
+        "StartAmp": 20,
+        "AmpChange" : 0.5,
+        "NumberOfIterations": 10
+      }
+    },
+
+    "Coloring" : {
+
+      "TestBiom" : {
+
+        "MinTemperature" : 0.4,
+        "MaxTemperature" : 0.4,
+
+        "MinHumidity" : 0.5,
+        "MaxHumidity" : 0.5,
+
+        "RoadUndergroundExtremColors" : [26, 26, 26, 255],
+        "RoadUndergroundExtremColorsH" : [26, 26, 26, 255],
+        "RoadUndergroundExtremColorsT" : [26, 26, 26, 255],
+        "RoadUndergroundExtremColorsHT" : [26, 26, 26, 255],
+
+        "RockExtremColor" : [0, 0, 0, 255],
+        "RockExtremColorH" : [0, 0, 0, 255],
+        "RockExtremColorT" : [0, 0, 0, 255],
+        "RockExtremColorHT" : [0, 0, 0, 255],
+
+        "MeadowExtremColor" : [0, 0, 0, 255],
+        "MeadowExtremColorH" : [64, 64, 0, 255],
+        "MeadowExtremColorT" : [191, 191, 255, 255],
+        "MeadowExtremColorHT" : [255, 255, 255, 255],
+
+        "SnowExtremColor" : [255, 255, 255, 255],
+        "SnowExtremColorH" : [255, 255, 255, 255],
+        "SnowExtremColorT" : [255, 255, 255, 255],
+        "SnowExtremColorHT" : [255, 255, 255, 255]
+      },
+
+      "GreenBiom" : {
+
+        "MinTemperature" : 0.0,
+        "MaxTemperature" : 1.0,
+
+        "MinHumidity" : 0.0,
+        "MaxHumidity" : 0.6,
+
+        "RoadUndergroundExtremColors" : [75, 75, 75, 255],
+        "RoadUndergroundExtremColorsH" : [25, 25, 25, 255],
+        "RoadUndergroundExtremColorsT" : [75, 75, 75, 255],
+        "RoadUndergroundExtremColorsHT" : [25, 25, 25, 255],
+
+        "RockExtremColor" : [75, 75, 75, 255],
+        "RockExtremColorH" : [25, 25, 25, 255],
+        "RockExtremColorT" : [75, 75, 75, 255],
+        "RockExtremColorHT" : [25, 25, 25, 255],
+
+        "MeadowExtremColor" : [50, 162, 74, 255],
+        "MeadowExtremColorH" : [4, 148, 34, 255],
+        "MeadowExtremColorT" : [104, 125, 18, 255],
+        "MeadowExtremColorHT" : [40, 122, 8, 255],
+
+        "SnowExtremColor" : [255, 255, 255, 255],
+        "SnowExtremColorH" : [255, 255, 255, 255],
+        "SnowExtremColorT" : [255, 255, 255, 255],
+        "SnowExtremColorHT" : [255, 255, 255, 255],
+
+        "MinTreeLeavesColor" : [22, 111, 2, 255],
+        "MaxTreeLeavesColor" : [124, 143, 0, 255]
+      },
+
+      "RedBiom" : {
+
+        "MinTemperature" : 0.0,
+        "MaxTemperature" : 1.0,
+
+        "MinHumidity" : 0.0,
+        "MaxHumidity" : 0.6,
+
+        "RoadUndergroundExtremColors" : [75, 75, 75, 255],
+        "RoadUndergroundExtremColorsH" : [25, 25, 25, 255],
+        "RoadUndergroundExtremColorsT" : [75, 75, 75, 255],
+        "RoadUndergroundExtremColorsHT" : [25, 25, 25, 255],
+
+        "RockExtremColor" : [75, 75, 75, 255],
+        "RockExtremColorH" : [25, 25, 25, 255],
+        "RockExtremColorT" : [75, 75, 75, 255],
+        "RockExtremColorHT" : [25, 25, 25, 255],
+
+        "MeadowExtremColor" : [177, 64, 32, 255],
+        "MeadowExtremColorH" : [208, 39, 17, 255],
+        "MeadowExtremColorT" : [157, 44, 6, 255],
+        "MeadowExtremColorHT" : [219, 26, 0, 255],
+
+        "SnowExtremColor" : [255, 255, 255, 255],
+        "SnowExtremColorH" : [255, 255, 255, 255],
+        "SnowExtremColorT" : [255, 255, 255, 255],
+        "SnowExtremColorHT" : [255, 255, 255, 255],
+
+        "MinTreeLeavesColor" : [102, 0, 75, 255],
+        "MaxTreeLeavesColor" : [31, 223, 255, 255]
+      },
+
+      "BlueBiom" : {
+
+        "MinTemperature" : 0.0,
+        "MaxTemperature" : 0.8,
+
+        "MinHumidity" : 0.7,
+        "MaxHumidity" : 1.0,
+
+        "RoadUndergroundExtremColors" : [75, 75, 75, 255],
+        "RoadUndergroundExtremColorsH" : [25, 25, 25, 255],
+        "RoadUndergroundExtremColorsT" : [75, 75, 75, 255],
+        "RoadUndergroundExtremColorsHT" : [25, 25, 25, 255],
+
+        "RockExtremColor" : [75, 75, 75, 255],
+        "RockExtremColorH" : [25, 25, 25, 255],
+        "RockExtremColorT" : [75, 75, 75, 255],
+        "RockExtremColorHT" : [25, 25, 25, 255],
+
+        "MeadowExtremColor" : [102, 128, 166, 255],
+        "MeadowExtremColorH" : [102, 166, 219, 255],
+        "MeadowExtremColorT" : [115, 145, 176, 255],
+        "MeadowExtremColorHT" : [125, 166, 250, 255],
+
+        "SnowExtremColor" : [255, 255, 255, 255],
+        "SnowExtremColorH" : [255, 255, 255, 255],
+        "SnowExtremColorT" : [255, 255, 255, 255],
+        "SnowExtremColorHT" : [255, 255, 255, 255],
+
+        "MinTreeLeavesColor" : [1, 59, 204, 255],
+        "MaxTreeLeavesColor" : [1, 59, 204, 255]
+      },
+
+      "canyon" : {
+
+        "MinTemperature" : 0.0,
+        "MaxTemperature" : 1.0,
+
+        "MinHumidity" : 0.0,
+        "MaxHumidity" : 1.0,
+
+        "RoadUndergroundExtremColors" : [26, 26, 26, 255],
+        "RoadUndergroundExtremColorsH" : [26, 26, 26, 255],
+        "RoadUndergroundExtremColorsT" : [26, 26, 26, 255],
+        "RoadUndergroundExtremColorsHT" : [26, 26, 26, 255],
+
+        "RockExtremColor" : [205, 112, 45, 255],
+        "RockExtremColorH" : [229, 104, 21, 255],
+        "RockExtremColorT" : [163, 69, 10, 255],
+        "RockExtremColorHT" : [198, 77, 20, 255],
+
+        "MeadowExtremColor" : [205, 112, 45, 255],
+        "MeadowExtremColorH" : [229, 104, 21, 255],
+        "MeadowExtremColorT" : [163, 69, 10, 255],
+        "MeadowExtremColorHT" : [198, 77, 20, 255],
+
+        "SnowExtremColor" : [255, 255, 255, 255],
+        "SnowExtremColorH" : [255, 255, 255, 255],
+        "SnowExtremColorT" : [255, 255, 255, 255],
+        "SnowExtremColorHT" : [255, 255, 255, 255]
+      }
+    },
+
+    "AssetGenerator" : {
+
+      "TestBiom" : {
+
+        "RoofColor" : [0.25, 0.25, 0.25, 1.0],
+        "AngleBetweenWallPoints" : 0.05,
+
+
+        "roadAsset" : {
+          "SimpleRoad": {
+            "Id": "Streets/DomeStreet",
+            "Segments": 4,
+            "SizeX": 4.3,
+            "SizeY": 1.0,
+            "SizeZ": 4.0
+          }
+        }
+      },
+
+      "GreenBiom" : {
+
+        "RoofColor" : [0.25, 0.25, 0.25, 1.0],
+        "AngleBetweenWallPoints" : 0.05,
+
+        "treesPerSquareMeter" : 0.002,
+        "minDistanceToTree" : 2,
+        "degreeOfClustering" : 0.4,
+        "minAdditionalScale" : 0,
+        "maxAdditionalTreeScale" : 0.5,
+
+
+        "roadAsset" : {
+            "SimpleRoad": {
+              "Id": "Streets/DomeStreet",
+              "Segments": 4,
+              "SizeX": 4.3,
+              "SizeY": 1.0,
+              "SizeZ": 4.0
+            }
+        }
+      },
+
+      "RedBiom" : {
+
+        "RoofColor" : [0.25, 0.25, 0.25, 1.0],
+        "AngleBetweenWallPoints" : 0.05,
+
+        "treesPerSquareMeter" : 0.0007,
+        "minDistanceToTree" : 6,
+        "degreeOfClustering" : 0.4,
+        "minAdditionalScale" : 2,
+        "maxAdditionalTreeScale" : 3.5,
+
+
+        "roadAsset" : {
+          "SimpleRoad": {
+            "Id": "Streets/DomeStreet",
+            "Segments": 4,
+            "SizeX": 4.3,
+            "SizeY": 1.0,
+            "SizeZ": 4.0
+          }
+        }
+      },
+
+      "BlueBiom" : {
+
+        "RoofColor" : [0.25, 0.25, 0.25, 1.0],
+        "AngleBetweenWallPoints" : 0.05,
+
+        "treesPerSquareMeter" : 0.001,
+        "minDistanceToTree" : 2,
+        "degreeOfClustering" : 0.1,
+        "minAdditionalScale" : 0,
+        "maxAdditionalTreeScale" : 0.5,
+
+
+        "roadAsset" : {
+          "SimpleRoad": {
+            "Id": "Streets/DomeStreet",
+            "Segments": 4,
+            "SizeX": 4.3,
+            "SizeY": 1.0,
+            "SizeZ": 4.0
+          }
+        }
+      },
+
+      "canyon" : {
+
+        "RoofColor" : [0.25, 0.25, 0.25, 1.0],
+        "AngleBetweenWallPoints" : 0.05,
+
+
+        "roadAsset" : {
+          "SimpleRoad": {
+            "Id": "Streets/DomeStreet",
+            "Segments": 4,
+            "SizeX": 4.3,
+            "SizeY": 1.0,
+            "SizeZ": 4.0
+          }
+        }
+      }
+    },
+
+    "Dome" : {
+      "maxSecondDerivationDelts" : 0.9
+    }
+
+  },
+
+  "tunnelgeneration" : {
+
+    "assetGroups" : {
+
+      "roadAsset" : {
+
+        "defaultBundle" : {
+
+          "SimpleRoad" : {
+            "Id" : "Streets/SimpleStreet",
+            "Segments" : 2,
+            "SizeX": 4.3,
+            "SizeY": 1.0,
+            "SizeZ": 4.0
+          }
+        }
+      },
+
+      "doorAsset" : {
+
+        "defaultBundle" : {
+
+          "SimpleDoor" : {
+            "Id" : "DoorAssets/SimpleDoor",
+            "SizeX": 2.5,
+            "SizeY": 2.0,
+            "SizeZ": 0.4
+          }
+        }
+      },
+
+      "surroundingAssets": {
+        "defaultBundle" : {
+          "FreddyTunnel": {
+            "Id": "TunnelSurroundings/BaseConnector",
+            "Segments" : 2,
+            "SizeX": 6.0,
+            "SizeY": 4.0,
+            "SizeZ": 6.0
+          }
+         },
+        "roundTunnels" : {
+          "RoundTunnel": {
+            "Id": "TunnelSurroundings/RoundTunnel",
+            "Segments" : 3,
+            "SizeX": 8.5,
+            "SizeY": 7.0,
+            "SizeZ": 9.0
+          }
+        }
+      }
+    }
+  },
+
+  "roomgeneration": {
+    "VehicleWidth": 1.5,
+    "AssetPlacementIterations": 100,
+    "AssetPlacementSize": 4,
+    "TargetGridWidth" : 2,
+
+    "AssetBundles" : [
+      "defaultBundle","transporterRoom"
+    ],
+
+    "assetGroups": {
+
+      "floorAssets": {
+
+        "defaultBundle" : {
+          "Ventilation": {
+            "Id": "RoomFloorAssets/SimpleVentilation",
+            "SizeX": 4.0,
+            "SizeY": 4.0,
+            "SizeZ": 4.0
+          },
+          "SatelliteThing": {
+            "Id": "RoomFloorAssets/SatelliteThing",
+            "SizeX": 5.0,
+            "SizeY": 12.0,
+            "SizeZ": 5.0
+          }
+        },
+
+        "transporterRoom" : {
+          "Computer": {
+            "Id": "RoomFloorAssets/ComputerDesk",
+            "SizeX": 5.0,
+            "SizeY": 6.0,
+            "SizeZ": 5.0
+          },
+          "Transporter": {
+            "Id": "RoomFloorAssets/Transporter",
+            "SizeX": 6.0,
+            "SizeY": 12.0,
+            "SizeZ": 6.0
+          }
+        }
+
+      },
+
+      "doorAsset" : {
+
+        "defaultBundle" : {
+
+          "SimpleDoor" : {
+            "Id" : "DoorAssets/SimpleDoor",
+            "SizeX": 2.5,
+            "SizeY": 2.0,
+            "SizeZ": 0.2
+          }
+        }
+      },
+
+      "wall" : {
+        "defaultBundle": {
+          "WallPannel": {
+            "Id": "Walls/SimplePanel",
+            "SizeX": 2.0,
+            "SizeY": 1.0,
+            "SizeZ": 2.0
+          }
+        }
+      },
+      "roof" : {
+        "defaultBundle": {
+          "WallPannel": {
+            "Id": "Walls/LightPanel",
+            "SizeX": 2.0,
+            "SizeY": 1.0,
+            "SizeZ": 2.0
+          }
+        }
+      },
+      "floor" : {
+        "defaultBundle": {
+          "WallPannel": {
+            "Id": "Walls/SimplePanel",
+            "SizeX": 2.0,
+            "SizeY": 1.0,
+            "SizeZ": 2.0
+          }
+        }
+      },
+
+      "passageWall" : {
+        "defaultBundle" : {
+          "WallPannel" : {
+            "Id": "Walls/SimplePanel",
+            "SizeX": 2.0,
+            "SizeY": 1.0,
+            "SizeZ": 2.0
+
+          }
+
+
+        }
+
+      },
+
+      "roadAsset" : {
+
+        "defaultBundle" : {
+          "SimpleRoad" : {
+            "Id" : "Streets/LightedStreet",
+            "Segments" : 2,
+            "SizeX": 4.3,
+            "SizeY": 1.0,
+            "SizeZ": 4.0
+          }
+        }
+      }
+
+
+    }
+
+
+  },
+
+  "mapgeneration": {
+
+    "largeMap" : {
+
+      "StartEntryWidthAndHeight" : [10, 3],
+      "StartPosition" : 4,
+
+
+      "fieldX" : 7,
+      "fieldZ" : 7,
+
+      "minNumberOfDomes" : 5,
+      "MinDomeRadius" : 60,
+      "MaxDomeRadius" : 100,
+
+      "MinRoomRadius" : 40,
+      "MaxRoomRadius" : 70,
+      "probabilityForTunnelInsteadOfRoom" : 0.15,
+
+      "MinTunnelLength" : 50,
+      "MaxTunnelLength" : 70,
+      "maxTunnelDeviation" : 45
+
+    },
+
+    "normalMap" : {
+
+      "StartEntryWidthAndHeight" : [10, 3],
+      "StartPosition" : 3,
+
+
+      "fieldX" : 5,
+      "fieldZ" : 5,
+
+      "minNumberOfDomes" : 3,
+      "MinDomeRadius" : 60,
+      "MaxDomeRadius" : 90,
+
+      "MinRoomRadius" : 30,
+      "MaxRoomRadius" : 50,
+      "probabilityForTunnelInsteadOfRoom" : 0.15,
+
+      "MinTunnelLength" : 50,
+      "MaxTunnelLength" : 50,
+      "maxTunnelDeviation" : 30
+
+    },
+
+    "smallMap" : {
+
+      "StartEntryWidthAndHeight" : [10, 3],
+      "StartPosition" : 1,
+
+      "fieldX" : 2,
+      "fieldZ" : 2,
+
+      "minNumberOfDomes" : 1,
+      "MinDomeRadius" : 70,
+      "MaxDomeRadius" : 90,
+
+      "MinRoomRadius" : 30,
+      "MaxRoomRadius" : 50,
+      "probabilityForTunnelInsteadOfRoom" : 0.15,
+
+      "MinTunnelLength" : 50,
+      "MaxTunnelLength" : 50,
+      "maxTunnelDeviation" : 30
+
+    },
+
+    "items" : {
+      "ItemSpace" : 2,
+      "ItemHeight" : 1,
+      "ItemFrequency" : 0.0005
+    }
+
+  },
+
+  "mapbody" : {
+
+    "vehicleHeight" : 0.5,
+    "vehicleRotationSurfaceDimension" : 8,
+    "vehicleRotationResolution" : 20
+
+  }
+
+}
+
+

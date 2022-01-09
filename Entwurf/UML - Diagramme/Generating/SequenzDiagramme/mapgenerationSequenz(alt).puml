@@ -1,0 +1,121 @@
+@startuml mapgenerationSequenz
+!include styles.puml
+skinparam sequenceParticipant underline
+
+
+
+!definelong addRoadToMap(a)
+sendr(MainGenerator,Map,getRoad(),Road)
+sendr(MainGenerator,a,getRoad(),Road)
+sendr(MainGenerator,Road,attach(),)
+!enddefinelong
+
+
+
+!definelong sendr(a,b,c,d)
+a -> b : c
+activate b
+b --> a : d
+deactivate b
+!enddefinelong
+
+
+
+
+
+participant MainGenerator
+activate MainGenerator
+
+create GenerationConfig
+MainGenerator --> GenerationConfig: <<create>>
+
+create DomeGenerator 
+MainGenerator --> DomeGenerator: <<create>>
+
+
+create RoomGenerator
+MainGenerator --> RoomGenerator: <<create>>
+
+
+create TunnelGenerator
+MainGenerator --> TunnelGenerator: <<create>>
+
+create Map
+MainGenerator --> Map: <<create>>
+
+
+create Road
+activate Map
+Map --> Road: <<create>>
+deactivate Map
+
+
+
+MainGenerator ->DomeGenerator: generateDome()
+activate DomeGenerator
+create Dome
+DomeGenerator --> Dome: <<create>>
+DomeGenerator -> MainGenerator: Dome
+deactivate DomeGenerator
+
+
+
+
+MainGenerator -> Map: addSceneItem()
+activate Map
+Map -> MainGenerator: addSceneItem()
+deactivate Map
+
+
+addRoadToMap(Dome)
+
+
+MainGenerator ->RoomGenerator: generateRoom()
+activate RoomGenerator
+create Room
+RoomGenerator --> Room: <<create>>
+RoomGenerator -> MainGenerator: Room
+deactivate RoomGenerator
+
+
+MainGenerator -> Map: addSceneItem()
+activate Map
+Map -> MainGenerator: addSceneItem()
+deactivate Map
+
+addRoadToMap(Room)
+
+
+MainGenerator ->TunnelGenerator: generateTunnel()
+activate TunnelGenerator
+create Tunnel
+TunnelGenerator --> Tunnel: <<create>>
+TunnelGenerator -> MainGenerator: Tunnel
+deactivate TunnelGenerator
+
+
+
+
+MainGenerator -> Map: addSceneItem()
+activate Map
+Map -> MainGenerator: addSceneItem()
+deactivate Map
+
+addRoadToMap(Tunnel)
+
+
+MainGenerator -> Map: createMapBody()
+activate Map
+create MapBody
+Map --> MapBody: <<create>>
+Map -> MainGenerator: MapBody()
+deactivate Map
+
+MainGenerator -> Map: generateSceneGraph()
+activate Map
+sendr(Map,Dome,generateSceneGraph(),Node)
+sendr(Map,Room,generateSceneGraph(),Node)
+sendr(Map,Tunnel,generateSceneGraph(),Node)
+
+Map -> MainGenerator: Node
+@enduml

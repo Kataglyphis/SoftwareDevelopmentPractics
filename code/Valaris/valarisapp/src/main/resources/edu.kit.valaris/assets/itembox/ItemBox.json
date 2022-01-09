@@ -1,0 +1,12 @@
+{
+  "key" : "ItemBox",
+  "path" : "/edu.kit.valaris/assets/itembox/ItemBox.j3o",
+  "nodes" : [],
+  "controls" : [
+    {"key" : "Bounce", "path" : "ItemBox", "isPreload" : false, "type" : "edu.kit.valaris.assets.ItemBoxControl", "params" : "2,0.2,2"}
+  ],
+  "meshes" : [
+    {"path" : "ItemBox/Faces", "material" : "/edu.kit.valaris/assets/itembox/Faces.j3m"},
+    {"path" : "ItemBox/Edges", "material" : "/edu.kit.valaris/assets/itembox/Edges.j3m"}
+  ]
+}

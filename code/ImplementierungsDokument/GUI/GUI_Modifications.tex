@@ -1,0 +1,271 @@
+\subsection{GUI}
+
+\subsubsection{IConfig}
+\begin{itemize}
+    \item \textit{Umbenannt zu ConfigManager und kein Interface mehr}
+        \begin{leftbar}[0.9\linewidth]
+            Hier lag ein Entwurfsfehler vor. Diese Klasse stellt nun Funktionen zum Lesen und 
+            Schreiben einer Datei bereit. Sie enthält für jede Methode einen Pfad, wo sich 
+            die Datei befinden sollte.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{InternalGameConfig, SeedConfig und GraphicsConfig}
+\begin{itemize}
+    \item \textit{Implementiert nicht mehr IConfig}
+        \begin{leftbar}[0.9\linewidth]
+            Da die Klasse statische Methoden enthält, implementiert sie nicht mehr das 
+            Interface IConfig.
+        \end{leftbar}
+    \item \textit{Methode getConfig() hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Gibt die Konfiguration zurück und ruft bei die getConfig()
+            Methode vom ConfigManager auf.
+        \end{leftbar}
+    \item \textit{Methode saveConfig() hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Speichert die Konfiguration und ruft bei die 
+            saveConfig() Methode vom ConfigManager auf.
+        \end{leftbar}
+    \item \textit{Methode reset() hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Setzt die Config zurück durch Überschreiben mit der Default-Datei.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{OwnScreenController}
+\begin{itemize}
+    \item \textit{Klasse hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            OwnScreenController implementiert von ScreenController und wird von jedem Menü-
+            Bildschirm geerbt. Es enthält Funktionen und Attribute, die jeder Bildschirm 
+            braucht und reduziert somit Code-Duplizierung. Jedem OwnScreenController wird 
+            außerdem eine Referenz auf den NiftyAppState und die anderen OwnScreenController
+            mitgegeben, so dass diese leicht aufrufbar sind.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{NiftyAppState}
+\begin{itemize}
+    \item \textit{Gesamtes Entwurfskonzept der Klasse geändert}
+        \begin{leftbar}[0.9\linewidth]
+            Ein NiftyAppState ist nun eine AppState, welcher alle die ihm mitgegebenen 
+            OwnScreenController in einer Nifty Instanz initialisiert und speichert.
+            Die OwnScreenController innerhalb eines NiftyAppStates haben Zugriff auf 
+            einander und können so leicht mit nifty.goToScreen() aufgerufen werden.
+            Ist dies nicht möglich, so erstellt ein OwnScreenController ein neues 
+            NiftyAppState-Objekt mit den jeweiligen OwnScreenControllern und fügt dieses
+            an den AppStateManager an.
+            Wird der NiftyAppState vom AppStateManager entfernt, so entfernt dieser alle 
+            initialisierten Sachen wie z.B den Processor für das NiftyDisplay.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{SplashScreen}
+\begin{itemize}
+    \item \textit{Klasse wurde hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Zeigt einen SplashScreen bei Start des Programms an.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{MainmenuScreen}
+\begin{itemize}
+    \item \textit{Implementiert nicht mehr ScreenController, erbt dafür von OwnScreenController}
+        \begin{leftbar}[0.9\linewidth]
+            Es wurde eine eigene ScreenController Klasse hinzugefügt.
+        \end{leftbar}
+    \item \textit{Methode openMultiplayerMode() entfernt}
+        \begin{leftbar}[0.9\linewidth]
+            Wurde nicht mehr benötigt, da die Mehrspieler-Funktion inklusive des 
+            Lobby Bildschirmes entfernt wurde.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{AbstractEditGameSettings}
+\begin{itemize}
+    \item \textit{Klasse entfernt}
+        \begin{leftbar}[0.9\linewidth]
+            Diese Klasse existierte ursprünglich, da der Lobby Bildschirm und der 
+            Einzelspielerbildschirm viele gleiche Methoden brauchten. Da der Lobby 
+            Bildschirm entfernt wurde, wurden alle Funktionen hierraus in die Klasse 
+            SinglePlayerModeScreen verschoben.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{LobbyScreen}
+\begin{itemize}
+    \item \textit{Klasse entfernt}
+        \begin{leftbar}[0.9\linewidth]
+            Wurde nicht mehr benötigt, da die Mehrspieler-Funktion inklusive des 
+            Lobby Bildschirmes entfernt wurde.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{SinglePlayerModeScreen}
+\begin{itemize}
+    \item \textit{Implementiert nicht mehr ScreenController, erbt dafür von OwnScreenController}
+        \begin{leftbar}[0.9\linewidth]
+            Es wurde eine eigene ScreenController Klasse hinzugefügt.
+        \end{leftbar}
+    \pagebreak
+    \item \textit{Methoden aus AbstractEditGameSettings hier eingefügt}
+        \begin{leftbar}[0.9\linewidth]
+            AbstractEditGameSettings wurde entfernt und dementsprechend sind dessen Methoden 
+            hier eingesetzt worden.
+        \end{leftbar}
+    \item \textit{Methode editCurrentSeed(String, DropDownSelectionChangedEvent) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Wird aufgerufen sobald eine Auswahl im DropDown-Menü getroffen wird.
+        \end{leftbar}
+    \item \textit{Methode editCurrentSeedNumber(String, TextFieldChangedEvent) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Wird aufgerufen sobald die Seed Nummer bearbeitet wird.
+        \end{leftbar}
+    \item \textit{Methode editKICount(String, TextFieldChangedEvent) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Wird aufgerufen sobald die KI Anzahl bearbeitet wird.
+        \end{leftbar}
+    \item \textit{Methode saveSeedName() hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Wird aufgerufen sobald der Seed Name mit Enter bestätigt, oder der Speicher-Button
+            rechts daneben geklickt wird.
+        \end{leftbar}
+    \item \textit{Methode editSeednameTextfieldVisibility() hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Wird aufgerufen sobald der Bearbeiten-Button neben dem DropDown-Menü gedrückt wird.
+        \end{leftbar}
+    \item \textit{Methode saveSeedNumber() hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Wird aufgerufen sobald die Seed Nummer mit Enter bestätigt, oder der Speicher-Button
+            rechts daneben geklickt wird.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{SettingsmenuScreen}
+\begin{itemize}
+    \item \textit{Implementiert nicht mehr ScreenController, erbt dafür von OwnScreenController}
+        \begin{leftbar}[0.9\linewidth]
+            Es wurde eine eigene ScreenController Klasse hinzugefügt.
+        \end{leftbar}
+    \item \textit{Methode editCurrentResolution(String, DropDownSelectionChangedEvent) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Wird aufgerufen sobald eine Auswahl im Auflösungs-DropDown getroffen wird.
+        \end{leftbar}
+    \item \textit{Methode editCurrentLanguage(String, DropDownSelectionChangedEvent) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Wird aufgerufen sobald eine Auswahl im Sprache-DropDown getroffen wird.
+        \end{leftbar}
+    \item \textit{Methode editCurrentKIDifficulty(String, DropDownSelectionChangedEvent) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Wird aufgerufen sobald eine Auswahl im KI-Schwiriegskeits-DropDown getroffen wird.
+        \end{leftbar}
+    \item \textit{Methode editCurrentQuality(String, DropDownSelectionChangedEvent) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Wird aufgerufen sobald eine Auswahl im Qualitäts-DropDown getroffen wird.
+        \end{leftbar}
+    \item \textit{Methode toggleFullscreen(String, CheckBoxStateChangedEvent) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Wird aufgerufen sobald eine Auswahl in der Vollbild-Checkbox getroffen wird.
+        \end{leftbar}
+    \item \textit{Methode showGraphicsTab() hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Zeigt den Grafik Einstellungs-Tab an.
+        \end{leftbar}
+    \item \textit{Methode showInternTab() hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Zeigt den Internen Einstellungs-Tab an.
+        \end{leftbar}
+    \item \textit{Methode resetSettings() hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Setzt die Einstellungen zurück.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{LoadingScreen}
+\begin{itemize}
+    \item \textit{Implementiert nicht mehr ScreenController, erbt dafür von OwnScreenController}
+        \begin{leftbar}[0.9\linewidth]
+            Es wurde eine eigene ScreenController Klasse hinzugefügt.
+        \end{leftbar}
+    \item \textit{Folgende Methoden entfernt}
+        \begin{itemize}
+            \item openHUD() : HUD wird an anderer Stelle geöffnet.
+            \item generateMap() : Funktionalität wude in startGame() verschoben.
+            \item getMapBody() : Nicht mehr benötigt.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{LoadingUtil}
+\begin{itemize}
+    \item \textit{Klasse hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            In dieser Util Klasse existieren Funktionen, die vom LoadingScreen aufgerufen 
+            werden, um alle benötigten Sachen zu laden. Mittels Callbacks wird der 
+            ladebalken entsprechend gesetzt.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{Hud}
+\begin{itemize}
+    \item \textit{Implementiert nicht mehr ScreenController, erbt dafür von OwnScreenController}
+        \begin{leftbar}[0.9\linewidth]
+            Es wurde eine eigene ScreenController Klasse hinzugefügt.
+        \end{leftbar}
+    \item \textit{Alle Funktionen entfernt/ersetzt}
+        \begin{leftbar}[0.9\linewidth]
+            Die Minimap wurde nicht im Hud integriert und die restlichen Funktionen wurden 
+            ersetzt bzw entfernt. Funktionen um auf andere Bildschirme du wechseln wurde an 
+            eine andere Stelle verlagert.
+        \end{leftbar}
+    \pagebreak
+    \item \textit{Methode updateRank(int) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Aktualisiert den angezeigten Rang im Hud.
+        \end{leftbar}
+    \item \textit{Methode updateTime(float) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Aktualisiert die angezeigte Zeit im Hud.
+        \end{leftbar}
+    \item \textit{Methode updateCountdown(String) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Aktualisiert den angezeigten Countdown im Hud.
+        \end{leftbar}
+    \item \textit{Methode updateItem(String) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Aktualisiert das angezeigte Item im Hud.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{ErrorScreen}
+\begin{itemize}
+    \item \textit{Klasse hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Diese Klasse dient dazu, eventuell auftretende Exceptions/Fehler während dem Spiel 
+            anzeigen zu können mittels eines Popups.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{PausemenuScreen}
+\begin{itemize}
+    \item \textit{Implementiert nicht mehr ScreenController, erbt dafür von OwnScreenController}
+        \begin{leftbar}[0.9\linewidth]
+            Es wurde eine eigene ScreenController Klasse hinzugefügt.
+        \end{leftbar}
+\end{itemize}
+
+\subsubsection{EndmenuScreen}
+\begin{itemize}
+    \item \textit{Implementiert nicht mehr ScreenController, erbt dafür von OwnScreenController}
+        \begin{leftbar}[0.9\linewidth]
+            Es wurde eine eigene ScreenController Klasse hinzugefügt.
+        \end{leftbar}
+    \item \textit{Methode updatePlayerEndTime() entfernt}
+        \begin{leftbar}[0.9\linewidth]
+            Ersetzt durch folgende Methode.
+        \end{leftbar}
+    \item \textit{Methode updatePlayerEndTimeAndColor(int, float, String) hinzugefügt}
+        \begin{leftbar}[0.9\linewidth]
+            Aktualisiert die Zeit und Farbe des Spielers.
+        \end{leftbar}
+\end{itemize}

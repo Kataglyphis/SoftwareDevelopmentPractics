@@ -1,0 +1,19 @@
+{
+  "key" : "Transporter",
+  "path" : "/edu.kit.valaris/assets/roomAssets/Transporter/transporterA1.j3o",
+
+  "nodes" : [],
+  "controls" : [],
+  "meshes" : [
+    {"path" : "LowerInnerPannel/Circle.0031", "material" : "/edu.kit.valaris/assets/roomAssets/Transporter/glowingBlue.j3m"},
+    {"path" : "UpperInnerPannel/Circle.0021", "material" : "/edu.kit.valaris/assets/roomAssets/Transporter/glowingBlue.j3m"},
+
+
+    {"path" : "UpperOutherPannel/Circle.0011", "material" : "/edu.kit.valaris/assets/roomAssets/Transporter/metallicLightGrey.j3m"},
+    {"path" : "LowerOutherPannel/Circle1", "material" : "/edu.kit.valaris/assets/roomAssets/Transporter/metallicLightGrey.j3m"},
+
+    {"path" : "SuroundingBars/Plane.0011", "material" : "/edu.kit.valaris/assets/roomAssets/Transporter/metallicLightGrey.j3m"},
+    {"path" : "MainPillar/Plane1", "material" : "/edu.kit.valaris/assets/roomAssets/Transporter/metallicDarkGrey.j3m"}
+  ],
+  "animations" : []
+}

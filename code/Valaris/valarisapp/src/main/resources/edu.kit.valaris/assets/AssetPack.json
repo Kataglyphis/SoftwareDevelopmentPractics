@@ -1,0 +1,80 @@
+{
+  "groups" : [
+    {
+      "key" : "Streets",
+      "assets" : [
+        "/edu.kit.valaris/assets/road/basicStreet/StreetAssetA1.json",
+        "/edu.kit.valaris/assets/road/domeStreet/CoolStreetA1.json",
+        "/edu.kit.valaris/assets/road/lightedRoad/LightedRoad.json"
+      ]
+    },
+    {
+      "key" : "Walls",
+      "assets" : [
+        "/edu.kit.valaris/assets/roomWalls/simpleWall/PannelAssetA1.json",
+        "/edu.kit.valaris/assets/roomWalls/ceiling/PannelWithLightA1.json"
+      ]
+    },
+    {
+      "key" : "TunnelSurroundings",
+      "assets" : [
+        "/edu.kit.valaris/assets/tunnel/baseConnector/BaseConnectorAssetA1.json",
+        "/edu.kit.valaris/assets/tunnel/roundTunnel/RoundTunnel.json"
+      ]
+    },
+    {
+      "key" : "RoomFloorAssets",
+      "assets" : [
+        "/edu.kit.valaris/assets/roomAssets/Ventilation/VentilationAssetA1.json",
+        "/edu.kit.valaris/assets/roomAssets/SateliteThing/SatelliteThingA1.json",
+        "/edu.kit.valaris/assets/roomAssets/Transporter/TransporterA1.json",
+        "/edu.kit.valaris/assets/roomAssets/Computer/ComputerDeskA1.json"
+      ]
+    },
+    {
+      "key" : "DoorAssets",
+      "assets" : [
+        "/edu.kit.valaris/assets/checkpoint/simpleDoor/roomArchA1.json"
+      ]
+    },
+    {
+      "key" : "Dynamics",
+      "assets" : [
+        "/edu.kit.valaris/assets/cart/Cart.json",
+        "/edu.kit.valaris/assets/missile/Missile.json",
+        "/edu.kit.valaris/assets/itembox/ItemBox.json",
+        "/edu.kit.valaris/assets/gravitytrap/GravityTrap.json",
+        "/edu.kit.valaris/assets/explosion/Explosion.json"
+      ]
+    },
+
+    {
+      "key" : ".GreenBiomTrees",
+      "assets" : [
+        "/edu.kit.valaris/assets/trees/BasicTree0.json"
+      ]
+    },
+
+    {
+      "key" : ".RedBiomTrees",
+      "assets" : [
+        "/edu.kit.valaris/assets/trees/BasicTree0.json"
+      ]
+    },
+
+    {
+      "key" : ".BlueBiomTrees",
+      "assets" : [
+        "/edu.kit.valaris/assets/trees/IceTree0.json"
+      ]
+    },
+
+    {
+      "key" : "DomeRoof",
+      "assets" : [
+        "/edu.kit.valaris/assets/domeRoof/DomeRoofA1.json"
+      ]
+    }
+
+  ]
+}

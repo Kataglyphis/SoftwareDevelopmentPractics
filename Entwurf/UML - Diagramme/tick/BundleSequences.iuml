@@ -1,0 +1,192 @@
+@startuml DynamicGameObject_addProperty
+
+participant "__:DynamicGameObject__"
+participant "__properties:List__"
+
+/'enter method '/
+-> "__:DynamicGameObject__" : addProperty(property)
+activate "__:DynamicGameObject__"
+
+/'search free space with linear search'/
+==Search Id==
+"__:DynamicGameObject__" -> "__:DynamicGameObject__" : i = -1
+loop for each index i of properties
+    "__:DynamicGameObject__" -> "__properties:List__" : tmp = get(i)
+    activate "__properties:List__"
+    "__properties:List__" --> "__:DynamicGameObject__"
+    deactivate "__properties:List__"
+
+    alt tmp == null
+        "__:DynamicGameObject__" -> "__:DynamicGameObject__" : id = i
+        "__:DynamicGameObject__" -> "__:DynamicGameObject__" : break
+    end
+end
+
+alt id < 0
+    "__:DynamicGameObject__" -> "__properties:List__" : add(property)
+    activate "__properties:List__"
+    "__properties:List__" --> "__:DynamicGameObject__"
+    deactivate "__properties:List__"
+    "__:DynamicGameObject__" -> "__properties:List__" : id = size()
+    activate "__properties:List__"
+    "__properties:List__" --> "__:DynamicGameObject__"
+    deactivate "__properties:List__"
+
+    "__:DynamicGameObject__" -> "__:DynamicGameObject__" : id = id - 1;
+else id >= 0
+    "__:DynamicGameObject__" -> "__properties:List__" : set(id, property)
+    activate "__properties:List__"
+    "__properties:List__" --> "__:DynamicGameObject__"
+    deactivate "__properties:List__"
+end
+
+==Add Event==
+create params
+"__:DynamicGameObject__" -> params : new
+
+"__:DynamicGameObject__" -> params : add(id)
+activate params
+params --> "__:DynamicGameObject__"
+deactivate params
+
+"__:DynamicGameObject__" -> params : add(property.getClass())
+activate params
+params --> "__:DynamicGameObject__"
+deactivate params
+
+"__:DynamicGameObject__" -> "__:DynamicGameObject__" : addEvent(new DynamicGameObjectEvent("AddProperty", params))
+activate "__:DynamicGameObject__"
+deactivate "__:DynamicGameObject__"
+
+/'leave method'/
+<-- "__:DynamicGameObject__" : return id
+deactivate "__:DynamicGameObject__"
+
+@enduml
+
+@startuml DynamicGameObject_getEventsAsStream
+
+participant "__:DynamicGameObject__"
+participant "__events:List__"
+
+-> "__:DynamicGameObject__" : getEventsAsStream()
+activate "__:DynamicGameObject__"
+
+"__:DynamicGameObject__" -> "__events:List__" : stream = asStream()
+activate "__events:List__"
+"__events:List__" --> "__:DynamicGameObject__"
+deactivate "__events:List__"
+
+"__:DynamicGameObject__" -> "__events:List__" : clear()
+activate "__events:List__"
+"__events:List__" --> "__:DynamicGameObject__"
+deactivate "__events:List__"
+
+<-- "__:DynamicGameObject__" : return stream
+deactivate "__:DynamicGameObject__"
+
+@enduml
+
+@startuml DynamicGameObject_sync
+
+participant "__:DynamicGameObject__"
+participant "__properties:List__"
+participant "__target:DynamicGameObject__"
+
+participant "__property:IProperty__"
+participant "__tmpProperty:IProperty__"
+
+-> "__:DynamicGameObject__" : sync(target)
+activate "__:DynamicGameObject__"
+
+==Sync DynamicGameObjects==
+"__:DynamicGameObject__" -> "__target:DynamicGameObject__" : propertyList = getProperties()
+activate "__target:DynamicGameObject__"
+"__target:DynamicGameObject__" --> "__:DynamicGameObject__"
+deactivate "__target:DynamicGameObject__"
+
+"__:DynamicGameObject__" -> "__:DynamicGameObject__" : i = 0
+
+loop for each property in propertyList
+    alt i < properties.size()
+        alt property != null
+            "__:DynamicGameObject__" -> "__properties:List__" : tmpProperty = get(i)
+            activate "__properties:List__"
+            "__properties:List__" --> "__:DynamicGameObject__"
+            deactivate "__properties:List__"
+
+            alt tmpProperty != null
+                alt tmpProperty.canSync(property)
+                    "__:DynamicGameObject__" -> "__tmpProperty:IProperty__" : sync(this)
+                    activate "__tmpProperty:IProperty__"
+                    ref over "__tmpProperty:IProperty__" : sync(target: Property)
+                    "__tmpProperty:IProperty__" --> "__:DynamicGameObject__"
+                    deactivate "__tmpProperty:IProperty__"
+                else !tmpProperty.canSync(property)
+                    "__:DynamicGameObject__" -> "__property:IProperty__" : tmpProperty = deepCopy()
+                    activate "__property:IProperty__"
+                    'ref over "__property:IProperty__" : deepCopy()
+                    "__property:IProperty__" --> "__:DynamicGameObject__"
+                    deactivate "__property:IProperty__"
+
+                    "__:DynamicGameObject__" -> "__properties:List__" : set(i, tmpProperty)
+                    activate "__properties:List__"
+                    "__properties:List__" --> "__:DynamicGameObject__"
+                    deactivate "__properties:List__"
+                end
+            else tmpProperty == null
+                "__:DynamicGameObject__" -> "__property:IProperty__" : tmpProperty = deepCopy()
+                activate "__property:IProperty__"
+                'ref over "__property:IProperty__" : deepCopy()
+                "__property:IProperty__" --> "__:DynamicGameObject__"
+                deactivate "__property:IProperty__"
+
+                "__:DynamicGameObject__" -> "__properties:List__" : set(i, tmpProperty)
+                activate "__properties:List__"
+                "__properties:List__" --> "__:DynamicGameObject__"
+                deactivate "__properties:List__"
+            end
+        else property == null
+            "__:DynamicGameObject__" -> "__properties:List__" : set(i, null)
+            activate "__properties:List__"
+            "__properties:List__" --> "__:DynamicGameObject__"
+            deactivate "__properties:List__"
+        end
+    else i >= properties.size()
+        alt property != null
+            "__:DynamicGameObject__" -> "__property:IProperty__" : tmpProperty = deepCopy()
+            activate "__property:IProperty__"
+            'ref over "__property:IProperty__" : deepCopy()
+            "__property:IProperty__" --> "__:DynamicGameObject__"
+            deactivate "__property:IProperty__"
+
+            "__:DynamicGameObject__" -> "__properties:List__" : add(tmpProperty)
+            activate "__properties:List__"
+            "__properties:List__" --> "__:DynamicGameObject__"
+            deactivate "__properties:List__"
+        else property == null
+            "__:DynamicGameObject__" -> "__properties:List__" : add(null)
+            activate "__properties:List__"
+            "__properties:List__" --> "__:DynamicGameObject__"
+            deactivate "__properties:List__"
+        end
+    end
+end
+
+==Queue events==
+"__:DynamicGameObject__" -> "__target:DynamicGameObject__" : eventStream = getEventsAsStream()
+activate "__target:DynamicGameObject__"
+'ref over "__target:DynamicGameObject__" : getEventsAsStream()
+"__target:DynamicGameObject__" --> "__:DynamicGameObject__"
+deactivate "__target:DynamicGameObject__"
+
+loop for each event in eventStream
+    "__:DynamicGameObject__" -> "__:DynamicGameObject__" : addEvent(event)
+    activate "__:DynamicGameObject__"
+    deactivate "__:DynamicGameObject__"
+end
+
+<-- "__:DynamicGameObject__"
+deactivate "__:DynamicGameObject__"
+
+@enduml

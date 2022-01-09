@@ -1,0 +1,10 @@
+\subsection{InGame - Interface}
+
+Das Interface ist ähnlich wie ECS aufgebaut, wobei DynamicGameObjects jeweils Entities, IProperties jeweils Components und IPropertyProcessors jeweils Systeme sind.
+Der Hauptunterschied zu herkömmlichen ECS ist jedoch, dass mehrere Instanzen einer IProperty auf dem selben DynamicGameObject aktiv sein können
+(zum Beispiel eine AnimatorProperty für jede aktive Animation) und jedes DynamicGameObject innerhalb des zuständingen DynamicGameObjectProcessor
+seine eigenen Instanzen der IPropertyProcessors hat, da ein IPropertyProcessor nur auf einer einzigen Node arbeiten kann. \par
+Um Änderungen am Aufbau der DynamicGameObjects zu kommunizieren gibt es DynamicGameObjectEvents, welche erstellt werden, falls eine IProperty hinzugefügt oder entfernt wird.
+Diese DynamicGameObjectEvents werden anhand ihrer Aktion mit verschiedenen Strategien verarbeitet.\par
+Analog zu den DynamicGameObjectEvents gibt es TickEvents, welche eine Änderung im Aufbau eines Ticks kommunizieren und ebenfalls anhand einer Aktion auf
+verschiedene Strategien aufgeteilt werden.\par
